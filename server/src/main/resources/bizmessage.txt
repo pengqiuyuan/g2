@@ -1,0 +1,4 @@
+product_shipped=您订单号为：{0}的商品已发货，请注意查收
+distribute_coupon=恭喜您，获得一张优惠券!
+support_reply=您有未读客服消息！
+product_mentioned=您已成功提货！

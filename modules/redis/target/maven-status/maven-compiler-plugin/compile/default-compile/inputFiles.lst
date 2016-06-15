@@ -1,0 +1,17 @@
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/JedisUtils.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/JedisFactory.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/JobDispatcher.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/JedisScriptExecutor.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/JedisShardedTemplate.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/ConnectionInfo.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/elector/MasterElector.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/JedisDirectPool.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/JedisSentinelPool.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/Keys.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/SimpleJobConsumer.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/AdvancedJobConsumer.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/JobProducer.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/service/scheduler/JobStatistics.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/JedisTemplate.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/JedisPoolBuilder.java
+/Users/apple/pengqiuyuan/git/nhd-mall/modules/redis/src/main/java/org/springside/modules/nosql/redis/pool/JedisPool.java

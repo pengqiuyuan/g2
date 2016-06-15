@@ -1,0 +1,8 @@
+org/springside/modules/tools/FreemarkersTest.class
+org/springside/modules/test/cache/memcached/MemcachedSimulator.class
+org/springside/modules/test/mail/MailServerSimulator.class
+org/springside/modules/test/benchmark/ConcurrentBenchmark.class
+org/springside/modules/test/benchmark/BenchmarkTask.class
+org/springside/modules/test/mail/MailServerSimulatorTest.class
+org/springside/modules/test/benchmark/ConcurrentBenchmark$1.class
+org/springside/modules/memcached/SpyMemcachedClientTest.class

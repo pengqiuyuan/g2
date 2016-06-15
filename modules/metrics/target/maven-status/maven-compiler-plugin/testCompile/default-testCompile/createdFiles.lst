@@ -1,0 +1,5 @@
+org/springside/modules/metrics/ReporterTest.class
+org/springside/modules/metrics/CounterTest.class
+org/springside/modules/metrics/TimerTest.class
+org/springside/modules/metrics/MetricRegistryTest.class
+org/springside/modules/metrics/HistogramTest.class
