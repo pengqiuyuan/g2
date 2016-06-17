@@ -59,7 +59,7 @@
                 $(this).parent("li").toggleClass("active").children("ul").collapse("toggle");
 
                 if ($toggle) {
-                    $(this).parent("li").siblings().removeClass("active").children("../error/ie.html").collapse("hide");
+                    $(this).parent("li").siblings().removeClass("active");
                 }
 
             });
