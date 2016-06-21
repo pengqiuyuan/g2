@@ -7,39 +7,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>G2 - 主页</title>
+<title>新华都电商系统<sitemesh:title/></title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<script src="${ctx}/static/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
 
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+<link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
+<link href="${ctx}/static/bootstrap/2.3.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="${ctx}/static/jquery-validation/1.11.1/validate.css" type="text/css" rel="stylesheet" />
 
-    <!--[if lt IE 8]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
+<link href="${ctx}/static/styles/default.css" type="text/css" rel="stylesheet" />
+<script src="${ctx}/static/jquery-validation/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/jquery-validation/1.11.1/messages_bs_zh.js" type="text/javascript"></script>
 
-    <link rel="shortcut icon" href="http://www.zi-han.net/theme/hplus/favicon.ico" >
-    <link href="${ctx}/static/hplus/css/bootstrap.min.css-v=3.3.5.css"  rel="stylesheet">
-    <link href="${ctx}/static/hplus/css/font-awesome.min.css-v=4.4.0.css"  rel="stylesheet">
-    <link href="${ctx}/static/hplus/css/animate.min.css"  rel="stylesheet">
-    <link href="${ctx}/static/hplus/css/style.min.css-v=4.0.0.css"  rel="stylesheet">
-    <script src="${ctx}/static/hplus/js/jquery.min.js-v=2.1.4.js" ></script>
-    <script src="${ctx}/static/hplus/js/bootstrap.min.js-v=3.3.5.js" ></script>
-    <script src="${ctx}/static/hplus/js/plugins/metisMenu/jquery.metisMenu.js" ></script>
-    <script src="${ctx}/static/hplus/js/plugins/slimscroll/jquery.slimscroll.min.js" ></script>
-    <script src="${ctx}/static/hplus/js/plugins/layer/layer.min.js" ></script>
-    <script src="${ctx}/static/hplus/js/hplus.min.js-v=4.0.0.js" ></script>
-    <script type="text/javascript" src="${ctx}/static/hplus/js/contabs.min.js" tppabs="http://www.zi-han.net/theme/hplus/js/contabs.min.js"></script>
-    <script src="${ctx}/static/hplus/js/plugins/pace/pace.min.js" tppabs="http://www.zi-han.net/theme/hplus/js/plugins/pace/pace.min.js"></script>
-    
-    <sitemesh:head/>
+<sitemesh:head/>
+<style type="text/css">
+	.head_content{margin-left:9%;}
+	.member_bar{margin-right:-25%;}
+	.div_footer{margin-bottom:20px;text-align:center;background:#E6E6E6;}
+
+</style>
 </head>
 
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body>
+	
 	<%@ include file="/WEB-INF/layouts/nav.jsp"%>
-	<sitemesh:body/>
+	<div class="container" style="width: 100%;padding-top: 20px">
+		<div id="content" style="width: 95%;margin-left:50px;padding-top: 0px">
+			<sitemesh:body/>
+		</div>
+		<%@ include file="/WEB-INF/layouts/footer.jsp"%>
+	</div>
+    <script src="${ctx}/static/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
+	
 </body>
 </html>
