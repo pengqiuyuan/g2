@@ -31,7 +31,7 @@
 			      		
 			
 					
-						 <input type="submit" class="btn"
+						 <input type="submit" class="btn btn-default"
 						value="查 找" />
 				<tags:sort />
 				</form>
@@ -61,23 +61,19 @@
 					
 						<td id="iDictionary" value="${item.id}">
 							<div class="btn-group">
-								<a class="btn" href="#">#${s.index+1}</a> <a
-									class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+								<a class="btn" href="#">#${s.index+1}</a> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
 									<li><a
 										href="<%=request.getContextPath()%>/manage/store/edit?id=${item.id}"><i
 											class="icon-edit"></i>修改</a></li>
-											<shiro:hasAnyRoles name="admin">
-									<c:if test="${item.id == 1 ? false : true}">
-									<li><a href="javascript:void(0);" rel="${item.id}"
-										class="del"><i class="icon-th"></i>删除 </a></li>
-										</c:if>
-								</shiro:hasAnyRoles>
-							
-									
-						
+										<shiro:hasAnyRoles name="admin">
+											<c:if test="${item.id == 1 ? false : true}">
+											<li><a href="javascript:void(0);" rel="${item.id}"
+												class="del"><i class="icon-th"></i>删除 </a></li>
+												</c:if>
+										</shiro:hasAnyRoles>
 								</ul>
 							</div>
 						</td>

@@ -46,7 +46,7 @@
 						<option value="0" ${param.search_EQ_status == '0' ? 'selected' : '' }  >冻结</option>
 						</select>
 					
-						 <input type="submit" class="btn"
+						 <input type="submit" class="btn btn-default"
 						value="查 找" />
 				<tags:sort />
 				</form>
