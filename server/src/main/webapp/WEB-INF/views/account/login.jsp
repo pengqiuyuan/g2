@@ -46,7 +46,12 @@
 			<label class="control-label" for="j_captcha">验证码：</label>
 			<div class="controls">
 				<input class="input-xlarge" name="j_captcha" id="j_captcha" type="text" value="">
-				<span class="help-inline">请输入验证码.</span></p></p>
+				<span class="help-inline">请输入验证码.</span>
+			</div>
+		</div>
+		
+	    <div class="control-group">
+			<div class="controls">
 				<div class="control-group"> 
 					<img id="captchaImg" src="<c:url value="/jcaptcha.jpg"/>" /> 
 				</div>
@@ -55,11 +60,15 @@
 							
 							<div class="control-group">
 								<div class="controls">
-									<input class="input-xlarge" name="_spring_security_remember_me" id="_spring_security_remember_me" type="checkbox" value="">
-									两周内记住我
-									<span style="margin-left: 25px">
-										<a href="javascript:refreshCaptcha()">看不清楚换一张</a>    
-                                    </span>
+									<label class="checkbox inline">
+										<input class="input-xlarge" name="_spring_security_remember_me" id="_spring_security_remember_me" type="checkbox" value="">
+										<span>两周内记住我</span><br>
+									</label>
+									<label class="checkbox inline">
+										<span>
+											<a href="javascript:refreshCaptcha()">看不清楚换一张</a>    
+	                                    </span>
+									</label>
 								</div>
 							</div>
 							<div class="form-actions">
@@ -67,5 +76,14 @@
 							</div>
 		</fieldset>
 	</form>
+	<script>	
+		function refreshCaptcha() {  
+			 $('#captchaImg').hide().attr(  
+	  		'src',  
+	 			'<c:url value="/jcaptcha.jpg"/>' + '?' + Math  
+	          		.floor(Math.random() * 100)).fadeIn();  
+		}  	
+	</script>
+
 </body>
 </html>
