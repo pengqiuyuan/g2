@@ -19,7 +19,7 @@
 </head>
 <body>
 		<div class="page-header">
-			<h2>门店名称：${store.name }</h2>
+			<h4>门店名称：${store.name }</h4>
 		</div>
 		<div>
 			<div id="store" >

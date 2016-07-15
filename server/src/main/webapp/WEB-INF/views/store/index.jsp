@@ -18,7 +18,7 @@
    
 	<div >
 		<div class="page-header">
-			<h2>门店管理</h2>
+			<h4>门店管理</h4>
 		</div>
 		<div>
 		 <c:if test="${not empty message}">

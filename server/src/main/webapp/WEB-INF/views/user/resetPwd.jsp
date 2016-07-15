@@ -14,7 +14,7 @@
 
 <body>
 	<div class="page-header">
-   		<h2>重置密码</h2>
+   		<h4>重置密码</h4>
  	</div>
  	 <c:if test="${not empty message}">
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>

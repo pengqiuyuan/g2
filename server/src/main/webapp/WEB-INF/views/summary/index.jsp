@@ -44,7 +44,7 @@
 					<a href="#" class="btn btn-success" id="thirtyDayAgo">近30日</a>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="serverZone">运营大区：</label> 
+					<label class="control-label" for="serverZone">运营大区（点击全选）：</label> 
 					<div class="controls">
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox1" value="option1"> 运营大区1 </label> 
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox2" value="option2"> 运营大区2 </label> 
@@ -52,7 +52,7 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="platform">渠道：</label>
+					<label class="control-label" for="platform">渠道（点击全选）：</label>
 					<div class="controls">
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox1" value="option1"> 渠道1 </label> 
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox2" value="option2"> 渠道2 </label> 
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="server">服务器：</label>
+					<label class="control-label" for="server">服务器（点击全选）：</label>
 					<div class="controls">
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox1" value="option1"> 服务器1 </label> 
 						<label class="checkbox inline"> <input type="checkbox" id="inlineCheckbox2" value="option2"> 服务器2 </label> 
@@ -79,6 +79,10 @@
 					<div class="row-fluid">
 						<div class="span6" id="c1"></div>
 						<div class="span6" id="c2"></div>
+					</div>
+					<div class="row-fluid">
+						<div class="span6" id="c3"></div>
+						<div class="span6" id="c4"></div>
 					</div>
 			</div>
 		</div>
@@ -174,5 +178,7 @@
 					5).color('continent').opacity(0.65).shape('circle')
 					.tooltip('Country*Population*GDP*LifeExpectancy');
 			chart.render();
+			
+			
 		</script>
 </body> 	

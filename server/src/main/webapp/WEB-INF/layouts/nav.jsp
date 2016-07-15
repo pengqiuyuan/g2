@@ -23,7 +23,7 @@
 								<li><a href="${ctx}/manage/store/index">门店管理</a></li>
 							</shiro:hasAnyRoles>
 							<shiro:hasAnyRoles name="admin">
-								<li><a href="${ctx}/manage/authority/index">权限管理</a></li>
+								<li><a href="${ctx}/manage/functions/index">权限管理</a></li>
 							</shiro:hasAnyRoles>
 							<li class="divider"></li>
 							<li><a href="#">sample</a></li>
