@@ -21,18 +21,28 @@ public class Function extends IdEntity{
 	 */
 	public static final String STATUS_INVALIDE = "0";
 	
-	private String name;
+	private String firstName;
+	
+	private String secondName;
 	
 	private String role;
 
 	private String status;
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getSecondName() {
+		return secondName;
+	}
+
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
 	}
 
 	public String getRole() {

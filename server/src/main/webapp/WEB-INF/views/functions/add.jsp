@@ -25,12 +25,22 @@
 	</c:if>
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/functions/save">
 		<div class="control-group">
-			<label class="control-label" for="name">名称：</label>
+			<label class="control-label">一级名称：</label>
 			<div class="controls">
-				<input type="text" name="name" class="input-large " value="" />
+				<select id="firstName" name="firstName" class="province-select">
+					<option value="">请选择一级名称</option>
+					<c:forEach items = "${firstNa}" var="first">
+						<option  value="${first}">${first}</option>
+					</c:forEach>
+				</select>
 			</div>
 		</div>
-
+		<div class="control-group">
+			<label class="control-label" for="secondName">二级名称：</label>
+			<div class="controls">
+				<input type="text" name="secondName" class="input-large " value="" />
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label" for="role">功能权限：</label>
 			<div class="controls">
@@ -55,9 +65,12 @@
 		$(function() {
 			$("#inputForm").validate({
 				rules : {
-					name : {
+					firstName : {
+						required : true
+					},
+					secondName : {
 						required : true,
-						remote: "${ctx}/manage/functions/checkName"
+						remote: "${ctx}/manage/functions/checkSecondName"
 					},
 					role : {
 						required : true,
@@ -65,9 +78,12 @@
 					}
 				},
 				messages : {
-					name : {
+					firstName : {
+						required : "必须填写"
+					},
+					secondName : {
 						required : "必须填写",
-						remote: "功能名称已存在"
+						remote: "功能二级名称已存在"
 					},
 					role : {
 						required : "必须填写",

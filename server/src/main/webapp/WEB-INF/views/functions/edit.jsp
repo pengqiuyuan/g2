@@ -22,20 +22,25 @@
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/functions/update">
 		<input type="hidden" name="id" value="${function.id}">
 		<div class="control-group">
-			<label class="control-label" for="name">用户名:</label>
+			<label class="control-label" for="firstName">一级名称：</label>
 			<div class="controls">
-				<input type="text" name="name" class="input-large "
-					value="${function.name}" />
+				<input type="text" name="firstName" class="input-large " disabled="disabled" value="${function.firstName}" />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label" for="role">功能权限:</label>
+			<label class="control-label" for="secondName">二级名称：</label>
 			<div class="controls">
-				<input type="text" name="role" value="${function.role}"  class="input-large" />
+				<input type="text" name="secondName" class="input-large " disabled="disabled" value="${function.secondName}" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="role">功能权限：</label>
+			<div class="controls">
+				<input type="text" name="role" value="${function.role}"  class="input-large"  disabled="disabled"/>
 			</div>
 		</div>
 		<div class="control-group ">
-			<label class="control-label" for="status">操作员状态:</label>
+			<label class="control-label" for="status">操作员状态：</label>
 			<div class="controls">
 				<select name="status">
 					<option value="1" ${user.status=='1'?'selected' : ''}>有效</option>
@@ -52,9 +57,12 @@
 		$(function() {
 			$("#inputForm").validate({
 				rules : {
-					name : {
+					firstName : {
+						required : true
+					},
+					secondName : {
 						required : true,
-						remote: "${ctx}/manage/functions/checkName"
+						remote: "${ctx}/manage/functions/checkSecondName"
 					},
 					role : {
 						required : true,
@@ -62,9 +70,12 @@
 					}
 				},
 				messages : {
-					name : {
+					firstName : {
+						required : "必须填写"
+					},
+					secondName : {
 						required : "必须填写",
-						remote: "功能名称已存在"
+						remote: "功能二级名称已存在"
 					},
 					role : {
 						required : "必须填写",

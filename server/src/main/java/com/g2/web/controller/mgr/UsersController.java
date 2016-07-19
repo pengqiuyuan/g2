@@ -3,6 +3,8 @@ package com.g2.web.controller.mgr;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -26,9 +28,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Function;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
+import com.g2.service.function.FunctionService;
 import com.g2.service.store.StoreService;
 import com.g2.service.user.UserService;
 import com.google.common.collect.Maps;
@@ -79,6 +83,9 @@ public class UsersController extends BaseController{
 	@Autowired
 	private StoreService storeService;
 	
+	@Autowired
+	private FunctionService functionService;
+	
 	/**
 	 *  用户管理首页
 	 * @param pageNumber  @param pageSize   显示条数
@@ -115,6 +122,23 @@ public class UsersController extends BaseController{
 		model.addAttribute("stores",storeService.findListByUid(userId));
 		model.addAttribute("user", user);
 		model.addAttribute("id", id);
+		
+		Map<String, Map<Function,String>> functions = new HashMap<String, Map<Function,String>>();
+		List<String> firstName = FunctionController.getFirstNa();
+		
+		for (String string : firstName) {
+			Map<Function,String> map = new HashMap<Function, String>();
+			List<Function> f = functionService.findByFirstName(string);
+			for (Function function : f) {
+				if(user.getRoleList().contains(function.getRole())){
+					map.put(function, "包含");
+				}else{
+					map.put(function, "不包含");
+				}
+			}
+			functions.put(string, map);
+		}
+		model.addAttribute("functions",functions);
 		return "/user/edit";
 	}
 	
@@ -137,6 +161,12 @@ public class UsersController extends BaseController{
 	public String addUser(Model model){
 		Long userId = getCurrentUserId();
 		model.addAttribute("stores",storeService.findListByUid(userId));
+		Map<String, List<Function>> functions = new HashMap<String, List<Function>>();
+		List<String> firstName = FunctionController.getFirstNa();
+		for (String string : firstName) {
+			functions.put(string, functionService.findByFirstName(string));
+		}
+		model.addAttribute("functions",functions);
 		return "/user/add";
 	}
 	
@@ -156,10 +186,7 @@ public class UsersController extends BaseController{
 		}
 		model.addAttribute("storeId", user.getStoreId());
 		model.addAttribute("message", "用户名重复！");
-
 	    return "/user/add"; 
-
-		
 	}
 
 	/**
@@ -243,7 +270,37 @@ public class UsersController extends BaseController{
 		return "/user/info";
 	}
 	
-	
+	/**
+	 * GM用户项目权限查看
+	 * @param oid 用户ID
+	 * @return
+	 */
+	@RequestMapping(value = "role", method = RequestMethod.GET)
+	public String role(@RequestParam(value = "id")long id,Model model){
+		User user = userService.findById(id);
+		Long userId = getCurrentUserId();
+		model.addAttribute("stores",storeService.findListByUid(userId));
+		model.addAttribute("user", user);
+		model.addAttribute("id", id);
+		
+		LinkedHashMap<String, LinkedHashMap<Function,String>> functions = new LinkedHashMap<String, LinkedHashMap<Function,String>>();
+		List<String> firstName = FunctionController.getFirstNa();
+		
+		for (String string : firstName) {
+			LinkedHashMap<Function,String> map = new LinkedHashMap<Function, String>();
+			List<Function> f = functionService.findByFirstName(string);
+			for (Function function : f) {
+				if(user.getRoleList().contains(function.getRole())){
+					map.put(function, "包含");
+				}else{
+					map.put(function, "不包含");
+				}
+			}
+			functions.put(string, map);
+		}
+		model.addAttribute("functions",functions);
+		return "/user/role";
+	}
 	
 	/**
 	 * 取出Shiro中的当前用户Id.

@@ -9,12 +9,12 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 	<head>
-		<title>后台用户管理</title>
+		<title>功能权限管理</title>
 	</head>
 <body>
 	<div>
 		<div class="page-header">
-			<h4>后台用户管理</h4>
+			<h4>功能权限管理</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">
@@ -23,7 +23,13 @@
 				</div>
 			</c:if>
 			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/functions/index">
-				<label>用户名：</label> <input name="search_LIKE_name" type="text" value="${param.search_LIKE_name}" /> 
+				<label>一级名称：</label> 
+				<select name="search_EQ_firstName">
+					<option value="">---------请选择---------</option>
+					<c:forEach items = "${firstNa}" var="first">
+						<option  value="${first}" ${param.search_EQ_firstName == first ? "selected":"" }>${first}</option>
+					</c:forEach>
+				</select>
 				<label>状态：</label> 
 				<select name="search_EQ_status">
 					<option value="">---------请选择---------</option>
@@ -37,7 +43,8 @@
 			<thead>
 				<tr>
 					<th title="编号" width="120px">编号</th>
-					<th title="名称">名称</th>
+					<th title="一级名称">一级名称</th>
+					<th title="二级名称">二级名称</th>
 					<th title="权限">权限</th>
 					<th title="状态">状态</th>
 				</tr>
@@ -60,7 +67,8 @@
 								</ul>
 							</div>
 						</td>
-						<td>${item.name}</td>
+						<td>${item.firstName}</td>
+						<td>${item.secondName}</td>
 						<td>${item.role}</td>
 						<td>${item.status == '1' ? '正常' : '冻结' }</td>
 					</tr>

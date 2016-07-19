@@ -1,8 +1,10 @@
 package com.g2.web.controller.mgr;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -47,6 +49,20 @@ public class FunctionController extends BaseController{
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 
+	private static List<String> firstNa = new ArrayList<String>();
+	
+	static {
+		firstNa.add("系统管理");
+		firstNa.add("概况");
+		firstNa.add("玩家");
+		firstNa.add("在线分析");
+		firstNa.add("等级分析");
+		firstNa.add("任务分析");
+		firstNa.add("收入分析");
+		firstNa.add("虚拟消费");
+		firstNa.add("鲸鱼用户");
+	}
+	
 	static {
 		sortTypes.put("auto", "自动");
 	}
@@ -88,9 +104,10 @@ public class FunctionController extends BaseController{
 		model.addAttribute("function", function);
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
+		model.addAttribute("firstNa", firstNa);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/function/index";
+		return "/functions/index";
 	}
 	
 	
@@ -103,7 +120,7 @@ public class FunctionController extends BaseController{
 		Function function = functionService.findById(id);
 		model.addAttribute("function", function);
 		model.addAttribute("id", id);
-		return "/function/edit";
+		return "/functions/edit";
 	}
 	
 	/**
@@ -123,8 +140,9 @@ public class FunctionController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.GET)
-	public String addFunction(){
-		return "/function/add";
+	public String addFunction(Model model){
+		model.addAttribute("firstNa", firstNa);
+		return "/functions/add";
 	}
 	
 	/**
@@ -152,14 +170,14 @@ public class FunctionController extends BaseController{
 	}
 	
 	/**
-	 * 门店详细
+	 * 详细
 	 * @param id 用户id
 	 */
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public String show(@RequestParam(value = "id")long id,Model model){
 		Function function = functionService.findById(id);
 		model.addAttribute("function", function);
-		return "/function/info";
+		return "/functions/info";
 	}
 	
 	/**
@@ -178,10 +196,10 @@ public class FunctionController extends BaseController{
 	/**
 	 * Ajax请求校验name是否唯一。
 	 */
-	@RequestMapping(value = "checkName")
+	@RequestMapping(value = "checkSecondName")
 	@ResponseBody
-	public String checkName(@RequestParam("name") String name) {
-		if (functionService.findByName(name) == null) {
+	public String checkSecondName(@RequestParam("secondName") String secondName) {
+		if (functionService.findBySecondName(secondName) == null) {
 			return "true";
 		} else {
 			return "false";
@@ -200,5 +218,9 @@ public class FunctionController extends BaseController{
 			return "false";
 		}
 	}
-	
+
+	public static List<String> getFirstNa() {
+		return firstNa;
+	}
+
 }

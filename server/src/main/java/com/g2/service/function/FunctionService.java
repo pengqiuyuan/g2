@@ -1,6 +1,8 @@
 package com.g2.service.function;
 
+import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.persistence.DynamicSpecifications;
 import org.springside.modules.persistence.SearchFilter;
-import org.springside.modules.persistence.SearchFilter.Operator;
 
 import com.g2.entity.Function;
 import com.g2.entity.User;
@@ -51,8 +52,12 @@ public class FunctionService {
 		functionDao.delete(id);
 	}
 
-	public Function findByName(String name){
-		return functionDao.findByName(name);
+	public List<Function> findByFirstName(String firstName){
+		return functionDao.findByFirstName(firstName);
+	}
+	
+	public Function findBySecondName(String secondName){
+		return functionDao.findBySecondName(secondName);
 	}
 	
 	public Function findByRole(String role){
@@ -96,8 +101,6 @@ public class FunctionService {
 	 */
 	public void update(Function function) {
 		Function func = functionDao.findOne(function.getId());
-		func.setName(function.getName());
-		func.setRole(function.getRole());
 		func.setStatus(function.getStatus());
 		functionDao.save(func);
 	}
