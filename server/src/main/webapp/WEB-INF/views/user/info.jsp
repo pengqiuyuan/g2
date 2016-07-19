@@ -20,7 +20,7 @@
 </head>
 <body>
 		<div class="page-header">
-			<h2>用户名：${user.name }</h2>
+			<h4>用户名：${user.name }</h4>
 		</div>
 		<div>
 			<div id="forumUser" >

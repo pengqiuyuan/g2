@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ import com.g2.entity.User;
 import com.g2.repository.StoreDao;
 import com.g2.repository.UserDao;
 import com.g2.service.account.AccountService;
+import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
 @Transactional
@@ -234,21 +236,15 @@ public class StoreService {
 	/**
 	 * 创建动态查询条件组合.
 	 */
-	private Specification<Stores> buildSpecification(Long userId,
-			Map<String, Object> searchParams) {
+	private Specification<Stores> buildSpecification(Long userId,Map<String, Object> searchParams) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-
 		User user = accountService.getUser(userId);
-		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)
-				&& !user.getRoles().equals(User.USER_ROLE_BUSINESS)) {
-			filters.put("id",
-					new SearchFilter("id", Operator.EQ, user.getStoreId()));
+		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)) {
+			filters.put("id",new SearchFilter("id", Operator.EQ, user.getStoreId()));
+			filters.put("status", new SearchFilter("status", Operator.EQ,Stores.STATUS_VALIDE));
 		}
-		filters.put("status", new SearchFilter("status", Operator.EQ,
-				Stores.STATUS_VALIDE));
-
-		Specification<Stores> spec = DynamicSpecifications.bySearchFilter(
-				filters.values(), Stores.class);
+		filters.put("status", new SearchFilter("status", Operator.EQ,Stores.STATUS_VALIDE));
+		Specification<Stores> spec = DynamicSpecifications.bySearchFilter(filters.values(), Stores.class);
 		return spec;
 	}
 

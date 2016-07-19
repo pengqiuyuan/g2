@@ -17,7 +17,7 @@ margin-left:10px;
 <body>
 
 	<div class="page-header">
-   		<h2>新增门店</h2>
+   		<h4>新增门店</h4>
  	</div>
  	 <c:if test="${not empty message}">
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>

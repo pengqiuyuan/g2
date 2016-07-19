@@ -1125,10 +1125,11 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder {
 	margin-bottom: 0;
 	vertical-align: middle
 }
-
+/*
 .radio.inline+.radio.inline,.checkbox.inline+.checkbox.inline {
 	margin-left: 10px
 }
+*/
 
 .input-mini {
 	width: 60px
@@ -1410,6 +1411,13 @@ input:focus:invalid:focus,textarea:focus:invalid:focus,select:focus:invalid:focu
 	margin-bottom: 20px;
 	background-color: #f5f5f5;
 	border-top: 1px solid #e5e5e5;
+	*zoom: 1
+}
+
+.form-actions-1 {
+	padding: 19px 20px 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	*zoom: 1
 }
 
@@ -1697,7 +1705,11 @@ legend+.control-group {
 	margin-top: 10px
 }
 
-.form-horizontal .form-actions {
+.form-horizontal .form-actions{
+	padding-left: 180px
+}
+
+.form-horizontal .form-actions-1{
 	padding-left: 180px
 }
 

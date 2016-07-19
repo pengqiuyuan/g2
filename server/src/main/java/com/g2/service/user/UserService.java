@@ -143,10 +143,9 @@ public class UserService {
 	private Specification<User> buildSpecification(Long userId, Map<String, Object> searchParams) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
 		User user = accountService.getUser(userId);
-		
-		if(!user.getRoles().equals(User.USER_ROLE_ADMIN) && !user.getRoles().equals(User.USER_ROLE_BUSINESS) )
+		if(!user.getRoles().equals(User.USER_ROLE_ADMIN))
 		{
-			filters.put("storeId", new SearchFilter("storeId", Operator.EQ, user.getStoreId()));
+			filters.put("id",new SearchFilter("id", Operator.EQ, userId));
 		}
 		Specification<User> spec = DynamicSpecifications.bySearchFilter(filters.values(), User.class);
 		return spec;

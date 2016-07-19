@@ -43,7 +43,7 @@ table.table td.buttons a {padding-right: 0.6em;}
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.42857143;
+    line-height: 1.16;
     text-align: center;
     white-space: nowrap;
     vertical-align: middle;
@@ -57,4 +57,5 @@ table.table td.buttons a {padding-right: 0.6em;}
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
+    border: 1px solid #ccc;
 }

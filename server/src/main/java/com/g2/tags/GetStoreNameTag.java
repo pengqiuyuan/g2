@@ -51,9 +51,11 @@ public class GetStoreNameTag extends TagSupport {
 			StoreService storeService = (StoreService) ctx.getBean("storeService");
 			Stores stores =  storeService.findById(Long.parseLong(id));
 			if(stores!=null){
-			pageContext.getOut().write(stores.getName());
+				pageContext.getOut().write(stores.getName());
+			}else if(id.equals("0")){
+				pageContext.getOut().write("<b>超级管理员</b>");
 			}else{
-				pageContext.getOut().write("<b>门店已不存在</b>");
+				pageContext.getOut().write("<b>项目已不存在</b>");
 
 			}
 		} catch (IOException e) {
