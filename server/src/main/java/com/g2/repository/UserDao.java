@@ -5,8 +5,6 @@
  *******************************************************************************/
 package com.g2.repository;
 
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

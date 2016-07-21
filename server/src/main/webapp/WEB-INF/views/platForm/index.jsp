@@ -7,12 +7,12 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-<title>运营大区设置</title>
+	<title>渠道管理</title>
 </head>
 <body>
 	<div>
 		<div class="page-header">
-			<h4>运营大区设置</h4>
+			<h4>渠道管理</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">
@@ -20,9 +20,16 @@
 					<button data-dismiss="alert" class="close">×</button>${message}
 				</div>
 			</c:if>
-			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/serverZone/index">
-				<label>名称：</label> 
-				<input name="search_LIKE_serverName" type="text" value="${param.search_LIKE_serverName}" /> 
+			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/platForm/index">
+				<label>运营大区：</label> 
+				<select name="search_LIKE_serverZoneId">
+					<option value="">选择运营大区</option>
+					<c:forEach items="${serverZones}" var="item">
+						<option value="${item.id}" ${param.search_LIKE_serverZoneId == item.id ? 'selected' : '' }>${item.serverName}</option>
+					</c:forEach>
+				</select> 
+				<label>渠道ID：</label><input name="search_LIKE_pfId" type="text" value="${param.search_LIKE_pfId}" /> 
+				<label>渠道名称：</label> <input name="search_LIKE_pfName" type="text" value="${param.search_LIKE_pfName}" /> 
 				<input type="submit" class="btn" value="查 找" />
 				<tags:sort />
 			</form>
@@ -31,12 +38,15 @@
 			<thead>
 				<tr>
 					<th title="编号" width="120px">编号</th>
-					<th title="名称">名称</th>
-					<th title="创建时间" width="240px">创建时间</th>
+					<th title="渠道编号">渠道编号</th>
+					<th title="渠道名称">渠道名称</th>
+					<th title="大区名称">大区名称</th>
+					<th title="创建时间">创建时间</th>
+					<th title="修改时间">修改时间</th>
 				</tr>
 			</thead>
 			<tbody id="tbody">
-				<c:forEach items="${serverZones.content}" var="item" varStatus="s">
+				<c:forEach items="${platForms.content}" var="item" varStatus="s">
 					<tr id="${item.id}">
 						<td id="iDictionary" value="${item.id}">
 							<div class="btn-group">
@@ -46,7 +56,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<shiro:hasAnyRoles name="admin">
-										<li><a href="<%=request.getContextPath()%>/manage/serverZone/edit?id=${item.id}"><i class="icon-edit"></i>修改</a></li>
+										<li><a href="<%=request.getContextPath()%>/manage/platForm/edit?id=${item.id}"><i class="icon-edit"></i>修改</a></li>
 									</shiro:hasAnyRoles>
 									<shiro:hasAnyRoles name="admin">
 										<c:if test="${item.id == 0 ? false : true}">
@@ -54,36 +64,33 @@
 										</c:if>
 									</shiro:hasAnyRoles>
 									<li class="divider"></li>
-									<li><a href="#">sample</a></li>
 								</ul>
 							</div>
 						</td>
-						<td><a href="<%=request.getContextPath()%>/manage/serverZone/detail?id=${item.id}" data-fancybox-type="iframe" rel="fancy" title="游戏详细" class="showInfo">${item.serverName }</a></td>
+						<td><a href="<%=request.getContextPath()%>/manage/platForm/detail?id=${item.id}" data-fancybox-type="iframe" rel="fancy" title="渠道编号" class="showInfo">${item.pfId}</a></td>
+						<td>${item.pfName}</td>
+						<td>${item.serverZone.serverName}</td>
 						<td><fmt:formatDate value="${item.crDate}" pattern="yyyy/MM/dd  HH:mm:ss" /></td>
+						<td><fmt:formatDate value="${item.updDate}" pattern="yyyy/MM/dd  HH:mm:ss" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<tags:pagination page="${serverZones}" paginationSize="5" />
+		<tags:pagination page="${platForms}" paginationSize="5" />
 		<shiro:hasAnyRoles name="admin">
 			<div class="form-actions">
-				<a href="<%=request.getContextPath()%>/manage/serverZone/add" class="btn btn-primary">新增运营大区</a>
+				<a href="<%=request.getContextPath()%>/manage/platForm/add" class="btn btn-primary">新增渠道</a>
 			</div>
 		</shiro:hasAnyRoles>
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.showInfo').fancybox({
-				autoDimensions:false,
-				width:800,
-				height:500
-			});
-			
 			$(".del").click(function(){
-				if(confirm("该操作会删除。。。。！")){
+				if(confirm("该操作会删除。。。。！"))
+			    {
 				var id = $(this).attr("rel");
 					$.ajax({
-						url: '<%=request.getContextPath()%>/manage/serverZone/del?id='+ id,
+						url: '<%=request.getContextPath()%>/manage/server/del?id='+ id,
 						type : 'DELETE',
 						contentType : "application/json;charset=UTF-8",
 						dataType : 'json',

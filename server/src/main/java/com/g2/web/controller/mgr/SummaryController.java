@@ -1,10 +1,11 @@
 package com.g2.web.controller.mgr;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
@@ -20,10 +21,17 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Server;
+import com.g2.entity.Stores;
+import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
+import com.g2.service.platForm.PlatFormService;
+import com.g2.service.server.ServerService;
+import com.g2.service.serverZone.ServerZoneService;
 import com.g2.service.store.StoreService;
 import com.google.common.collect.Maps;
 
@@ -70,7 +78,15 @@ public class SummaryController extends BaseController{
 	
 	@Autowired
 	private StoreService storeService;
+	
+	@Autowired
+	private ServerZoneService serverZoneService;
 
+	@Autowired
+	private PlatFormService platFormService;
+	
+	@Autowired
+	private ServerService serverService;
 	
 	/**
 	 *  门店管理首页
@@ -80,29 +96,44 @@ public class SummaryController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request){
-		Long storeId = getCurrentStoresId();
-		logger.info("storeId"+storeId+"用户管理首页");
+		Long userId = getCurrentUserId();
+		User u = accountService.getUser(userId);
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-
+		if (!u.getRoles().equals(User.USER_ROLE_ADMIN)) {
+			List<Stores> stores = new ArrayList<Stores>();
+			Stores sto=  storeService.findById(Long.valueOf(u.getStoreId()));
+			stores.add(sto);
+			model.addAttribute("stores", stores);
+		}else{
+			List<Stores> stores =  storeService.findList();
+			model.addAttribute("stores", stores);
+		}
+		model.addAttribute("serverZones", serverZoneService.findAll());
+		model.addAttribute("platForms", platFormService.findAll());
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/summary/index";
 	}
 	
-	
 	/**
 	 * 取出Shiro中的当前用户Id.
 	 */
-	public Long getCurrentStoresId() {
+	public Long getCurrentUserId() {
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
 		return user.id;
 	}
 	
-	
-	public String getCurrentUserName() {
+	public ShiroUser getCurrentUser() {
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return user.name;
+		return user;
 	}
 	
+	@RequestMapping(value = "/findServerByStoreId")
+	@ResponseBody
+	public Set<Server> findServerByStoreId(@RequestParam(value="storeId")String storeId){
+		System.out.println("11111");
+		Set<Server> servers = serverService.findByStoreId(storeId);
+		return servers;
+	}
 	
 }

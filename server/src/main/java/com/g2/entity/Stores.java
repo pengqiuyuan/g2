@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,8 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 门店
- * @author wuhui
- *
  */
 @Entity
 @Table(name = "g2_stores")
@@ -93,8 +90,8 @@ public class Stores {
 	@Column(name = "cr_date")
 	private Date createDate;
 	
-	@Column(name = "up_date")
-	private Date upDate;
+	@Column(name = "upd_date")
+	private Date updDate;
 	
 	private String pictureCode;
 	
@@ -181,11 +178,11 @@ public class Stores {
 		this.createDate = createDate;
 	}
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getUpDate() {
-		return upDate;
+	public Date getUpdDate() {
+		return updDate;
 	}
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
 	}
 	public String getPictureCode() {
 		return pictureCode;

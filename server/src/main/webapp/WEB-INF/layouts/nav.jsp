@@ -20,7 +20,16 @@
 									<li><a href="${ctx}/manage/user/index">用户管理</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,systemStore">
-									<li><a href="${ctx}/manage/store/index">门店管理</a></li>
+									<li><a href="${ctx}/manage/store/index">游戏项目</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin">
+									<li><a href="${ctx}/manage/serverZone/index">运营大区</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin">
+									<li><a href="${ctx}/manage/platForm/index">渠道管理</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin">
+									<li><a href="${ctx}/manage/server/index">服务器信息设置</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin">
 									<li><a href="${ctx}/manage/functions/index">权限管理</a></li>
@@ -34,10 +43,10 @@
 						</li>
 					</shiro:hasAnyRoles>
 					<shiro:hasAnyRoles name="admin,summary">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">概况 <b class="caret"></b></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">游戏概况 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<shiro:hasAnyRoles name="admin,summary">
-									<li><a href="${ctx}/manage/game/summary/index">概况</a></li>
+									<li><a href="${ctx}/manage/game/summary/index">游戏概况</a></li>
 								</shiro:hasAnyRoles>
 								<li class="divider"></li>
 								<li><a href="#">sample</a></li>
@@ -45,7 +54,7 @@
 						</li>
 					</shiro:hasAnyRoles>
 					<shiro:hasAnyRoles name="admin,playerNew,playActive,playerRetention,playerConvertion,playerChurned,playerBehavior,playerDivice">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">玩家 <b class="caret"></b></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">游戏玩家 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<shiro:hasAnyRoles name="admin,playerNew">
 									<li><a href="${ctx}/manage/game/playerNew/index">新增玩家</a></li>

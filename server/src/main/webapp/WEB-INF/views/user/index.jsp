@@ -95,7 +95,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$(".del").click(function(){
-				var id = $(this).attr("rel");
+				if(confirm("删除用户？")){
+					var id = $(this).attr("rel");
 					$.ajax({
 						url: '<%=request.getContextPath()%>/manage/user/del?id=' + id, 
 						type: 'DELETE',
@@ -107,7 +108,7 @@
 							alert('错误了，请重试');
 						}
 					});
-				
+			    }
 			});
 			$(".userdel").click(function(){
 				var id = $(this).attr("rel");

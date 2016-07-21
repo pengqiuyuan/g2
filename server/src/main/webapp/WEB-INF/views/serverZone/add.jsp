@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="page-header">
-		<h2>新增运营大区</h2>
+		<h4>新增运营大区</h4>
 	</div>
 	<c:if test="${not empty message}">
 		<div id="message" class="alert alert-success">

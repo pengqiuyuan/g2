@@ -53,8 +53,8 @@ public class FunctionController extends BaseController{
 	
 	static {
 		firstNa.add("系统管理");
-		firstNa.add("概况");
-		firstNa.add("玩家");
+		firstNa.add("游戏概况");
+		firstNa.add("游戏玩家");
 		firstNa.add("在线分析");
 		firstNa.add("等级分析");
 		firstNa.add("任务分析");

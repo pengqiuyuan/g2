@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>运营大区信息</title>
+	<title>服务器信息</title>
 	<style type="text/css">
 		p span {
 			width: 100px;
@@ -28,16 +28,12 @@
 </head>
 <body>
 	<div class="page-header">
-		<h4>运营大区名称：${serverZone.serverName }</h4>
+		<h4>服务器名称：${server.serverId }</h4>
 	</div>
-	<div>
-		<div id="store">
-			<p>
-				<span>创建时间：</span>
-				<fmt:formatDate value="${serverZone.crDate}" pattern="yyyy/MM/dd  HH:mm:ss" />
-			</p>
-		</div>
-	</div>
+	<div>IP：${server.ip }</div>
+	<div>端口:${server.port}</div>
+	<div>游戏项目:${server.stores.name}</div>
+	<div>运营大区:${server.serverZone.serverName}</div>
 	<div class="clear"></div>
 </body>
 </html>

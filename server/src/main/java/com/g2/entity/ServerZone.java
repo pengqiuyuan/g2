@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  *
  */
 @Entity
-@Table(name = "g2_zone")
+@Table(name = "g2_server_zone")
 public class ServerZone{
 	
 	/**

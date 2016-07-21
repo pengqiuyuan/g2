@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * 
- * @author wuhui
+ * @author pengqiuyuan
  *
  */
 @MappedSuperclass
@@ -23,7 +23,7 @@ public class BaseEntry {
 	
 	private Date crDate;
 	
-	private Date upDate;
+	private Date updDate;
 	
 	private String status;
 
@@ -47,14 +47,12 @@ public class BaseEntry {
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getUpDate() {
-		return upDate;
+	public Date getUpdDate() {
+		return updDate;
 	}
 
-	
-
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
 	}
 
 	public String getStatus() {
@@ -63,6 +61,31 @@ public class BaseEntry {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseEntry other = (BaseEntry) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	

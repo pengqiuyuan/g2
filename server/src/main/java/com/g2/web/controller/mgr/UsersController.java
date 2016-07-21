@@ -123,11 +123,11 @@ public class UsersController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("id", id);
 		
-		Map<String, Map<Function,String>> functions = new HashMap<String, Map<Function,String>>();
+		LinkedHashMap<String, LinkedHashMap<Function,String>> functions = new LinkedHashMap<String, LinkedHashMap<Function,String>>();
 		List<String> firstName = FunctionController.getFirstNa();
 		
 		for (String string : firstName) {
-			Map<Function,String> map = new HashMap<Function, String>();
+			LinkedHashMap<Function,String> map = new LinkedHashMap<Function, String>();
 			List<Function> f = functionService.findByFirstName(string);
 			for (Function function : f) {
 				if(user.getRoleList().contains(function.getRole())){

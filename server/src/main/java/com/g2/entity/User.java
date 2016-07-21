@@ -64,7 +64,7 @@ public class User extends IdEntity{
 	/**
 	 * 更新时间
 	 */
-	private Date upDate;
+	private Date updDate;
 	/**
 	 * 状态
 	 */
@@ -72,7 +72,16 @@ public class User extends IdEntity{
 
 	private String plainPassword;
 	
+	//服务器大区id  ios官方  IOS越狱 ,多个服务区大区，下划线隔开如：1,2,3
+	private String serverZone;
+	
+	public String getServerZone() {
+		return serverZone;
+	}
 
+	public void setServerZone(String serverZone) {
+		this.serverZone = serverZone;
+	}
 
 	public String getStoreId() {
 		return storeId;
@@ -162,14 +171,14 @@ public class User extends IdEntity{
 	}
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-	public Date getUpDate() {
-		return upDate;
+	public Date getUpdDate() {
+		return updDate;
 	}
 
-	public void setUpDate(Date upDate) {
-		this.upDate = upDate;
+	public void setUpdDate(Date updDate) {
+		this.updDate = updDate;
 	}
-
+	
 	public String getStatus() {
 		return status;
 	}
@@ -189,4 +198,10 @@ public class User extends IdEntity{
 		return ToStringBuilder.reflectionToString(this);
 	}
 
+	@Transient
+	@JsonIgnore
+	public List<String> getServerZoneList() {
+		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
+		return ImmutableList.copyOf(StringUtils.split(serverZone, ","));
+	}
 }
