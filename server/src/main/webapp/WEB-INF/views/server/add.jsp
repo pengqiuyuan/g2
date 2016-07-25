@@ -52,18 +52,6 @@
 				<input type="text" name="serverId" class="input-large " placeholder="server_id不能超过7位" />
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label" for="ip">服务器IP：</label>
-			<div class="controls">
-				<input type="text" name="ip" class="input-large " placeholder="如：10.0.10.5" />
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="port">服务器端口：</label>
-			<div class="controls">
-				<input type="text" name="port" class="input-large " />
-			</div>
-		</div>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" id="submit">保存</button>
 			<a href="<%=request.getContextPath()%>/manage/server/index" class="btn btn-primary">返回</a>
@@ -88,13 +76,6 @@
 						minlength:1,
 						maxlength:7,
 						remote: '<%=request.getContextPath()%>/manage/server/checkServerId'
-					},
-					ip:{
-						ip:true
-					},
-					port:{
-						required:true,
-						number:true
 					}
 				},messages:{
 					storeId:{
@@ -107,13 +88,6 @@
 						required:"服务器名称必须填写",
 						minlength:"游戏名称长度1-7位",
 						remote: "serverId已存在"
-					},
-					ip:{
-						required:"IP必须填写"
-					},
-					port:{
-						required:"端口必须填写",
-						number: "请输入合法的数字"
 					}
 				}
 			});

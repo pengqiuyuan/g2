@@ -25,8 +25,8 @@
 			<label class="control-label" for="storeId">项目:</label>
 			<div class="controls">
 				<select name="storeId">
+					<option value="">请选择项目</option>
 					<c:forEach items="${stores}" var="item">
-						<option value="">请选择项目</option>
 						<option value="${item.id }"
 							${user.storeId == item.id ? "selected":"" }>${item.name }
 						</option>

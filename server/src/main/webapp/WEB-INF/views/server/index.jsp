@@ -48,8 +48,6 @@
 				<tr>
 					<th title="编号" width="120px">编号</th>
 					<th title="服务器名称">服务器ID</th>
-					<th title="IP">IP</th>
-					<th title="端口">端口</th>
 					<th title="游戏项目">游戏项目</th>
 					<th title="运营大区">运营大区</th>
 					<th title="创建时间">创建时间</th>
@@ -77,8 +75,6 @@
 							</div>
 						</td>
 						<td><a href="<%=request.getContextPath()%>/manage/server/detail?id=${item.id}" data-fancybox-type="iframe" rel="fancy" title="服务器名称" class="showInfo">${item.serverId}</a></td>
-						<td>${item.ip}</td>
-						<td>${item.port}</td>
 						<td>${item.stores.name}</td>
 						<td>${item.serverZone.serverName}</td>
 						<td><fmt:formatDate value="${item.crDate}" pattern="yyyy/MM/dd  HH:mm:ss" /></td>

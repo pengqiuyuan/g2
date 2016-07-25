@@ -30,8 +30,6 @@
 	<div class="page-header">
 		<h4>服务器名称：${server.serverId }</h4>
 	</div>
-	<div>IP：${server.ip }</div>
-	<div>端口:${server.port}</div>
 	<div>游戏项目:${server.stores.name}</div>
 	<div>运营大区:${server.serverZone.serverName}</div>
 	<div class="clear"></div>

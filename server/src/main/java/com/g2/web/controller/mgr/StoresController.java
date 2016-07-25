@@ -3,6 +3,7 @@ package com.g2.web.controller.mgr;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -28,13 +29,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Stores;
+import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.store.StoreService;
+import com.g2.service.user.UserService;
 import com.google.common.collect.Maps;
 
 /**
- * 门户管理的controller
+ * 游戏项目管理的controller
  *
  */
 @Controller("storesController")
@@ -76,10 +79,13 @@ public class StoresController extends BaseController{
 	
 	@Autowired
 	private StoreService storeService;
+	
+	@Autowired
+	private UserService userService;
 
 	
 	/**
-	 *  门店管理首页
+	 *  游戏项目管理首页
 	 */
 	@RequestMapping(value = "index", method = RequestMethod.GET)
 	public String index(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
@@ -119,7 +125,7 @@ public class StoresController extends BaseController{
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String updateStores(Stores store,RedirectAttributes redirectAttributes){
 		storeService.update(store);
-		redirectAttributes.addFlashAttribute("message", "修改门店成功");
+		redirectAttributes.addFlashAttribute("message", "修改游戏项目成功");
 	    return "redirect:/manage/store/index";
 	}
 	
@@ -139,7 +145,7 @@ public class StoresController extends BaseController{
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String saveStores(Stores store,RedirectAttributes redirectAttributes){
 		storeService.save(store);
-		redirectAttributes.addFlashAttribute("message", "新增门店成功");
+		redirectAttributes.addFlashAttribute("message", "新增游戏项目成功");
 		return "redirect:/manage/store/index";
 	}
 
@@ -158,12 +164,18 @@ public class StoresController extends BaseController{
 		}
 		Stores store = storeService.findById(id);
 		storeService.del(store);
+		
+		List<User> users = userService.findByStoreId(store.getId().toString());
+		for (User user : users) {
+			userService.realDel(user);
+		}
+		
 		map.put("success", "true");
 		return map;
 	}
 	
 	/**
-	 * 门店详细
+	 * 游戏项目详细
 	 * @param id 用户id
 	 */
 	@RequestMapping(value = "detail", method = RequestMethod.GET)

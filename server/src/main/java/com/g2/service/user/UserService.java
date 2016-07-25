@@ -1,6 +1,7 @@
 package com.g2.service.user;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,9 @@ public class UserService {
 		return userDao.findOne(id);
 	}
 	
+	public List<User> findByStoreId(String storeId){
+		return userDao.findByStoreId(storeId);
+	}
 	
 	/**
 	 * 添加
@@ -100,8 +104,7 @@ public class UserService {
 	 * @param user
 	 */
 	public void realDel(User user){
-		User user1 = this.findById(user.getId());
-		userDao.delete(user1);
+		userDao.deleteByStoreId(user.getStoreId().toString());
 	}
 	
 	/**

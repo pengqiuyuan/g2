@@ -8,11 +8,11 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 	<head>
-	<title>游戏设置</title>
+	<title>游戏项目设置</title>
 	</head>
 	<body>
 		<div class="page-header">
-			<h2>游戏设置</h2>
+			<h4>游戏项目设置</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">

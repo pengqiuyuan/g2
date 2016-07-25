@@ -67,8 +67,6 @@ public class ServerService {
 		s.setStoreId(server.getStoreId());
 		s.setServerZoneId(server.getServerZoneId());
 		s.setServerId(server.getServerId());
-		s.setIp(server.getIp());
-		s.setPort(server.getPort());
 		s.setUpdDate(new Date());
 		serverDao.save(s);
 	}

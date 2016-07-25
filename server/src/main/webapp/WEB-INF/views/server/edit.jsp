@@ -50,18 +50,6 @@
 				<input type="text" name="serverId" class="input-large " value="${st.serverId}" readonly="readonly" />
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label" for="ip">服务器IP：</label>
-			<div class="controls">
-				<input type="text" name="ip" class="input-large " value="${st.ip}" placeholder="如：10.0.10.5" />
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="port">服务器端口：</label>
-			<div class="controls">
-				<input type="text" name="port" class="input-large " value="${st.port}" />
-			</div>
-		</div>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" id="submit">保存</button>
 			<a href="<%=request.getContextPath()%>/manage/server/index" class="btn btn-primary">返回</a>
@@ -80,13 +68,6 @@
 					},
 					serverZoneId:{
 						required:true
-					},
-					ip:{
-						ip:true
-					},
-					port:{
-						required:true,
-						number:true
 					}
 				},messages:{
 					storeId:{
@@ -94,13 +75,6 @@
 					},
 					serverZoneId:{
 						required:"运营大区必须填写"
-					},
-					ip:{
-						required:"IP必须填写"
-					},
-					port:{
-						required:"端口必须填写",
-						number: "请输入合法的数字"
 					}
 				}
 			});

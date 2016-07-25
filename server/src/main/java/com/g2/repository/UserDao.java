@@ -6,7 +6,10 @@
 package com.g2.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -18,4 +21,10 @@ public interface UserDao extends PagingAndSortingRepository<User, Long>, JpaSpec
 	
 	@Query("select count(roles)  from User  where status='1' and storeId=?1 and roles=?2" )
 	int countRole(String storeId, String role);
+	
+	List<User> findByStoreId(String storeId);
+	
+	@Modifying
+	@Query("delete from User user where user.storeId = ?1 ")
+	void deleteByStoreId(String storeId);
 }

@@ -5,26 +5,23 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>游戏修改</title>
+	<title>游戏项目修改</title>
 <style type="text/css"> 
 .error{ 
 color:Red; 
-margin-left:10px;  
 } 
 </style> 
 </head>
-
 <body>
 
 	<div class="page-header">
-   		<h2>游戏修改</h2>
+   		<h4>游戏项目修改</h4>
  	</div>
  	 <c:if test="${not empty message}">
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>
 	</c:if>
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/store/update"  enctype="multipart/form-data" >
-    <input type="hidden" name="id" value="${store.id }">
-			
+    	<input type="hidden" name="id" value="${store.id }">
 			<div
 				class="control-group">
 				<label class="control-label" for="id">游戏Id：</label>
@@ -39,31 +36,39 @@ margin-left:10px;
 					<input type="text" name="name" class="input-large " value="${store.name }"   />
 				</div>
 			</div>
-
-					
  			<div class="form-actions">
   			     <button type="submit" class="btn btn-primary" id="submit">保存</button>
 				 <a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 	        </div>
 	</form>
 	<script type="text/javascript">
-
-$(function(){
-	$("#inputForm").validate({
-		rules:{
-			name:{
-				required:true,
-				minlength:1,
-				maxlength:3
-			}
-		},messages:{
-			name:{
-				required:"必须填写",
-				minlength:"游戏名称长度1-3位"
-			}
-		}
-	});
-})
-
-</script> 
+		$(function(){
+			$("#inputForm").validate({
+				rules:{
+					id:{
+						required:true,
+						number:true,
+						remote: '<%=request.getContextPath()%>/manage/store/checkId'
+					},
+					name:{
+						required:true,
+						minlength:1,
+						maxlength:3,
+						remote: '<%=request.getContextPath()%>/manage/store/checkName'
+					}
+				},messages:{
+					id:{
+						number: "请输入合法的数字",
+						remote: "ID已存在",
+						required:"必须填写"
+					},
+					name:{
+						required:"必须填写",
+						minlength:"游戏名称长度1-3位",
+						remote: "名称已存在",
+					}
+				}
+			});
+		})
+	</script>
 </body>
