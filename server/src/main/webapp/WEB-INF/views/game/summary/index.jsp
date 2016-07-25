@@ -67,7 +67,7 @@
 					<div class="controls">
 						<c:forEach items="${serverZones}" var="ite" varStatus="j">
 							<label class="checkbox inline">
-								<input type="checkbox" class="box" name="roles" value="${ite.id}" id="${ite.id}"/>
+								<input type="checkbox" class="box" name="serverZoneId" value="${ite.id}" id="${ite.id}"/>
 								<span>${ite.serverName}</span>&nbsp;&nbsp;&nbsp;
 								<c:if test="${(j.index+1)%7 == 0}">
 								</c:if>

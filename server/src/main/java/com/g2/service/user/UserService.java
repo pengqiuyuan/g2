@@ -82,6 +82,7 @@ public class UserService {
 		user1.setRoles(user.getRoles());
 		user1.setStatus(user.getStatus());
 		user1.setUpdDate(user.getUpdDate());
+		user1.setServerZone(user.getServerZone());
 		userDao.save(user1);
 	}
 	

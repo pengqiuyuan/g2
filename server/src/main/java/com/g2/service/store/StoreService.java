@@ -50,6 +50,14 @@ public class StoreService {
 	public Stores findById(long id) {
 		return storeDao.findOne(id);
 	}
+	
+	public Stores findByName(String name){
+		return storeDao.findByName(name);
+	}
+	
+	public void delById(Long StoreId){
+		storeDao.delete(StoreId);
+	}
 
 	/**
 	 * 分页查询
@@ -84,7 +92,6 @@ public class StoreService {
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize,
 				sortType);
 		Specification<Stores> spec = buildApiSpecification(null, searchParams);
-
 		return storeDao.findAll(spec, pageRequest);
 	}
 
@@ -95,9 +102,6 @@ public class StoreService {
 	 */
 	public void save(Stores store) {
 		store.setStatus(Stores.STATUS_VALIDE);
-
-		Stores stores = storeDao.findByMax();
-		store.setSort(stores.getSort() + 1);
 		storeDao.save(store);
 	}
 
@@ -124,17 +128,7 @@ public class StoreService {
 	 */
 	public void update(Stores store) {
 		Stores store1 = storeDao.findOne(store.getId());
-		store1.setAddr(store.getAddr());
-		store1.setCity(store.getCity());
-		store1.setLatitude(store.getLatitude());
-		store1.setLongitude(store.getLongitude());
 		store1.setName(store.getName());
-		store1.setProvince(store.getProvince());
-		store1.setTel(store.getTel());
-		store1.setThumb(store.getThumb());
-		store1.setPartner(store.getPartner());
-		store1.setPrivateKey(store.getPrivateKey().trim());
-		store1.setSeller(store.getSeller());
 		storeDao.save(store1);
 	}
 
@@ -187,19 +181,6 @@ public class StoreService {
 		return storeDao.findOne(spec);
 	}
 
-	/**
-	 * 更改排序字段
-	 * 
-	 * @param ids
-	 * @param orders
-	 */
-	public void sort(int[] ids, int[] orders) {
-		for (int i = 0; i < ids.length; i++) {
-			Stores stores = storeDao.findOne(Long.valueOf(ids[i]));
-			stores.setSort(orders[i]);
-			storeDao.save(stores);
-		}
-	}
 
 	/**
 	 * 创建分页请求.
@@ -208,11 +189,10 @@ public class StoreService {
 			String sortType) {
 		Sort sort = null;
 		if ("auto".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "sort");
+			sort = new Sort(Direction.DESC, "id");
 		} else if ("createDate".equals(sortType)) {
 			sort = new Sort(Direction.DESC, "createDate");
 		}
-
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 

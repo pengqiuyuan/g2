@@ -79,7 +79,7 @@
 						<td><huake:getStoreNameTag id="${item.storeId}"></huake:getStoreNameTag>
 						</td>
 						<td><fmt:formatDate value="${item.registerDate}"
-								pattern="yyyy/MM/dd  HH:mm:ss" /></td>
+								pattern="yyyy/MM/dd" /></td>
 						<td>${item.status == '1' ? '正常' : '冻结' }</td>
 					</tr>
 				</c:forEach>

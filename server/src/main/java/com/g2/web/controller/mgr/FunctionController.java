@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,7 @@ public class FunctionController extends BaseController{
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 
-	private static List<String> firstNa = new ArrayList<String>();
+	private static LinkedList<String> firstNa = new LinkedList<String>();
 	
 	static {
 		firstNa.add("系统管理");
@@ -219,7 +220,7 @@ public class FunctionController extends BaseController{
 		}
 	}
 
-	public static List<String> getFirstNa() {
+	public static LinkedList<String> getFirstNa() {
 		return firstNa;
 	}
 

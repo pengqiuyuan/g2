@@ -8,7 +8,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 	<head>
-	<script type="text/javascript" src="${ctx}/static/js/jquery-ui-1.8.21.custom.min.js"></script>
 	<title>游戏设置</title>
 	</head>
 	<body>
@@ -88,13 +87,6 @@
 	
 		<script type="text/javascript">
 			$(document).ready(function(){
-		
-				$('.showInfo').fancybox({
-					autoDimensions:false,
-					width:800,
-					height:500
-				});
-				
 				$(".del").click(function(){
 					if(confirm("该操作会删除。。。。！"))
 				    {

@@ -11,7 +11,6 @@
 <style type="text/css">
 .error {
 	color: Red;
-	margin-left: 10px;
 }
 </style>
 </head>
@@ -23,6 +22,31 @@
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/user/update">
 		<input type="hidden" name="id" value="${user.id}">
 		<div class="control-group">
+			<label class="control-label" for="storeId">项目:</label>
+			<div class="controls">
+				<select name="storeId">
+					<c:forEach items="${stores}" var="item">
+						<option value="">请选择项目</option>
+						<option value="${item.id }"
+							${user.storeId == item.id ? "selected":"" }>${item.name }
+						</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="serverZone">运营大区：</label>
+			<div class="controls">
+				<c:forEach items="${serverZones}" var="ite" varStatus="j">
+					<label class="checkbox inline"> 
+						<input type="checkbox" class="box" name="serverZone" value="${ite.key.id}" id="serverZone_${ite.key.id}" ${ite.value=='包含'?'checked' : ''}/> <span>${ite.key.serverName}</span>
+						<c:if test="${(j.index+1)%7 == 0}">
+						</c:if>
+					</label>
+				</c:forEach>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label" for="name">用户名:</label>
 			<div class="controls">
 				<input type="text" name="name" class="input-large " value="${user.name }" />
@@ -32,18 +56,6 @@
 			<label class="control-label" for="loginName">登入名:</label>
 			<div class="controls">
 				<input type="text" name="loginName" value="${user.loginName }" disabled='disabled' class="input-large" />
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="storeId">门店:</label>
-			<div class="controls">
-				<select name="storeId">
-					<c:forEach items="${stores}" var="item">
-						<option value="${item.id }"
-							${user.storeId == item.id ? "selected":"" }>${item.name }
-						</option>
-					</c:forEach>
-				</select>
 			</div>
 		</div>
 		<div class="control-group ">
@@ -64,7 +76,7 @@
 				<div class="controls">
 					<c:forEach items="${item.value}" var="ite" varStatus="j">
 						<label class="checkbox inline">
-							<input type="checkbox" class="box" name="roles" value="${ite.key.role}" ${ite.value=='包含'?'checked' : ''} id="${i.index}"/>
+							<input type="checkbox" class="box" name="roles" value="${ite.key.role}" ${ite.value=='包含'?'checked' : ''} id="functions_${i.index}"/>
 							<span>${ite.key.secondName}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<c:if test="${(j.index+1)%7 == 0}">
 							</c:if>
@@ -81,29 +93,69 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		function selectAll(id){  
-		    if ($("#"+id).prop("checked")) {
-		        $("input[id='"+id+"']").prop("checked", false);  
-		    } else {  
-		    	$("input[id='"+id+"']").prop("checked", true);  
-		    }  
-		}	
+	function selectAll(id){  
+	    if ($("#functions_"+id).prop("checked")) {
+	        $("input[id='functions_"+id+"']").prop("checked", false);  
+	    } else {  
+	    	$("input[id='functions_"+id+"']").prop("checked", true);  
+	    }  
+	}	
 		$(function() {
 			$("#inputForm").validate({
 				rules : {
-					name : {
+					storeId : {
 						required : true
 					},
-					loginName : {
+					serverZone : {
 						required : true
+					},
+					name : {
+						required : true,
+						minlength : 2,
+						maxlength : 10
+					},
+					loginName : {
+						required : true,
+						minlength : 2,
+						maxlength : 10
+					},
+					pwdCipher : {
+						required : true,
+						minlength : 5,
+						maxlength : 15
+					},
+					confirmPwdCipher : {
+						required : true,
+						minlength : 5,
+						maxlength : 15,
+						equalTo : "#pwdCipher"
 					}
 				},
 				messages : {
+					storeId : {
+						required : "项目必须填写"
+					},
+					serverZone : {
+						required : "运营大区必须填写"
+					},
 					name : {
 						required : "必须填写",
+						minlength : "用户名长度2-10位"
 					},
 					loginName : {
 						required : "必须填写",
+						minlength : "登入名长度2-10位"
+					},
+					pwdCipher : {
+						required : "必须填写",
+						minlength : "密码长度5-15位",
+						maxlength : "密码长度5-15位"
+					},
+					confirmPwdCipher : {
+						required : "必须填写",
+						minlength : "密码长度5-15位",
+						maxlength : "密码长度5-15位",
+						equalTo : "两次输入密码不一致，请重新输入"
 					}
 				}
 			});

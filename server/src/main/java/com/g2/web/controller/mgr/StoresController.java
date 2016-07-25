@@ -3,7 +3,6 @@ package com.g2.web.controller.mgr;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -118,8 +117,7 @@ public class StoresController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String updateStores(Stores store,@RequestParam("fileInput_thum") List<CommonsMultipartFile> fileInputxs,RedirectAttributes redirectAttributes){
-		logger.debug("SSSSSSS   "+store.getProvince());
+	public String updateStores(Stores store,RedirectAttributes redirectAttributes){
 		storeService.update(store);
 		redirectAttributes.addFlashAttribute("message", "修改门店成功");
 	    return "redirect:/manage/store/index";
@@ -139,29 +137,12 @@ public class StoresController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST)
-	public String saveStores(Stores store,@RequestParam("fileInput_thum") List<CommonsMultipartFile> fileInputxs,RedirectAttributes redirectAttributes){
+	public String saveStores(Stores store,RedirectAttributes redirectAttributes){
 		storeService.save(store);
 		redirectAttributes.addFlashAttribute("message", "新增门店成功");
 		return "redirect:/manage/store/index";
 	}
 
-	
-	
-
-	
-	/**
-	 * 修改排序 * @param oid 用户id
-	 * @throws Exception 
-	 */
-	@RequestMapping(value = "updateSort")
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public Map<String,Object> updateSort(@RequestParam(value = "ids")int[] ids,@RequestParam(value = "order")int[] order) throws Exception{
-		 Map<String,Object> map = new HashMap<String, Object>();
-		 storeService.sort(ids,order);
-		map.put("success", "true");
-		return map;
-	}
 	/**
 	 * 删除操作 @param oid 用户id
 	 * @throws Exception 
@@ -192,6 +173,31 @@ public class StoresController extends BaseController{
 		return "/store/info";
 	}
 	
+	/**
+	 * Ajax请求校验name是否唯一。
+	 */
+	@RequestMapping(value = "/checkName")
+	@ResponseBody
+	public String checkLoginName(@RequestParam("name") String name) {
+		if (storeService.findByName(name) == null) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	
+	/**
+	 * Ajax请求校验ID是否唯一。
+	 */
+	@RequestMapping(value = "/checkId")
+	@ResponseBody
+	public String checkId(@RequestParam("id") String id) {
+		if (storeService.findById(Long.valueOf(id))== null) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 	
 	
 	/**

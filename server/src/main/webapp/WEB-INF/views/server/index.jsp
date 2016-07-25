@@ -96,11 +96,6 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$('.showInfo').fancybox({
-				autoDimensions:false,
-				width:800,
-				height:500
-			});
 			$(".del").click(function(){
 				if(confirm("该操作会删除。。。。！")){
 				var id = $(this).attr("rel");

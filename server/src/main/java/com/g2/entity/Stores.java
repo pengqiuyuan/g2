@@ -1,6 +1,5 @@
 package com.g2.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -46,46 +45,8 @@ public class Stores {
 	 * 名称
 	 */
 	private String name;
-	/**
-	 * 地址
-	 */
-	private String addr;
-	/**
-	 * 缩略图
-	 */
-	private String thumb;
-	/**
-	 * 省份
-	 */
-	private String province;
-	/**
-	 * 城市
-	 */
-	private String city;
-	/**
-	 * 经度
-	 */
-	private BigDecimal longitude;
-	/**
-	 * 纬度
-	 */
-	private BigDecimal latitude;
-	/**
-	 * 门店电话
-	 */
-	private String tel;
-	
 	
 	private String status;
-	
-	private int sort;
-	
-	
-	private String partner;
-	
-	private String seller;
-	
-	private String privateKey;
 	
 	@Column(name = "cr_date")
 	private Date createDate;
@@ -93,15 +54,12 @@ public class Stores {
 	@Column(name = "upd_date")
 	private Date updDate;
 	
-	private String pictureCode;
-	
 	@OneToMany(cascade = CascadeType.ALL,  
             fetch = FetchType.LAZY)  
 	@JoinColumn(name="storeId")
 	@JsonIgnore
 	private Set<User> users  = new HashSet<User>(); 
 	
-
 	
 	public String getName() {
 		return name;
@@ -109,49 +67,7 @@ public class Stores {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddr() {
-		return addr;
-	}
-	public void setAddr(String addr) {
-		this.addr = addr;
-	}
-	public String getThumb() {
-		return thumb;
-	}
-	public void setThumb(String thumb) {
-		this.thumb = thumb;
-	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public BigDecimal getLongitude() {
-		
-		return longitude == null ? new BigDecimal(0) : longitude ;
-	}
-	public void setLongitude(BigDecimal longitude) {
-		this.longitude = longitude;
-	}
-	public BigDecimal getLatitude() {
-		return latitude == null ? new BigDecimal(0) : latitude ;
-	}
-	public void setLatitude(BigDecimal latitude) {
-		this.latitude = latitude;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -164,12 +80,7 @@ public class Stores {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Set<User> getUsers() {
-		return users;
-	}
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
 	public Date getCreateDate() {
 		return createDate;
@@ -184,42 +95,14 @@ public class Stores {
 	public void setUpdDate(Date updDate) {
 		this.updDate = updDate;
 	}
-	public String getPictureCode() {
-		return pictureCode;
+	
+	public Set<User> getUsers() {
+		return users;
 	}
-	public void setPictureCode(String pictureCode) {
-		this.pictureCode = pictureCode;
-	}
-	public int getSort() {
-		return sort;
-	}
-	public void setSort(int sort) {
-		this.sort = sort;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 	
-	
-	
-	public String getPartner() {
-		return partner;
-	}
-	public void setPartner(String partner) {
-		this.partner = partner;
-	}
-	public String getSeller() {
-		return seller;
-	}
-	public void setSeller(String seller) {
-		this.seller = seller;
-	}
-	public String getPrivateKey() {
-		return privateKey;
-	}
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-	
-	
-
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
