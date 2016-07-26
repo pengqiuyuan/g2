@@ -5,12 +5,16 @@
  *******************************************************************************/
 package com.g2.web.account;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.g2.service.account.ShiroDbRealm.ShiroUser;
+
 
 /**
  * LoginController负责打开登录页面(GET请求)和登录出错页面(POST请求)，
@@ -25,7 +29,12 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
-		return "account/login";
+		ShiroUser u = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+		if(u!=null){
+			return "redirect:/manage/index";
+		}else{
+			return "account/login";
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

@@ -2,13 +2,18 @@ package com.g2.web.controller.mgr;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +52,8 @@ public class SummaryController extends BaseController{
 	
 	private static final String PAGE_SIZE = "15";
 	
+	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
+	Calendar calendar = new GregorianCalendar(); 
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 
@@ -63,8 +70,6 @@ public class SummaryController extends BaseController{
 		SummaryController.sortTypes = sortTypes;
 	}
 
-
-	
 	@Override
 	@InitBinder
 	protected void initBinder(ServletRequestDataBinder binder){
@@ -97,19 +102,26 @@ public class SummaryController extends BaseController{
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request){
 		Long userId = getCurrentUserId();
-		User u = accountService.getUser(userId);
+		User user = accountService.getUser(userId);
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		if (!u.getRoles().equals(User.USER_ROLE_ADMIN)) {
+		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)) {
 			List<Stores> stores = new ArrayList<Stores>();
-			Stores sto=  storeService.findById(Long.valueOf(u.getStoreId()));
+			Stores sto=  storeService.findById(Long.valueOf(user.getStoreId()));
 			stores.add(sto);
 			model.addAttribute("stores", stores);
 		}else{
 			List<Stores> stores =  storeService.findList();
 			model.addAttribute("stores", stores);
 		}
+		model.addAttribute("user", user);
 		model.addAttribute("serverZones", serverZoneService.findAll());
 		model.addAttribute("platForms", platFormService.findAll());
+		String dateFrom = thirtyDayAgoFrom();
+		String dateTo = nowDate();
+		model.addAttribute("dateFrom", dateFrom);
+		model.addAttribute("dateTo", dateTo);
+		model.addAttribute("sZones",request.getParameterValues("search_EQ_serverZoneId") != null?request.getParameterValues("search_EQ_serverZoneId"):new ArrayList<String>()); 
+		model.addAttribute("pForms",request.getParameterValues("search_EQ_pfId") != null?request.getParameterValues("search_EQ_pfId"):new ArrayList<String>()); 
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/summary/index";
@@ -131,9 +143,52 @@ public class SummaryController extends BaseController{
 	@RequestMapping(value = "/findServerByStoreId")
 	@ResponseBody
 	public Set<Server> findServerByStoreId(@RequestParam(value="storeId")String storeId){
-		System.out.println("11111");
 		Set<Server> servers = serverService.findByStoreId(storeId);
 		return servers;
+	}
+	
+	
+	public String nowDate(){
+		String nowDate = sdf.format(new Date());
+		return nowDate;
+	}
+	
+	public String thirtyDayAgoFrom(){
+	    calendar.setTime(new Date()); 
+	    calendar.add(calendar.DATE,-30);
+	    Date date=calendar.getTime();
+	    String da = sdf.format(date); 
+		return da;
+	}
+	
+	/**
+	 * 服务器获取时间
+	 */
+	@RequestMapping(value="/getDate")
+	@ResponseBody
+	public Map<String, String> getDate(){
+		Map<String,String> dateMap = new HashMap<String, String>();
+		SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
+		Calendar calendar = new GregorianCalendar(); 
+		String nowDate = sdf.format(new Date());
+		
+	    calendar.setTime(new Date()); 
+	    calendar.add(calendar.DATE,-1);
+	    String yesterday = sdf.format(calendar.getTime());
+	    
+	    calendar.setTime(new Date()); 
+	    calendar.add(calendar.DATE,-7);
+	    String sevenDayAgo = sdf.format(calendar.getTime()); 
+	    
+	    calendar.setTime(new Date()); 
+	    calendar.add(calendar.DATE,-30);
+	    String thirtyDayAgo = sdf.format(calendar.getTime()); 
+		
+	    dateMap.put("nowDate",nowDate);
+	    dateMap.put("yesterday",yesterday);
+	    dateMap.put("sevenDayAgo",sevenDayAgo);
+	    dateMap.put("thirtyDayAgo",thirtyDayAgo);
+		return dateMap;
 	}
 	
 }

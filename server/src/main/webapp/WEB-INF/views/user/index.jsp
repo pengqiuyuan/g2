@@ -20,17 +20,16 @@
 				<div id="message" class="alert alert-success">
 					<button data-dismiss="alert" class="close">×</button>${message}</div>
 			</c:if>
-			<form id="queryForm" class="well form-inline" method="get"
-				action="${ctx}/manage/user/index">
-				<label>用户名：</label> <input name="search_LIKE_name" type="text"
-					value="${param.search_LIKE_name}" /> <label>状态：</label> <select
-					name="search_EQ_status">
-					<option value="">---------请选择---------</option>
-					<option value="1"
-						${param.search_EQ_status == '1' ? 'selected' : '' }>正常</option>
-					<option value="0"
-						${param.search_EQ_status == '0' ? 'selected' : '' }>冻结</option>
-				</select> <input type="submit" class="btn btn-default" value="查 找" />
+			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/user/index">
+				<label>用户名：</label> 
+				<input name="search_LIKE_name" type="text" value="${param.search_LIKE_name}" /> 
+				<label>状态：</label> 
+					<select name="search_EQ_status">
+						<option value="">---------请选择---------</option>
+						<option value="1" ${param.search_EQ_status == '1' ? 'selected' : '' }>正常</option>
+						<option value="0" ${param.search_EQ_status == '0' ? 'selected' : '' }>冻结</option>
+					</select> 
+				<input type="submit" class="btn btn-default" value="查 找" />
 				<tags:sort />
 			</form>
 		</div>

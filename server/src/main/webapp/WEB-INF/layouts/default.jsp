@@ -39,8 +39,9 @@
 		<div id="content" style="width: 95%;margin-left:50px;padding-top: 0px">
 			<sitemesh:body/>
 		</div>
-		<%@ include file="/WEB-INF/layouts/footer.jsp"%>
+		
 	</div>
+	<%@ include file="/WEB-INF/layouts/footer.jsp"%>
     <script src="${ctx}/static/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
 	
 </body>
