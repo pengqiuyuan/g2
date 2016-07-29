@@ -116,8 +116,8 @@
 					<div class="row-fluid">
 						<div class="tabbable span6">
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
-								<li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+								<li class="active"><a href="#tab1" data-toggle="tab">新增用户</a></li>
+								<li><a href="#tab2" data-toggle="tab">活跃用户</a></li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab1">
@@ -289,6 +289,8 @@
 						var parsedJson = $.parseJSON(data);
 						$("#dateFrom").val(parsedJson.thirtyDayAgo);
 						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
 					}//回调看看是否有出错
 				});
 			});		
