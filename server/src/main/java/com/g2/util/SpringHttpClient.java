@@ -1,11 +1,14 @@
 package com.g2.util;
 
 import java.io.IOException;
-
+import java.nio.charset.Charset;
 import java.util.Map;
 
 
+
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -31,7 +34,7 @@ public class SpringHttpClient {
 	 * @return
 	 */
     public Map<String,Object> getMethod(String url ,String... prams){
-    	
+    	restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
     	ResponseEntity<String> resEntity = restTemplate.getForEntity(url, String.class, prams);
         ObjectMapper mapper = new ObjectMapper();
     	Map<String, Object> map = null;
@@ -50,6 +53,7 @@ public class SpringHttpClient {
 
     
     public String getMethodStr(String url ,String... prams){
+    	restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
     	ResponseEntity<String> resEntity = restTemplate.getForEntity(url, String.class, prams);
         return resEntity.getBody();
     }

@@ -17,10 +17,9 @@
 		<div class="page-header">
 			<h4>
 				游戏概况
-				<span id="storeName">
-					<c:if test="${user.roles != 'admin' ? 'true':'false' }">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）
-					</c:if>
-				</span>
+				<c:if test="${user.roles != 'admin' ? 'true':'false' }">
+					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
+				</c:if>
 			</h4>
 		</div>
 		<div class="container-fluid">
@@ -115,30 +114,85 @@
 			<div class="row-fluid">
 					<div class="row-fluid">
 						<div class="tabbable span6">
+							<p class="">30日数据趋势</p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab1" data-toggle="tab">新增用户</a></li>
-								<li><a href="#tab2" data-toggle="tab">活跃用户</a></li>
+								<li class="active"><a href="#tab_30_newuser" data-toggle="tab">新增用户</a></li>
+								<li><a href="#tab_30_activeuser" data-toggle="tab">活跃用户</a></li>
+								<li><a href="#tab_30_usertime" data-toggle="tab">平均使用时长</a></li>
+								<li><a href="#tab_30_startup" data-toggle="tab">启动次数</a></li>
+								<li><a href="#tab_30_totaluser" data-toggle="tab">累计用户</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab1">
-									<div id="c1"></div>
+								<div class="tab-pane active" id="tab_30_newuser">
+									<div id="c_30_newuser"></div>
 								</div>
-								<div class="tab-pane" id="tab2">
-									<div id="c2"></div>
+								<div class="tab-pane" id="tab_30_activeuser">
+									<div id="c_30_activeuser"></div>
+								</div>
+								<div class="tab-pane active" id="tab_30_usertime">
+									<div id="c_30_usertime"></div>
+								</div>
+								<div class="tab-pane" id="tab_30_startup">
+									<div id="c_30_startup"></div>
+								</div>
+								<div class="tab-pane" id="tab_30_totaluser">
+									<div id="c_30_totaluser"></div>
 								</div>
 							</div>
 						</div>
 						<div class="tabbable span6">
+							<p class="">时段分析</p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab3" data-toggle="tab">Section 3</a></li>
-								<li><a href="#tab4" data-toggle="tab">Section 4</a></li>
+								<li class="active"><a href="#tab_timeframe_newuser" data-toggle="tab">新增用户</a></li>
+								<li><a href="#tab_timeframe_startup" data-toggle="tab">启动次数</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab3">
-									<div class="span6" id="c3"></div>
+								<div class="tab-pane active" id="tab_timeframe_newuser">
+									<div class="span6" id="c_timeframe_newuser"></div>
 								</div>
-								<div class="tab-pane" id="tab4">
-									<div class="span6" id="c4"></div>
+								<div class="tab-pane" id="tab_timeframe_startup">
+									<div class="span6" id="c_timeframe_startup"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row-fluid">
+						<div class="tabbable span6">
+							<p class="">Top10 用户地区</p>
+							<ul class="nav nav-tabs">
+								<li><a href="#tab_top_area_1" data-toggle="tab">昨日</a></li>
+								<li><a href="#tab_top_area_2" data-toggle="tab">今日</a></li>
+								<li><a href="#tab_top_area_3" data-toggle="tab">近7日</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="#tab_top_area_1">
+									<div id="c_top_area_1"></div>
+								</div>
+								<div class="tab-pane" id="#tab_top_area_2">
+									<div id="c_top_area_2"></div>
+								</div>
+								<div class="tab-pane active" id="#tab_top_area_3">
+									<div id="c_top_area_3"></div>
+								</div>
+							</div>
+						</div>
+						<div class="tabbable span6">
+							<p class="">Top10 渠道来源</p>
+							<ul class="nav nav-tabs">
+								<li><a href="#tab_top_platform_1" data-toggle="tab">昨日</a></li>
+								<li><a href="#tab_top_platForm_2" data-toggle="tab">今日</a></li>
+								<li><a href="#tab_top_platForm_3" data-toggle="tab">近7日</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="#tab_top_platform_1">
+									<div class="span6" id="c_top_platform_1"></div>
+								</div>
+								<div class="tab-pane" id="#tab_top_platform_2">
+									<div class="span6" id="c_top_platform_2"></div>
+								</div>
+								<div class="tab-pane" id="#tab_top_platform_3">
+									<div class="span6" id="c_top_platform_3"></div>
 								</div>
 							</div>
 						</div>
@@ -151,8 +205,9 @@
 	<script type="text/javascript">
 		// G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
 		// Step 1: 创建 Chart 对象
-		var data1 = ${data1}; 
-		var data2 = ${data2};
+		var c_30_newuser = ${c_30_newuser}; 
+		var c_30_activeuser = ${c_30_activeuser};
+		var c_timeframe_newuser = ${c_timeframe_newuser};
 		$("#storeId").change(function(){
 			var storeName = $("#storeId").val();
 			$("#storeName").empty();
@@ -192,15 +247,15 @@
 			secondStep : 30,
 			inputMask : true
 		});
-
+		//---------------------- c_30_newuser ----------------
 		var chart1 = new G2.Chart({
-			id : 'c1', // 指定图表容器 ID
+			id : 'c_30_newuser', // 指定图表容器 ID
 			width : 800, // 指定图表宽度
 			height : 400
 		// 指定图表高度
 		});
 		// Step 2: 载入数据源
-		chart1.source(data1, {
+		chart1.source(c_30_newuser, {
 			genre : {
 				alias : '游戏种类' // 列定义，定义该属性显示的别名
 			},
@@ -212,13 +267,15 @@
 		chart1.interval().position('genre*sold').color('genre')
 		// Step 4: 渲染图表
 		chart1.render();
+		//---------------------- c_30_newuser ----------------
 		
+		//---------------------- c_30_activeuser ----------------
 		var chart2 = new G2.Chart({
-			id : 'c2',
+			id : 'c_30_activeuser',
 			width : 800,
 			height : 400
 		});
-		chart2.source(data2, {
+		chart2.source(c_30_activeuser, {
 			'LifeExpectancy' : {
 				alias : '人均寿命（年）'
 			},
@@ -250,12 +307,31 @@
 				.color('continent').opacity(0.65).shape('circle').tooltip(
 						'Country*Population*GDP*LifeExpectancy');
 		chart2.render();
+		//---------------------- c_30_activeuser ----------------
 		
-		$(function(){
-			$("#yesterday").click(function(){
+		//---------------------- c_timeframe_newuser ----------------
+		var chart6 = new G2.Chart({
+			id : 'c_timeframe_newuser',
+			width : 1000,
+			height : 500
+		});
+		var defs = {
+			'month' : {
+				type : 'cat',
+				values : [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月',
+						'九月', '十月', '十一月', '十二月' ]
+			}
+		};
+		chart6.source(c_timeframe_newuser, defs);
+		chart6.line().position('month*tem').color('city').shape('dot').size(3);
+		chart6.render();
+		//---------------------- c_timeframe_newuser ----------------
+
+		$(function() {
+			$("#yesterday").click(function() {
 				chart1.repaint();
-				$.ajax({                                               
-					url: '<%=request.getContextPath()%>/manage/game/summary/getDate',
+				$.ajax({
+					url : '<%=request.getContextPath()%>/manage/game/summary/getDate',
 					type: 'GET',
 					contentType: "application/json;charset=UTF-8",		
 					dataType: 'text',
@@ -263,6 +339,8 @@
 						var parsedJson = $.parseJSON(data);
 						$("#dateFrom").val(parsedJson.yesterday);
 						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
 					}//回调看看是否有出错
 				});
 			});
@@ -276,6 +354,8 @@
 						var parsedJson = $.parseJSON(data);
 						$("#dateFrom").val(parsedJson.sevenDayAgo);
 						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
 					}//回调看看是否有出错
 				});
 			});
@@ -319,10 +399,14 @@
 					dataType: 'text',
 					success: function(data){
 						var parsedJson = $.parseJSON(data);
-						var d1 = $.parseJSON(parsedJson.data1);
-						var d2 = $.parseJSON(parsedJson.data2);
+						var d1 = $.parseJSON(parsedJson.c_30_newuser);
+						var d2 = $.parseJSON(parsedJson.c_30_activeuser);
+						var d6 = $.parseJSON(parsedJson.c_timeframe_newuser);
 						chart1.changeData(d1);
 						chart2.changeData(d2);
+						chart6.changeData(d6);
+					},error:function(xhr){
+						window.location.href = window.location.href;
 					}//回调看看是否有出错
 				});
 			});
