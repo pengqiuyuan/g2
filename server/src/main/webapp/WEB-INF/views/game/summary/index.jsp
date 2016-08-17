@@ -17,23 +17,32 @@
 		<div class="page-header">
 			<h4>
 				游戏概况
-				<c:if test="${user.roles != 'admin' ? 'true':'false' }">
+				<c:if test="${user.roles != 'admin' ? 'true':'false' }"><!-- 非管理员 -->
 					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
 				</c:if>
 			</h4>
 		</div>
 		<div class="container-fluid">
-			<div id="inputForm"  Class="form-horizontal" >
+			<form id="inputForm"  Class="form-horizontal" >
 				<div class="control-group">
 					<label class="control-label" for="storeId">项目名称：</label>
 					<div class="controls">
 						<select id="storeId" name="search_EQ_storeId">	
 							<option value="">请选择项目</option>
-							<c:forEach items="${stores}" var="item" >
-								<option value="${item.name}"  ${user.storeId == item.id ? 'selected' : '' }>
-									${item.name}
-								</option>
-							</c:forEach>
+							<c:if test="${user.roles != 'admin' ? 'true':'false' }"> <!-- 非管理员 -->
+								<c:forEach items="${stores}" var="item" >
+									<option value="${item.name}"  ${user.storeId == item.id ? 'selected' : '' }>
+										${item.name}
+									</option>
+								</c:forEach>
+							</c:if>
+							<c:if test="${user.roles == 'admin' ? 'true':'false' }"> <!-- 管理员 -->
+								<c:forEach items="${stores}" var="item" >
+									<option value="${item.name}"  ${param.search_EQ_storeId == item.name ? 'selected' : '' }>
+										${item.name}
+									</option>
+								</c:forEach>
+							</c:if>
 						</select>
 						<span id="error_storeId" class="error" hidden="hidden">项目必须填写</span>
 					</div>
@@ -42,7 +51,7 @@
 					<label class="control-label" for="datetimepickerStart">起始时间：</label>
 					<div class="controls">
 						<div id="datetimepickerStart" class="input-append date">
-							<input type="text" name="search_EQ_dateFrom" value="${dateFrom}" id="dateFrom"></input> 
+							<input type="text" name="search_EQ_dateFrom" value="${param.search_EQ_dateFrom == null ? dateFrom : param.search_EQ_dateFrom }" id="dateFrom"></input> 
 							<span class="add-on"> 
 								<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 							</span>
@@ -54,7 +63,7 @@
 					<label class="control-label" for="datetimepickerEnd">结束时间：</label>
 					<div class="controls">
 						<div id="datetimepickerEnd" class="input-append date">
-							<input type="text" name="search_EQ_dateTo" value="${dateTo}" id="dateTo"></input>
+							<input type="text" name="search_EQ_dateTo" value="${param.search_EQ_dateTo == null ? dateTo : param.search_EQ_dateTo}" id="dateTo"></input>
 							<span class="add-on"> 
 								<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 							</span>
@@ -70,16 +79,16 @@
 						<a href="#" class="btn btn-success" id="yesterday">昨日</a> 
 						<a href="#" class="btn btn-success" id="sevenDayAgo">近7日</a> 
 						<a href="#" class="btn btn-success" id="thirtyDayAgo">近30日</a>
-						<a href="#" class="btn btn-primary" id="condition">开启筛选条件</a>
+						<a href="#" class="btn btn-primary" id="condition">${paramValues.search_EQ_serverZoneId == null && paramValues.search_EQ_pfId == null ? '开启筛选条件' : '关闭筛选条件'}</a>
 					</div>
 				</div>
-				<div id="conditionX" hidden="hidden">
+				<div id="conditionX" ${paramValues.search_EQ_serverZoneId == null && paramValues.search_EQ_pfId == null ? 'hidden' : ''}>
 					<div class="control-group">
 						<label class="control-label" for="serverZoneId">运营大区：</label>
 						<div class="controls">
 							<c:forEach items="${serverZones}" var="ite" varStatus="j">
 								<label class="checkbox inline"> 
-									<input type="checkbox" class="box" name="search_EQ_serverZoneId" value="${ite.id}" id="${ite.id}" /> 
+									<input type="checkbox" class="box" name="search_EQ_serverZoneId" <c:forEach items="${paramValues.search_EQ_serverZoneId}" var='pte'>${ite.id == pte ? 'checked' : ''}</c:forEach>  value="${ite.id}" id="${ite.id}" /> 
 									<span>${ite.serverName}</span>&nbsp;&nbsp;&nbsp;
 									<c:if test="${(j.index+1)%7 == 0}">
 									</c:if>
@@ -92,7 +101,7 @@
 						<div class="controls">
 							<c:forEach items="${platForms}" var="ite" varStatus="j">
 								<label class="checkbox inline"> 
-								<input type="checkbox" class="box" name="search_EQ_pfId" value="${ite.id}" id="${ite.id}" /> 
+								<input type="checkbox" class="box" name="search_EQ_pfId" <c:forEach items="${paramValues.search_EQ_pfId}" var='pte'>${ite.id == pte ? 'checked' : ''}</c:forEach> value="${ite.id}" id="${ite.id}" /> 
 								<span>${ite.pfName}</span>&nbsp;&nbsp;&nbsp;
 									<c:if test="${(j.index+1)%7 == 0}">
 									</c:if>
@@ -104,13 +113,13 @@
 				<div class="control-group">
 					<label class="control-label"></label>
 					<div class="controls">
-						<button class="btn btn-primary" id="sub" type="submit">
+						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
 						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
-			</div>
+			</form>
 			<div class="row-fluid">
 					<div class="row-fluid">
 						<div class="tabbable span6">
@@ -200,7 +209,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="${ctx}/static/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript">
 		// G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
@@ -328,6 +336,30 @@
 		//---------------------- c_timeframe_newuser ----------------
 
 		$(function() {
+			$("#inputForm").validate({
+				rules:{
+					search_EQ_storeId:{
+						required:true
+					},
+					search_EQ_dateFrom:{
+						required:true
+					},
+					search_EQ_dateTo:{
+						required:true
+					}
+				},messages:{
+					search_EQ_storeId:{
+						required:"查询项目必须填写"
+					},
+					search_EQ_dateFrom:{
+						required:"起始时间必须填写"
+					},
+					search_EQ_dateTo:{
+						required:"结束时间必须填写"
+					}
+				}
+			});
+			
 			$("#yesterday").click(function() {
 				chart1.repaint();
 				$.ajax({

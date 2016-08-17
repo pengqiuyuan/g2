@@ -109,12 +109,7 @@ public class SummaryController extends BaseController{
 	public String index(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
-			ServletRequest request,
-			@RequestParam(value = "search_EQ_storeId")String search_EQ_storeName,
-			@RequestParam(value = "search_EQ_dateFrom")String search_EQ_dateFrom,
-			@RequestParam(value = "search_EQ_dateTo")String search_EQ_dateTo,
-			@RequestParam(value = "search_EQ_serverZoneId", required = false)String[] search_EQ_serverZoneId,
-			@RequestParam(value = "search_EQ_pfId" , required = false)String[] search_EQ_pfId) throws Exception{
+			ServletRequest request) throws Exception{
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = summaryService.getCurrentUserId();
 		User user = accountService.getUser(userId);
@@ -133,9 +128,12 @@ public class SummaryController extends BaseController{
 		model.addAttribute("dateFrom", summaryService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", summaryService.nowDate());
 		
-		model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
+/*		model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
 		model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
-		model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
+		model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	*/
+		model.addAttribute("c_30_newuser", "{}");
+		model.addAttribute("c_30_activeuser","{}");	
+		model.addAttribute("c_timeframe_newuser", "{}");	
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/summary/index";
