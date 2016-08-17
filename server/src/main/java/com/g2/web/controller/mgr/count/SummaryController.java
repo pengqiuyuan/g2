@@ -1,4 +1,4 @@
-package com.g2.web.controller.mgr;
+package com.g2.web.controller.mgr.count;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +33,13 @@ import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
+import com.g2.service.count.SummaryService;
 import com.g2.service.platForm.PlatFormService;
 import com.g2.service.server.ServerService;
 import com.g2.service.serverZone.ServerZoneService;
 import com.g2.service.store.StoreService;
 import com.g2.util.SpringHttpClient;
+import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
 /**
@@ -97,6 +98,9 @@ public class SummaryController extends BaseController{
 	@Autowired
 	private SpringHttpClient springHttpClient;
 	
+	@Autowired
+	private SummaryService summaryService;
+	
 	/**
 	 *  门店管理首页
 	 * @throws Exception 
@@ -105,10 +109,15 @@ public class SummaryController extends BaseController{
 	public String index(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
-			ServletRequest request) throws Exception{
-		Long userId = getCurrentUserId();
-		User user = accountService.getUser(userId);
+			ServletRequest request,
+			@RequestParam(value = "search_EQ_storeId")String search_EQ_storeName,
+			@RequestParam(value = "search_EQ_dateFrom")String search_EQ_dateFrom,
+			@RequestParam(value = "search_EQ_dateTo")String search_EQ_dateTo,
+			@RequestParam(value = "search_EQ_serverZoneId", required = false)String[] search_EQ_serverZoneId,
+			@RequestParam(value = "search_EQ_pfId" , required = false)String[] search_EQ_pfId) throws Exception{
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		Long userId = summaryService.getCurrentUserId();
+		User user = accountService.getUser(userId);
 		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)) {
 			List<Stores> stores = new ArrayList<Stores>();
 			Stores sto=  storeService.findById(Long.valueOf(user.getStoreId()));
@@ -121,10 +130,8 @@ public class SummaryController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("serverZones", serverZoneService.findAll());
 		model.addAttribute("platForms", platFormService.findAll());
-		String dateFrom = thirtyDayAgoFrom();
-		String dateTo = nowDate();
-		model.addAttribute("dateFrom", dateFrom);
-		model.addAttribute("dateTo", dateTo);
+		model.addAttribute("dateFrom", summaryService.thirtyDayAgoFrom());
+		model.addAttribute("dateTo", summaryService.nowDate());
 		
 		model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
 		model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
@@ -153,43 +160,17 @@ public class SummaryController extends BaseController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
 		map.put("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
-		System.out.println(springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));
+		//System.out.println(springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));
 		map.put("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
 		return map;
 	}
-	
-	/**
-	 * 取出Shiro中的当前用户Id.
-	 */
-	public Long getCurrentUserId() {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return user.id;
-	}
-	
-	public ShiroUser getCurrentUser() {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return user;
-	}
+
 	
 	@RequestMapping(value = "/findServerByStoreId")
 	@ResponseBody
 	public Set<Server> findServerByStoreId(@RequestParam(value="storeId")String storeId){
 		Set<Server> servers = serverService.findByStoreId(storeId);
 		return servers;
-	}
-	
-	
-	public String nowDate(){
-		String nowDate = sdf.format(new Date());
-		return nowDate;
-	}
-	
-	public String thirtyDayAgoFrom(){
-	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
-	    Date date=calendar.getTime();
-	    String da = sdf.format(date); 
-		return da;
 	}
 	
 	/**
