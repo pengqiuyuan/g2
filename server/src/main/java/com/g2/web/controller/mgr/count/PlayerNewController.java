@@ -33,6 +33,7 @@ import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
+import com.g2.service.count.PlayerNewService;
 import com.g2.service.count.SummaryService;
 import com.g2.service.platForm.PlatFormService;
 import com.g2.service.server.ServerService;
@@ -43,14 +44,14 @@ import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
 /**
- * 概括管理的controller
+ * 新增用户管理的controller
  *
  */
-@Controller("summaryController")
-@RequestMapping(value="/manage/game/summary")
-public class SummaryController extends BaseController{
+@Controller("playerNewController")
+@RequestMapping(value="/manage/game/playerNew")
+public class PlayerNewController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(SummaryController.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlayerNewController.class);
 	
 	private static final String PAGE_SIZE = "15";
 	
@@ -69,7 +70,7 @@ public class SummaryController extends BaseController{
 	}
 
 	public static void setSortTypes(Map<String, String> sortTypes) {
-		SummaryController.sortTypes = sortTypes;
+		PlayerNewController.sortTypes = sortTypes;
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public class SummaryController extends BaseController{
 	private SpringHttpClient springHttpClient;
 	
 	@Autowired
-	private SummaryService summaryService;
+	private PlayerNewService playerNewService;
 	
 	/**
 	 * @throws Exception 
@@ -110,7 +111,7 @@ public class SummaryController extends BaseController{
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		Long userId = summaryService.getCurrentUserId();
+		Long userId = playerNewService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)) {
 			List<Stores> stores = new ArrayList<Stores>();
@@ -124,42 +125,13 @@ public class SummaryController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("serverZones", serverZoneService.findAll());
 		model.addAttribute("platForms", platFormService.findAll());
-		model.addAttribute("dateFrom", summaryService.thirtyDayAgoFrom());
-		model.addAttribute("dateTo", summaryService.nowDate());
-		
-		model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
-		model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
-		model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
-		model.addAttribute("c_top_area_1", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/top/userarea"));	
+		model.addAttribute("dateFrom", playerNewService.thirtyDayAgoFrom());
+		model.addAttribute("dateTo", playerNewService.nowDate());
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/game/summary/index";
+		return "/game/player/new/index";
 	}
-	
-	/**
-	 * 异步查询
-	 * @param id 用户id
-	 */
-	@RequestMapping(value = "findIndex", method = RequestMethod.GET )
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public Map<String, Object> findIndex(
-			@RequestParam(value = "search_EQ_storeName")String search_EQ_storeName,
-			@RequestParam(value = "search_EQ_dateFrom")String search_EQ_dateFrom,
-			@RequestParam(value = "search_EQ_dateTo")String search_EQ_dateTo,
-			@RequestParam(value = "search_EQ_serverZoneId", required = false)String[] search_EQ_serverZoneId,
-			@RequestParam(value = "search_EQ_pfId" , required = false)String[] search_EQ_pfId,
-			ServletRequest request,
-			Model model){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
-		map.put("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
-		//System.out.println(springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));
-		map.put("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
-		return map;
-	}
-
 	
 	@RequestMapping(value = "/findServerByStoreId")
 	@ResponseBody

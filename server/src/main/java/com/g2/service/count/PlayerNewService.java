@@ -15,7 +15,7 @@ import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
 @Transactional
-public class SummaryService {
+public class PlayerNewService {
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	
