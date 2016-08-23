@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>活跃玩家</title>
+	<title>设备相关</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,7 +16,7 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				活跃玩家
+				设备相关
 				<c:if test="${user.roles != 'admin' ? 'true':'false' }"><!-- 非管理员 -->
 					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
 				</c:if>
