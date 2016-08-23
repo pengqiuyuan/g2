@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>游戏概况</title>
+	<title>玩家留存</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,7 +16,7 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				游戏概况
+				玩家留存
 				<c:if test="${user.roles != 'admin' ? 'true':'false' }"><!-- 非管理员 -->
 					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
 				</c:if>
@@ -121,7 +121,7 @@
 				</div>
 			</form>
 			<div class="row-fluid">
-				<div class="row-fluid">
+					<div class="row-fluid">
 						<div class="tabbable span12">
 							<p><code>近日概况</code></p>
 							<table class="table table-striped table-bordered table-condensed" id="table">
@@ -163,6 +163,72 @@
 											<td>${item.serverName }</td>
 										</tr>
 									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="tabbable span6">
+							<p class=""><code>应用摘要</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="累计用户总数">累计用户总数</th>
+										<th title="一次性用户(%)">一次性用户（%）</th>
+										<th title="启动（总数 | 近30日每日人均）">启动（总数 | 近30日每日人均）</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+										<tr>
+											<td id="iDictionary">
+												<div class="btn-group">
+													<a class="btn" href="#">#1</a> 
+													<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+													<ul class="dropdown-menu">
+														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
+														<li class="divider"></li>
+														<li><a href="#">sample</a></li>
+													</ul>
+												</div>
+											</td>
+											<td>19177633</td>
+											<td>3079976 ( 27.0% )</td>
+											<td>267304281 | 1.7</td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tabbable span6">
+							<p class=""><code>活跃概况(昨日)</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="周活跃（%）">周活跃（%）</th>
+										<th title="月活跃（%）">月活跃（%）</th>
+										<th title="次日留存率均值">次日留存率均值</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+										<tr>
+											<td id="iDictionary">
+												<div class="btn-group">
+													<a class="btn" href="#">#1</a> 
+													<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+													<ul class="dropdown-menu">
+														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
+														<li class="divider"></li>
+														<li><a href="#">sample</a></li>
+													</ul>
+												</div>
+											</td>
+											<td>1358468 （ 7.1% ）</td>
+											<td>3209523 （ 16.7% ）</td>
+											<td>25.5%</td>
+										</tr>
 								</tbody>
 							</table>
 						</div>
@@ -258,7 +324,8 @@
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<%@ include file="chart.jsp"%>
 	<script type="text/javascript">
-
+		// G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
+		// Step 1: 创建 Chart 对象
 		$("#storeId").change(function(){
 			var storeName = $("#storeId").val();
 			$("#storeName").empty();
@@ -298,7 +365,7 @@
 			secondStep : 30,
 			inputMask : true
 		});
-
+		
 		$(function() {
 			$("#inputForm").validate({
 				rules:{
