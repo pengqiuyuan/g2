@@ -12,7 +12,7 @@
 		var chart_d1 = [{"province":'北京市1', "population":19612368},{"province":"内蒙古自治区1", "population":24706291},{"province":"黑龙江省1", "population":38313991},
 		                        {"province":'北京市', "population":19612368},{"province":"内蒙古自治区", "population":24706291},{"province":"黑龙江省", "population":38313991},
 		                        {"province":"广西壮族自治区", "population":46023761},{"province":"海南省", "population":8671485},{"province":"西藏自治区", "population":3002165},{"province":"陕西省", "population":37327379}];
-		var chart_c1 = [{"province":'北京市1', "population":88888888},{"province":"内蒙古自治区1", "population":24706291},{"province":"黑龙江省1", "population":38313991},
+		var chart_c1 = [{"province":'北京市1', "population":99999999},{"province":"内蒙古自治区1", "population":24706291},{"province":"黑龙江省1", "population":38313991},
 		                        {"province":'北京市', "population":19612368},{"province":"内蒙古自治区", "population":24706291},{"province":"黑龙江省", "population":38313991},
 		                        {"province":"广西壮族自治区", "population":46023761},{"province":"海南省", "population":8671485},{"province":"西藏自治区", "population":3002165},{"province":"陕西省", "population":37327379}];
 		//---------------------- c_top_area_1 ----------------

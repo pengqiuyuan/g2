@@ -237,42 +237,42 @@
 						<div class="tabbable span6">
 							<p class=""><code>30日数据趋势</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_30_newuser" data-toggle="tab">新增用户</a></li>
-								<li><a href="#tab_30_activeuser" data-toggle="tab">活跃用户</a></li>
-								<li><a href="#tab_30_usertime" data-toggle="tab">平均使用时长</a></li>
-								<li><a href="#tab_30_startup" data-toggle="tab">启动次数</a></li>
-								<li><a href="#tab_30_totaluser" data-toggle="tab">累计用户</a></li>
+								<li class="active"><a href="#a1" data-toggle="tab">新增用户</a></li>
+								<li><a href="#a2" data-toggle="tab">活跃用户</a></li>
+								<li><a href="#a3" data-toggle="tab">平均使用时长</a></li>
+								<li><a href="#a4" data-toggle="tab">启动次数</a></li>
+								<li><a href="#a5" data-toggle="tab">累计用户</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_30_newuser">
-									<div id="c_30_newuser"></div>
+								<div class="tab-pane active" id="a1">
+									<div id="chart_a1"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_activeuser">
-									<div id="c_30_activeuser"></div>
+								<div class="tab-pane" id="a2">
+									<div id="chart_a2"></div>
 								</div>
-								<div class="tab-pane active" id="tab_30_usertime">
-									<div id="c_30_usertime"></div>
+								<div class="tab-pane active" id="a3">
+									<div id="chart_a3"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_startup">
-									<div id="c_30_startup"></div>
+								<div class="tab-pane" id="a4">
+									<div id="chart_a4"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_totaluser">
-									<div id="c_30_totaluser"></div>
+								<div class="tab-pane" id="a5">
+									<div id="chart_a5"></div>
 								</div>
 							</div>
 						</div>
 						<div class="tabbable span6">
 							<p class=""><code>时段分析</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_timeframe_newuser" data-toggle="tab">新增用户</a></li>
-								<li><a href="#tab_timeframe_startup" data-toggle="tab">启动次数</a></li>
+								<li class="active"><a href="#b1" data-toggle="tab">新增用户</a></li>
+								<li><a href="#b2" data-toggle="tab">启动次数</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_timeframe_newuser">
-									<div class="span6" id="c_timeframe_newuser"></div>
+								<div class="tab-pane active" id="b1">
+									<div class="span6" id="chart_b1"></div>
 								</div>
-								<div class="tab-pane" id="tab_timeframe_startup">
-									<div class="span6" id="c_timeframe_startup"></div>
+								<div class="tab-pane" id="b2">
+									<div class="span6" id="chart_b2"></div>
 								</div>
 							</div>
 						</div>
@@ -282,38 +282,38 @@
 						<div class="tabbable span6">
 							<p class=""><code>Top10 用户地区</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_top_area_1" data-toggle="tab">昨日</a></li>
-								<li><a href="#tab_top_area_2" data-toggle="tab">今日</a></li>
-								<li><a href="#tab_top_area_3" data-toggle="tab">近7日</a></li>
+								<li class="active"><a href="#c1" data-toggle="tab">昨日</a></li>
+								<li><a href="#c2" data-toggle="tab">今日</a></li>
+								<li><a href="#c3" data-toggle="tab">近7日</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_top_area_1">
-									<div id="c_top_area_1"></div>
+								<div class="tab-pane active" id="c1">
+									<div id="chart_c1"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_area_2">
-									<div id="c_top_area_2"></div>
+								<div class="tab-pane" id="c2">
+									<div id="chart_c2"></div>
 								</div>
-								<div class="tab-pane active" id="tab_top_area_3">
-									<div id="c_top_area_3"></div>
+								<div class="tab-pane active" id="c3">
+									<div id="chart_c3"></div>
 								</div>
 							</div>
 						</div>
 						<div class="tabbable span6">
 							<p class=""><code>Top10 渠道来源</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_top_platform_1" data-toggle="tab">昨日</a></li>
-								<li><a href="#tab_top_platform_2" data-toggle="tab">今日</a></li>
-								<li><a href="#tab_top_platform_3" data-toggle="tab">近7日</a></li>
+								<li class="active"><a href="#d1" data-toggle="tab">昨日</a></li>
+								<li><a href="#d2" data-toggle="tab">今日</a></li>
+								<li><a href="#d3" data-toggle="tab">近7日</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_top_platform_1">
-									<div id="c_top_platform_1"></div>
+								<div class="tab-pane active" id="d1">
+									<div id="chart_d1"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_platform_2">
-									<div id="c_top_platform_2"></div>
+								<div class="tab-pane" id="d2">
+									<div id="chart_d2"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_platform_3">
-									<div id="c_top_platform_3"></div>
+								<div class="tab-pane" id="d3">
+									<div id="chart_d3"></div>
 								</div>
 							</div>
 						</div>

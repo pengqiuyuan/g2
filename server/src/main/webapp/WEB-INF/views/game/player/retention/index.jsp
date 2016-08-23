@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>游戏概况</title>
+	<title>玩家留存</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,7 +16,7 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				游戏概况
+				玩家留存
 				<c:if test="${user.roles != 'admin' ? 'true':'false' }"><!-- 非管理员 -->
 					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
 				</c:if>
@@ -121,7 +121,7 @@
 				</div>
 			</form>
 			<div class="row-fluid">
-				<div class="row-fluid">
+					<div class="row-fluid">
 						<div class="tabbable span12">
 							<p><code>近日概况</code></p>
 							<table class="table table-striped table-bordered table-condensed" id="table">
@@ -169,44 +169,110 @@
 					</div>
 					<div class="row-fluid">
 						<div class="tabbable span6">
+							<p class=""><code>应用摘要</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="累计用户总数">累计用户总数</th>
+										<th title="一次性用户(%)">一次性用户（%）</th>
+										<th title="启动（总数 | 近30日每日人均）">启动（总数 | 近30日每日人均）</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+										<tr>
+											<td id="iDictionary">
+												<div class="btn-group">
+													<a class="btn" href="#">#1</a> 
+													<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+													<ul class="dropdown-menu">
+														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
+														<li class="divider"></li>
+														<li><a href="#">sample</a></li>
+													</ul>
+												</div>
+											</td>
+											<td>19177633</td>
+											<td>3079976 ( 27.0% )</td>
+											<td>267304281 | 1.7</td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tabbable span6">
+							<p class=""><code>活跃概况(昨日)</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="周活跃（%）">周活跃（%）</th>
+										<th title="月活跃（%）">月活跃（%）</th>
+										<th title="次日留存率均值">次日留存率均值</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+										<tr>
+											<td id="iDictionary">
+												<div class="btn-group">
+													<a class="btn" href="#">#1</a> 
+													<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+													<ul class="dropdown-menu">
+														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
+														<li class="divider"></li>
+														<li><a href="#">sample</a></li>
+													</ul>
+												</div>
+											</td>
+											<td>1358468 （ 7.1% ）</td>
+											<td>3209523 （ 16.7% ）</td>
+											<td>25.5%</td>
+										</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="tabbable span6">
 							<p class=""><code>30日数据趋势</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_30_newuser" data-toggle="tab">新增用户</a></li>
-								<li><a href="#tab_30_activeuser" data-toggle="tab">活跃用户</a></li>
-								<li><a href="#tab_30_usertime" data-toggle="tab">平均使用时长</a></li>
-								<li><a href="#tab_30_startup" data-toggle="tab">启动次数</a></li>
-								<li><a href="#tab_30_totaluser" data-toggle="tab">累计用户</a></li>
+								<li class="active"><a href="#a1" data-toggle="tab">新增用户</a></li>
+								<li><a href="#a2" data-toggle="tab">活跃用户</a></li>
+								<li><a href="#a3" data-toggle="tab">平均使用时长</a></li>
+								<li><a href="#a4" data-toggle="tab">启动次数</a></li>
+								<li><a href="#a5" data-toggle="tab">累计用户</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_30_newuser">
-									<div id="c_30_newuser"></div>
+								<div class="tab-pane active" id="a1">
+									<div id="chart_a1"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_activeuser">
-									<div id="c_30_activeuser"></div>
+								<div class="tab-pane" id="a2">
+									<div id="chart_a2"></div>
 								</div>
-								<div class="tab-pane active" id="tab_30_usertime">
-									<div id="c_30_usertime"></div>
+								<div class="tab-pane active" id="a3">
+									<div id="chart_a3"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_startup">
-									<div id="c_30_startup"></div>
+								<div class="tab-pane" id="a4">
+									<div id="chart_a4"></div>
 								</div>
-								<div class="tab-pane" id="tab_30_totaluser">
-									<div id="c_30_totaluser"></div>
+								<div class="tab-pane" id="a5">
+									<div id="chart_a5"></div>
 								</div>
 							</div>
 						</div>
 						<div class="tabbable span6">
 							<p class=""><code>时段分析</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_timeframe_newuser" data-toggle="tab">新增用户</a></li>
-								<li><a href="#tab_timeframe_startup" data-toggle="tab">启动次数</a></li>
+								<li class="active"><a href="#b1" data-toggle="tab">新增用户</a></li>
+								<li><a href="#b2" data-toggle="tab">启动次数</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_timeframe_newuser">
-									<div class="span6" id="c_timeframe_newuser"></div>
+								<div class="tab-pane active" id="b1">
+									<div class="span6" id="chart_b1"></div>
 								</div>
-								<div class="tab-pane" id="tab_timeframe_startup">
-									<div class="span6" id="c_timeframe_startup"></div>
+								<div class="tab-pane" id="b2">
+									<div class="span6" id="chart_b2"></div>
 								</div>
 							</div>
 						</div>
@@ -216,38 +282,38 @@
 						<div class="tabbable span6">
 							<p class=""><code>Top10 用户地区</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_top_area_1" data-toggle="tab">昨日</a></li>
-								<li><a href="#tab_top_area_2" data-toggle="tab">今日</a></li>
-								<li><a href="#tab_top_area_3" data-toggle="tab">近7日</a></li>
+								<li class="active"><a href="#c1" data-toggle="tab">昨日</a></li>
+								<li><a href="#c2" data-toggle="tab">今日</a></li>
+								<li><a href="#c3" data-toggle="tab">近7日</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_top_area_1">
-									<div id="c_top_area_1"></div>
+								<div class="tab-pane active" id="c1">
+									<div id="chart_c1"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_area_2">
-									<div id="c_top_area_2"></div>
+								<div class="tab-pane" id="c2">
+									<div id="chart_c2"></div>
 								</div>
-								<div class="tab-pane active" id="tab_top_area_3">
-									<div id="c_top_area_3"></div>
+								<div class="tab-pane active" id="c3">
+									<div id="chart_c3"></div>
 								</div>
 							</div>
 						</div>
 						<div class="tabbable span6">
 							<p class=""><code>Top10 渠道来源</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab_top_platform_1" data-toggle="tab">昨日</a></li>
-								<li><a href="#tab_top_platform_2" data-toggle="tab">今日</a></li>
-								<li><a href="#tab_top_platform_3" data-toggle="tab">近7日</a></li>
+								<li class="active"><a href="#d1" data-toggle="tab">昨日</a></li>
+								<li><a href="#d2" data-toggle="tab">今日</a></li>
+								<li><a href="#d3" data-toggle="tab">近7日</a></li>
 							</ul>
 							<div class="tab-content">
-								<div class="tab-pane active" id="tab_top_platform_1">
-									<div id="c_top_platform_1"></div>
+								<div class="tab-pane active" id="d1">
+									<div id="chart_d1"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_platform_2">
-									<div id="c_top_platform_2"></div>
+								<div class="tab-pane" id="d2">
+									<div id="chart_d2"></div>
 								</div>
-								<div class="tab-pane" id="tab_top_platform_3">
-									<div id="c_top_platform_3"></div>
+								<div class="tab-pane" id="d3">
+									<div id="chart_d3"></div>
 								</div>
 							</div>
 						</div>
@@ -258,7 +324,8 @@
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<%@ include file="chart.jsp"%>
 	<script type="text/javascript">
-
+		// G2 对数据源格式的要求，仅仅是 JSON 数组，数组的每个元素是一个标准 JSON 对象。
+		// Step 1: 创建 Chart 对象
 		$("#storeId").change(function(){
 			var storeName = $("#storeId").val();
 			$("#storeName").empty();
@@ -298,7 +365,7 @@
 			secondStep : 30,
 			inputMask : true
 		});
-
+		
 		$(function() {
 			$("#inputForm").validate({
 				rules:{

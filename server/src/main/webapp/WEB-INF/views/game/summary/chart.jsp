@@ -13,7 +13,8 @@
 	var c_30_activeuser = ${c_30_activeuser};
 	var c_timeframe_newuser = ${c_timeframe_newuser};
 	var c_top_area_1 = ${c_top_area_1};
-	var c_top_platform_1 = [{"province":'北京市', "population":19612368},{"province":"内蒙古自治区", "population":24706291},{"province":"黑龙江省", "population":38313991},
+	var c_top_platform_1 = [{"province":'北京市1', "population":19612368},{"province":"内蒙古自治区1", "population":24706291},{"province":"黑龙江省1", "population":38313991},
+	                        {"province":'北京市', "population":19612368},{"province":"内蒙古自治区", "population":24706291},{"province":"黑龙江省", "population":38313991},
 	                        {"province":"广西壮族自治区", "population":46023761},{"province":"海南省", "population":8671485},{"province":"西藏自治区", "population":3002165},{"province":"陕西省", "population":37327379}];
 	//---------------------- c_30_newuser ----------------
 	var chart1 = new G2.Chart({
