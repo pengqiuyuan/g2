@@ -60,7 +60,7 @@
 									<li><a href="${ctx}/manage/game/playerNew/index">新增玩家</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,playActive">
-									<li><a href="${ctx}/manage/game/playActive/index">活跃玩家</a></li>
+									<li><a href="${ctx}/manage/game/playerActive/index">活跃玩家</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,playerRetention">
 									<li><a href="${ctx}/manage/game/playerRetention/index">玩家留存</a></li>

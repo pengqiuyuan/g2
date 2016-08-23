@@ -127,10 +127,10 @@ public class SummaryController extends BaseController{
 		model.addAttribute("dateFrom", summaryService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", summaryService.nowDate());
 		
-		model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
-		model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
-		model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
-		model.addAttribute("c_top_area_1", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/top/userarea"));	
+		//model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
+		//model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
+		//model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
+		//model.addAttribute("c_top_area_1", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/top/userarea"));	
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
@@ -153,10 +153,10 @@ public class SummaryController extends BaseController{
 			ServletRequest request,
 			Model model){
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
-		map.put("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
+		//map.put("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
+		//map.put("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
 		//System.out.println(springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));
-		map.put("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
+		//map.put("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
 		return map;
 	}
 
