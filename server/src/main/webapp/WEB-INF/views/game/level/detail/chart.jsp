@@ -36,7 +36,11 @@
 		                {'time': '10:40', 'call': 13, 'waiting': 1, 'people': 2},
 		                {'time': '10:45', 'call': 5, 'waiting': 2, 'people': 3},
 		                {'time': '10:50', 'call': 2, 'waiting': 3, 'people': 1},
-		                {'time': '10:55', 'call': 7, 'waiting': 9, 'people': 8}
+		                {'time': '10:55', 'call': 7, 'waiting': 9, 'people': 8},
+		                {'time': '11:00', 'call': 17, 'waiting': 9, 'people': 3},
+		                {'time': '11:05', 'call': 8, 'waiting': 2, 'people': 3},
+		                {'time': '11:20', 'call': 6, 'waiting': 5, 'people': 2},
+		                {'time': '11:25', 'call': 7, 'waiting': 4, 'people': 7}
 		              ];
 		var chart_d1 = [{"province":'北京市1', "population":19612368},{"province":"内蒙古自治区1", "population":24706291},{"province":"黑龙江省1", "population":38313991},
 		                        {"province":'北京市', "population":19612368},{"province":"内蒙古自治区", "population":24706291},{"province":"黑龙江省", "population":38313991},

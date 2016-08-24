@@ -124,8 +124,8 @@
 					<shiro:hasAnyRoles name="admin,revenueIncomeDate,revenuePayPermeate,revenueNewPlayerValue,revenuePayHabit">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">收入分析 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,revenueIncomeDate">
-									<li><a href="${ctx}/manage/game/revenueIncomeDate/index">收入数据</a></li>
+								<shiro:hasAnyRoles name="admin,revenueIncomeData">
+									<li><a href="${ctx}/manage/game/revenueIncomeData/index">收入数据</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,revenuePayPermeate">
 									<li><a href="${ctx}/manage/game/revenuePayPermeate/index">付费渗透</a></li>
