@@ -254,7 +254,7 @@
 	var Frame = G2.Frame;
 	var frame = new Frame(chart_a2);
 	frame = Frame.combinColumns(frame, [ 'oldPlayer', 'newPlayer' ],
-			'Profit', 'City', 'Year');
+			'Profit', '用户分类', 'Year');
 	var chart = new G2.Chart({
 		id : 'chart_a2',
 		width : 1000,
@@ -262,7 +262,7 @@
 	});
 	chart.source(frame, {
 		'Profit' : {
-			alias : 'Profit in Dollars',
+			alias : '活跃用户',
 			formatter : function(val) {
 				return val + 'k';
 			}
@@ -271,8 +271,8 @@
 	chart.tooltip({
 		crosshairs : true
 	});
-	chart.area().position('Year*Profit').color('City');
-	chart.line().position('Year*Profit').color('City').size(0);
+	chart.area().position('Year*Profit').color('用户分类');
+	chart.line().position('Year*Profit').color('用户分类').size(0);
 	chart.render();
 	//---------------------- chart_a2 ----------------
 
@@ -293,9 +293,9 @@
 		alias : '日期'
 	});
 	chart.col('newPlayer', {
-		alias : '新增用户',
+		alias : '平均使用时长',
 		formatter : function(val) {
-			return val + ' 位';
+			return val + ' s';
 		}
 	});
 	chart.tooltip({
@@ -323,9 +323,9 @@
 		alias : '日期'
 	});
 	chart.col('newPlayer', {
-		alias : '新增用户',
+		alias : '启动次数',
 		formatter : function(val) {
-			return val + ' 位';
+			return val + ' 次';
 		}
 	});
 	chart.tooltip({
@@ -353,7 +353,7 @@
 		alias : '日期'
 	});
 	chart.col('newPlayer', {
-		alias : '新增用户',
+		alias : '累计用户',
 		formatter : function(val) {
 			return val + ' 位';
 		}
