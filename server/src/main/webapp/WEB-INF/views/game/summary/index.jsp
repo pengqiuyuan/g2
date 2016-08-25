@@ -79,35 +79,6 @@
 						<a href="#" class="btn btn-success" id="yesterday">昨日</a> 
 						<a href="#" class="btn btn-success" id="sevenDayAgo">近7日</a> 
 						<a href="#" class="btn btn-success" id="thirtyDayAgo">近30日</a>
-						<a href="#" class="btn btn-primary" id="condition">${paramValues.search_EQ_serverZoneId == null && paramValues.search_EQ_pfId == null ? '开启筛选条件' : '关闭筛选条件'}</a>
-					</div>
-				</div>
-				<div id="conditionX" ${paramValues.search_EQ_serverZoneId == null && paramValues.search_EQ_pfId == null ? 'hidden' : ''}>
-					<div class="control-group">
-						<label class="control-label" for="serverZoneId">运营大区：</label>
-						<div class="controls">
-							<c:forEach items="${serverZones}" var="ite" varStatus="j">
-								<label class="checkbox inline"> 
-									<input type="checkbox" class="box" name="search_EQ_serverZoneId" <c:forEach items="${paramValues.search_EQ_serverZoneId}" var='pte'>${ite.id == pte ? 'checked' : ''}</c:forEach>  value="${ite.id}" id="${ite.id}" /> 
-									<span>${ite.serverName}</span>&nbsp;&nbsp;&nbsp;
-									<c:if test="${(j.index+1)%7 == 0}">
-									</c:if>
-								</label>
-							</c:forEach>
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="platformId">渠道：</label>
-						<div class="controls">
-							<c:forEach items="${platForms}" var="ite" varStatus="j">
-								<label class="checkbox inline"> 
-								<input type="checkbox" class="box" name="search_EQ_pfId" <c:forEach items="${paramValues.search_EQ_pfId}" var='pte'>${ite.id == pte ? 'checked' : ''}</c:forEach> value="${ite.id}" id="${ite.id}" /> 
-								<span>${ite.pfName}</span>&nbsp;&nbsp;&nbsp;
-									<c:if test="${(j.index+1)%7 == 0}">
-									</c:if>
-								</label>
-							</c:forEach>
-						</div>
 					</div>
 				</div>
 				<div class="control-group">

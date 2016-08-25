@@ -32,7 +32,6 @@ import com.g2.entity.Server;
 import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
-import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.count.SummaryService;
 import com.g2.service.platForm.PlatFormService;
 import com.g2.service.server.ServerService;
@@ -109,6 +108,7 @@ public class SummaryController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
+		logger.debug("概括");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = summaryService.getCurrentUserId();
 		User user = accountService.getUser(userId);
@@ -180,15 +180,15 @@ public class SummaryController extends BaseController{
 		String nowDate = sdf.format(new Date());
 		
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-1);
+	    calendar.add(Calendar.DATE,-1);
 	    String yesterday = sdf.format(calendar.getTime());
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-7);
+	    calendar.add(Calendar.DATE,-7);
 	    String sevenDayAgo = sdf.format(calendar.getTime()); 
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
+	    calendar.add(Calendar.DATE,-30);
 	    String thirtyDayAgo = sdf.format(calendar.getTime()); 
 		
 	    dateMap.put("nowDate",nowDate);

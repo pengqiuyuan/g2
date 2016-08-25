@@ -15,7 +15,6 @@ import org.springside.modules.persistence.DynamicSpecifications;
 import org.springside.modules.persistence.SearchFilter;
 
 import com.g2.entity.Function;
-import com.g2.entity.User;
 import com.g2.repository.FunctionDao;
 import com.g2.repository.UserDao;
 import com.g2.service.account.AccountService;
@@ -123,7 +122,7 @@ public class FunctionService {
 	private Specification<Function> buildSpecification(Long userId,
 			Map<String, Object> searchParams) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-		User user = accountService.getUser(userId);
+		//User user = accountService.getUser(userId);
 		Specification<Function> spec = DynamicSpecifications.bySearchFilter(filters.values(), Function.class);
 		return spec;
 	}

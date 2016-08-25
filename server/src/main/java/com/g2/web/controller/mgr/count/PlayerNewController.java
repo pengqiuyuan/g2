@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -25,16 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
 import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
-import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.count.PlayerNewService;
-import com.g2.service.count.SummaryService;
 import com.g2.service.platForm.PlatFormService;
 import com.g2.service.server.ServerService;
 import com.g2.service.serverZone.ServerZoneService;
@@ -110,6 +106,7 @@ public class PlayerNewController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
+		logger.debug("新增用户");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = playerNewService.getCurrentUserId();
 		User user = accountService.getUser(userId);
@@ -152,15 +149,15 @@ public class PlayerNewController extends BaseController{
 		String nowDate = sdf.format(new Date());
 		
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-1);
+	    calendar.add(Calendar.DATE,-1);
 	    String yesterday = sdf.format(calendar.getTime());
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-7);
+	    calendar.add(Calendar.DATE,-7);
 	    String sevenDayAgo = sdf.format(calendar.getTime()); 
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
+	    calendar.add(Calendar.DATE,-30);
 	    String thirtyDayAgo = sdf.format(calendar.getTime()); 
 		
 	    dateMap.put("nowDate",nowDate);

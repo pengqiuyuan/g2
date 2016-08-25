@@ -4,12 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.persistence.SearchFilter;
 
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
@@ -28,7 +26,7 @@ public class SummaryService {
 	
 	public String thirtyDayAgoFrom(){
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
+	    calendar.add(Calendar.DATE,-30);
 	    Date date=calendar.getTime();
 	    String da = sdf.format(date); 
 		return da;

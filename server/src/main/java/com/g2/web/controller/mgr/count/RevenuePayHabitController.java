@@ -106,6 +106,7 @@ public class RevenuePayHabitController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
+		logger.debug("付费习惯");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = revenuePayHabitService.getCurrentUserId();
 		User user = accountService.getUser(userId);
@@ -148,15 +149,15 @@ public class RevenuePayHabitController extends BaseController{
 		String nowDate = sdf.format(new Date());
 		
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-1);
+	    calendar.add(Calendar.DATE,-1);
 	    String yesterday = sdf.format(calendar.getTime());
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-7);
+	    calendar.add(Calendar.DATE,-7);
 	    String sevenDayAgo = sdf.format(calendar.getTime()); 
 	    
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
+	    calendar.add(Calendar.DATE,-30);
 	    String thirtyDayAgo = sdf.format(calendar.getTime()); 
 		
 	    dateMap.put("nowDate",nowDate);

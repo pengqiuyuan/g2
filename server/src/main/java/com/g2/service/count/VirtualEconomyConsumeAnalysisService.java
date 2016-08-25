@@ -26,7 +26,7 @@ public class VirtualEconomyConsumeAnalysisService {
 	
 	public String thirtyDayAgoFrom(){
 	    calendar.setTime(new Date()); 
-	    calendar.add(calendar.DATE,-30);
+	    calendar.add(Calendar.DATE,-30);
 	    Date date=calendar.getTime();
 	    String da = sdf.format(date); 
 		return da;
