@@ -250,7 +250,7 @@
 								<div class="tab-pane" id="a2">
 									<div id="chart_a2"></div>
 								</div>
-								<div class="tab-pane active" id="a3">
+								<div class="tab-pane" id="a3">
 									<div id="chart_a3"></div>
 								</div>
 								<div class="tab-pane" id="a4">
