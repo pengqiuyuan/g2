@@ -201,6 +201,19 @@
 						</div>
 					</div>
 					<div class="row-fluid">
+						<div class="tabbable span12">
+							<p><code>在线趋势</code></p>
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#a0" data-toggle="tab">在线趋势</a></li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="a0">
+									<div id="chart_a0"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row-fluid">
 						<div class="tabbable span6">
 							<p class=""><code>30日数据趋势</code></p>
 							<ul class="nav nav-tabs">
@@ -236,10 +249,10 @@
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="b1">
-									<div class="span6" id="chart_b1"></div>
+									<div id="chart_b1"></div>
 								</div>
 								<div class="tab-pane" id="b2">
-									<div class="span6" id="chart_b2"></div>
+									<div id="chart_b2"></div>
 								</div>
 							</div>
 						</div>
@@ -260,7 +273,7 @@
 								<div class="tab-pane" id="c2">
 									<div id="chart_c2"></div>
 								</div>
-								<div class="tab-pane active" id="c3">
+								<div class="tab-pane" id="c3">
 									<div id="chart_c3"></div>
 								</div>
 							</div>
