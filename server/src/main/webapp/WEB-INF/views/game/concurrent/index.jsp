@@ -253,7 +253,7 @@
 								<div class="tab-pane" id="a3">
 									<div id="chart_a3"></div>
 								</div>
-								<div class="tab-pane" id="a4">
+								<div class="tab-pane" id="a4">	
 									<div id="chart_a4"></div>
 								</div>
 								<div class="tab-pane" id="a5">
