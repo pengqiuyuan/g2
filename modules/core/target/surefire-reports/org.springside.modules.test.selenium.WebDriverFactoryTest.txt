@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.springside.modules.test.selenium.WebDriverFactoryTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.596 sec - in org.springside.modules.test.selenium.WebDriverFactoryTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.952 sec - in org.springside.modules.test.selenium.WebDriverFactoryTest
