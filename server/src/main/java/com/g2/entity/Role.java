@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.Index;
 
 /**
@@ -85,6 +86,5 @@ public class Role implements Serializable{
 //	public void setResources(List<Resource> resources) {
 //		this.resources = resources;
 //	}
-	
 	
 }

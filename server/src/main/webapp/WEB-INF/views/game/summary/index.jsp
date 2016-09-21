@@ -304,7 +304,6 @@
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<%@ include file="chart.jsp"%>
 	<script type="text/javascript">
-
 		$("#storeId").change(function(){
 			var storeName = $("#storeId").val();
 			$("#storeName").empty();
