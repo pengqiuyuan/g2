@@ -1,4 +1,4 @@
-package com.g2.service.count;
+package com.g2.service.game;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +13,7 @@ import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
 @Transactional
-public class PlayerChurnedService {
+public class SummaryService {
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	

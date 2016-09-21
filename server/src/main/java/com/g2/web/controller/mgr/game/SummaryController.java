@@ -28,7 +28,7 @@ import org.springside.modules.web.Servlets;
 import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
-import com.g2.service.count.SummaryService;
+import com.g2.service.game.SummaryService;
 import com.g2.service.server.ServerService;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;

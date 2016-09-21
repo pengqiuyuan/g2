@@ -31,7 +31,7 @@
 									<li><a href="${ctx}/manage/user/index">账号管理</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,systemLogger">
-									<li><a href="${ctx}/manage/Logger/index">操作记录</a></li>
+									<li><a href="${ctx}/manage/logger/index">操作记录</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin">
 									<li><a href="${ctx}/manage/functions/index">权限管理</a></li>

@@ -30,20 +30,21 @@ import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
+import com.g2.service.game.DataRankService;
 import com.g2.service.server.ServerService;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
 /**
- * 基本指标管理的controller
+ * 关卡分布管理的controller
  *
  */
-@Controller("dataBasicController")
-@RequestMapping(value="/manage/game/dataBasic")
-public class DataBasicController extends BaseController{
+@Controller("dataRankController")
+@RequestMapping(value="/manage/game/dataRank")
+public class DataRankController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(DataBasicController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataRankController.class);
 	
 	private static final String PAGE_SIZE = "15";
 	
@@ -62,7 +63,7 @@ public class DataBasicController extends BaseController{
 	}
 
 	public static void setSortTypes(Map<String, String> sortTypes) {
-		DataBasicController.sortTypes = sortTypes;
+		DataRankController.sortTypes = sortTypes;
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class DataBasicController extends BaseController{
 	private ServerService serverService;
 	
 	@Autowired
-	private DataBasicService dataBasicService;
+	private DataRankService dataRankService;
 	
 	/**
 	 * @throws Exception 
@@ -89,19 +90,19 @@ public class DataBasicController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
-		logger.debug("基本指标");
+		logger.debug("关卡分布");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		Long userId = dataBasicService.getCurrentUserId();
+		Long userId = dataRankService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
 		model.addAttribute("user", user);
-		model.addAttribute("dateFrom", dataBasicService.thirtyDayAgoFrom());
-		model.addAttribute("dateTo", dataBasicService.nowDate());
+		model.addAttribute("dateFrom", dataRankService.thirtyDayAgoFrom());
+		model.addAttribute("dateTo", dataRankService.nowDate());
 		model.addAttribute("servers", serverService.findAll());
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/game/databasic/index";
+		return "/game/datarank/index";
 	}
 	
 	/**
