@@ -55,7 +55,6 @@ public class User extends IdEntity{
 	private String salt;
 	private String roles;
 	private Date registerDate;
-	private String storeId;
 
 	/**
 	 * 邮箱
@@ -72,25 +71,6 @@ public class User extends IdEntity{
 
 	private String plainPassword;
 	
-	//服务器大区id  ios官方  IOS越狱 ,多个服务区大区，下划线隔开如：1,2,3
-	private String serverZone;
-	
-	public String getServerZone() {
-		return serverZone;
-	}
-
-	public void setServerZone(String serverZone) {
-		this.serverZone = serverZone;
-	}
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-
 	public User() {
 	}
 
@@ -198,10 +178,4 @@ public class User extends IdEntity{
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	@Transient
-	@JsonIgnore
-	public List<String> getServerZoneList() {
-		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
-		return ImmutableList.copyOf(StringUtils.split(serverZone, ","));
-	}
 }

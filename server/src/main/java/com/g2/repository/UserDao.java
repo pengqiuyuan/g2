@@ -17,14 +17,4 @@ import com.g2.entity.User;
 
 public interface UserDao extends PagingAndSortingRepository<User, Long>, JpaSpecificationExecutor<User> {
 	User findByLoginName(String loginName);
-
-	
-	@Query("select count(roles)  from User  where status='1' and storeId=?1 and roles=?2" )
-	int countRole(String storeId, String role);
-	
-	List<User> findByStoreId(String storeId);
-	
-	@Modifying
-	@Query("delete from User user where user.storeId = ?1 ")
-	void deleteByStoreId(String storeId);
 }

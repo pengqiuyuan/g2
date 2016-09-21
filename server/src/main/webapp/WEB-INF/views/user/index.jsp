@@ -39,7 +39,6 @@
 					<th title="编号" width="120px">编号</th>
 					<th title="用户名">用户名</th>
 					<th title="登入名">登入名</th>
-					<th title="登入名">所属门店</th>
 					<th title="创建时间" width="240px">创建时间</th>
 					<th title="状态">状态</th>
 				</tr>
@@ -75,8 +74,6 @@
 							class="showInfo">${item.name }</a></td>
 
 						<td>${item.loginName}</td>
-						<td><huake:getStoreNameTag id="${item.storeId}"></huake:getStoreNameTag>
-						</td>
 						<td><fmt:formatDate value="${item.registerDate}"
 								pattern="yyyy/MM/dd" /></td>
 						<td>${item.status == '1' ? '正常' : '冻结' }</td>

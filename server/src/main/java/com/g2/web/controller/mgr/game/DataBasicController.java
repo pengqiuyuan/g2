@@ -27,15 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
-import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.count.LevelDetailService;
 import com.g2.service.game.DataBasicService;
-import com.g2.service.platForm.PlatFormService;
 import com.g2.service.server.ServerService;
-import com.g2.service.serverZone.ServerZoneService;
-import com.g2.service.store.StoreService;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
@@ -106,13 +102,6 @@ public class DataBasicController extends BaseController{
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/level/detail/index";
-	}
-	
-	@RequestMapping(value = "/findServerByStoreId")
-	@ResponseBody
-	public Set<Server> findServerByStoreId(@RequestParam(value="storeId")String storeId){
-		Set<Server> servers = serverService.findByStoreId(storeId);
-		return servers;
 	}
 	
 	/**

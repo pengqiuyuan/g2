@@ -22,13 +22,15 @@ public class Server extends BaseEntry{
 	 */
 	private String serverId;
 	
-	private String storeId;
-	
-	private String serverZoneId;
-	
-	private Stores stores;
-	
-	private ServerZone serverZone;
+	private String serverName;
+
+	public String getServerName() {
+		return serverName;
+	}
+
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
+	}
 
 	public String getServerId() {
 		return serverId;
@@ -36,40 +38,6 @@ public class Server extends BaseEntry{
 
 	public void setServerId(String serverId) {
 		this.serverId = serverId;
-	}
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-
-	public String getServerZoneId() {
-		return serverZoneId;
-	}
-
-	public void setServerZoneId(String serverZoneId) {
-		this.serverZoneId = serverZoneId;
-	}
-
-	@Transient
-	public Stores getStores() {
-		return stores;
-	}
-
-	public void setStores(Stores stores) {
-		this.stores = stores;
-	}
-
-	@Transient
-	public ServerZone getServerZone() {
-		return serverZone;
-	}
-
-	public void setServerZone(ServerZone serverZone) {
-		this.serverZone = serverZone;
 	}
 
 	@Override

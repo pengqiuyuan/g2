@@ -35,10 +35,6 @@ public class ServerService {
 	@Autowired
 	private AccountService accountService;
 	
-	public Set<Server> findByStoreId(String storeId){
-		return serverDao.findByStoreId(storeId);
-	}
-	
 	public List<Server> findAll(){
 		return serverDao.findAll();
 	}
@@ -51,10 +47,6 @@ public class ServerService {
 		return serverDao.findByServerId(serverId);
 	}
 	
-	public Set<Server> findByServerZoneIdAndStoreId(String serverZoneId,String gameId){
-		return serverDao.findByServerZoneIdAndStoreId(serverZoneId,gameId);
-	}
-	
 	public void save(Server server){
 		server.setCrDate(new Date());
 		server.setUpdDate(new Date());
@@ -64,26 +56,14 @@ public class ServerService {
 	
 	public void update(Server server){
 		Server s =  serverDao.findOne(server.getId());
-		s.setStoreId(server.getStoreId());
-		s.setServerZoneId(server.getServerZoneId());
 		s.setServerId(server.getServerId());
+		s.setServerName(server.getServerName());
 		s.setUpdDate(new Date());
 		serverDao.save(s);
 	}
 	
 	public void delById(Long id){
 		serverDao.delete(id);
-	}
-	
-	public void deleteByStoreId(String storeId){
-		serverDao.deleteByStoreId(storeId);
-	}
-	public void deleteByServerZoneId(String serverZoneId){
-		serverDao.deleteByServerZoneId(serverZoneId);
-	}
-	
-	public List<String> findServerId(String storeId){
-		return serverDao.findServerId(storeId);
 	}
 	
 	/**
@@ -133,7 +113,6 @@ public class ServerService {
 		User user = accountService.getUser(userId);
 		if (!user.getRoles().equals(User.USER_ROLE_ADMIN)) {
 			filters.put("status", new SearchFilter("status", Operator.EQ,Server.STATUS_VALIDE));
-			filters.put("storeId", new SearchFilter("storeId", Operator.EQ,user.getStoreId()));
 		}
 		filters.put("status", new SearchFilter("status", Operator.EQ,Server.STATUS_VALIDE));
 		Specification<Server> spec = DynamicSpecifications.bySearchFilter(filters.values(), Server.class);

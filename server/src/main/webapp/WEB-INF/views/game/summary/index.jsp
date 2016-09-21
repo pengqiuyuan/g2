@@ -7,7 +7,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>游戏概况</title>
+	<title>首页</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,33 +16,21 @@
 	<div>
 		<div class="page-header">
 			<h4>
-				游戏概况
-				<c:if test="${user.roles != 'admin' ? 'true':'false' }"><!-- 非管理员 -->
-					<span id="storeName">（<huake:getStoreNameTag id="${user.storeId}"></huake:getStoreNameTag>）</span>
-				</c:if>
+				首页
 			</h4>
 		</div>
 		<div class="container-fluid">
 			<form id="inputForm"  Class="form-horizontal" >
 				<div class="control-group">
-					<label class="control-label" for="storeId">项目名称：</label>
+					<label class="control-label" for="serverId">区服：</label>
 					<div class="controls">
-						<select id="storeId" name="search_EQ_storeId">	
+						<select id="serverId" name="search_EQ_serverId">	
 							<option value="">请选择项目</option>
-							<c:if test="${user.roles != 'admin' ? 'true':'false' }"> <!-- 非管理员 -->
-								<c:forEach items="${stores}" var="item" >
-									<option value="${item.name}"  ${user.storeId == item.id ? 'selected' : '' }>
-										${item.name}
-									</option>
-								</c:forEach>
-							</c:if>
-							<c:if test="${user.roles == 'admin' ? 'true':'false' }"> <!-- 管理员 -->
-								<c:forEach items="${stores}" var="item" >
-									<option value="${item.name}"  ${param.search_EQ_storeId == item.name ? 'selected' : '' }>
-										${item.name}
-									</option>
-								</c:forEach>
-							</c:if>
+							<c:forEach items="${servers}" var="item" >
+								<option value="${item.serverName}">
+									${item.serverName}
+								</option>
+							</c:forEach>
 						</select>
 						<span id="error_storeId" class="error" hidden="hidden">项目必须填写</span>
 					</div>

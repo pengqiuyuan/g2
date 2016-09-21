@@ -61,10 +61,6 @@ public class UserService {
 		return userDao.findOne(id);
 	}
 	
-	public List<User> findByStoreId(String storeId){
-		return userDao.findByStoreId(storeId);
-	}
-	
 	/**
 	 * 添加
 	 * @param user
@@ -80,13 +76,11 @@ public class UserService {
 	 */
 	public void update(User user){
 		User user1 = this.findById(user.getId());
-		user1.setStoreId(user.getStoreId());
 		user1.setEmail(user.getEmail());
 		user1.setName(user.getName());
 		user1.setRoles(user.getRoles());
 		user1.setStatus(user.getStatus());
 		user1.setUpdDate(user.getUpdDate());
-		user1.setServerZone(user.getServerZone());
 		userDao.save(user1);
 	}
 	
@@ -104,7 +98,7 @@ public class UserService {
 	 * @param user
 	 */
 	public void realDel(User user){
-		userDao.deleteByStoreId(user.getStoreId().toString());
+		userDao.delete(user.getId());
 	}
 	
 	/**

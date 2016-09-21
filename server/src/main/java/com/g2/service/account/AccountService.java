@@ -76,11 +76,6 @@ public class AccountService {
 		userDao.delete(id);
 
 	}
-	
-	public int count(String storeId,String role) {
-		return userDao.countRole(storeId,role);
-
-	}
 
 	/**
 	 * 判断是否超级管理员.

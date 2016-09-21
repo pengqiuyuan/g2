@@ -30,13 +30,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Function;
-import com.g2.entity.ServerZone;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.function.FunctionService;
-import com.g2.service.serverZone.ServerZoneService;
-import com.g2.service.store.StoreService;
 import com.g2.service.user.UserService;
 import com.google.common.collect.Maps;
 
@@ -82,15 +79,9 @@ public class UsersController extends BaseController{
 	@Autowired
 	private UserService userService;
 	
-	
-	@Autowired
-	private StoreService storeService;
-	
 	@Autowired
 	private FunctionService functionService;
 	
-	@Autowired
-	private ServerZoneService serverZoneService;
 	/**
 	 *  用户管理首页
 	 * @param pageNumber  @param pageSize   显示条数
@@ -123,8 +114,6 @@ public class UsersController extends BaseController{
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
 	public String edit(@RequestParam(value = "id")long id,Model model){
 		User user = userService.findById(id);
-		Long userId = getCurrentUserId();
-		model.addAttribute("stores",storeService.findListByUid(userId));
 		model.addAttribute("user", user);
 		model.addAttribute("id", id);
 		
@@ -144,17 +133,6 @@ public class UsersController extends BaseController{
 			functions.put(string, map);
 		}
 		model.addAttribute("functions",functions);
-		
-		List<ServerZone> serverZones = serverZoneService.findAll();
-		LinkedHashMap<ServerZone,String> mapServerZones = new LinkedHashMap<ServerZone, String>();
-		for (ServerZone serverZone : serverZones) {
-			if(user.getServerZoneList().contains(serverZone.getId().toString())){
-				mapServerZones.put(serverZone, "包含");
-			}else{
-				mapServerZones.put(serverZone, "不包含");
-			}
-		}
-		model.addAttribute("serverZones",mapServerZones);
 		return "/user/edit";
 	}
 	
@@ -175,15 +153,12 @@ public class UsersController extends BaseController{
 	 */
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public String addUser(Model model){
-		Long userId = getCurrentUserId();
-		model.addAttribute("stores",storeService.findListByUid(userId));
 		LinkedHashMap<String, List<Function>> functions = new LinkedHashMap<String, List<Function>>();
 		LinkedList<String> firstName = FunctionController.getFirstNa();
 		for (String string : firstName) {
 			functions.put(string, functionService.findByFirstName(string));
 		}
 		model.addAttribute("functions",functions);
-		model.addAttribute("serverZones",serverZoneService.findAll());
 		return "/user/add";
 	}
 	
@@ -201,7 +176,6 @@ public class UsersController extends BaseController{
 			redirectAttributes.addFlashAttribute("message", "新增用户成功");
 			return "redirect:/manage/user/index";
 		}
-		model.addAttribute("storeId", user.getStoreId());
 		model.addAttribute("message", "用户名重复！");
 	    return "/user/add"; 
 	}
@@ -295,8 +269,6 @@ public class UsersController extends BaseController{
 	@RequestMapping(value = "role", method = RequestMethod.GET)
 	public String role(@RequestParam(value = "id")long id,Model model){
 		User user = userService.findById(id);
-		Long userId = getCurrentUserId();
-		model.addAttribute("stores",storeService.findListByUid(userId));
 		model.addAttribute("user", user);
 		model.addAttribute("id", id);
 		

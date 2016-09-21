@@ -1,8 +1,6 @@
 package com.g2.web.controller.mgr;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -24,14 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
-import com.g2.entity.ServerZone;
-import com.g2.entity.Stores;
 import com.g2.entity.User;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.server.ServerService;
-import com.g2.service.serverZone.ServerZoneService;
-import com.g2.service.store.StoreService;
 import com.google.common.collect.Maps;
 
 @Controller("serverController")
@@ -47,8 +41,6 @@ public class ServerController extends BaseController{
 	static{
 		sortTypes.put("auto","自动");
 		sortTypes.put("id", "Id");
-		sortTypes.put("storeId", "游戏项目");
-		sortTypes.put("serverZoneId", "运营大区");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -61,12 +53,6 @@ public class ServerController extends BaseController{
 	
 	@Autowired
 	private ServerService serverService;
-	
-	@Autowired
-	private StoreService storeService;
-	
-	@Autowired
-	private ServerZoneService serverZoneService;
 	
 	@Autowired
 	private AccountService accountService;
@@ -82,39 +68,11 @@ public class ServerController extends BaseController{
 		logger.info("userId"+userId+"服务器信息设置");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Page<Server> servers = serverService.findServerByCondition(userId,searchParams, pageNumber, pageSize, sortType);
-		for (Server server : servers) {
-			Stores stores = storeService.findById(Long.valueOf(server.getStoreId()));
-			ServerZone serverZone = serverZoneService.findById(Long.valueOf(server.getServerZoneId()));
-			server.setStores(stores);
-			server.setServerZone(serverZone);
-		}
 		model.addAttribute("servers", servers);
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		
-		if (!u.getRoles().equals(User.USER_ROLE_ADMIN)) {
-			List<Stores> stores = new ArrayList<Stores>();
-			Stores sto=  storeService.findById(Long.valueOf(u.getStoreId()));
-			stores.add(sto);
-			
-			List<ServerZone> serverZones = new ArrayList<ServerZone>();
-			List<String> s = u.getServerZoneList();
-			for (String str : s) {
-				ServerZone server = serverZoneService.findById(Long.valueOf(str));
-				serverZones.add(server);
-			}
-			
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}else{
-			List<Stores> stores =  storeService.findList();
-			List<ServerZone> serverZones = serverZoneService.findAll();
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}
-		
-
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/server/index";
 	}
@@ -126,24 +84,6 @@ public class ServerController extends BaseController{
 	public String add(Model model){
 		ShiroUser user = getCurrentUser();
 		User u = accountService.getUser(user.id);
-		if (!u.getRoles().equals(User.USER_ROLE_ADMIN)) {
-			List<Stores> stores = new ArrayList<Stores>();
-			Stores sto=  storeService.findById(Long.valueOf(u.getStoreId()));
-			stores.add(sto);
-			List<ServerZone> serverZones = new ArrayList<ServerZone>();
-			List<String> s = u.getServerZoneList();
-			for (String str : s) {
-				ServerZone server = serverZoneService.findById(Long.valueOf(str));
-				serverZones.add(server);
-			}
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}else{
-			List<Stores> stores =  storeService.findList();
-			List<ServerZone> serverZones = serverZoneService.findAll();
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}	
 		return "/server/add";
 	}
 	
@@ -164,24 +104,6 @@ public class ServerController extends BaseController{
 
 		ShiroUser user = getCurrentUser();
 		User u = accountService.getUser(user.id);
-		if (!u.getRoles().equals(User.USER_ROLE_ADMIN)) {
-			List<Stores> stores = new ArrayList<Stores>();
-			Stores sto=  storeService.findById(Long.valueOf(u.getStoreId()));
-			stores.add(sto);
-			List<ServerZone> serverZones = new ArrayList<ServerZone>();
-			List<String> s = u.getServerZoneList();
-			for (String str : s) {
-				ServerZone server = serverZoneService.findById(Long.valueOf(str));
-				serverZones.add(server);
-			}
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}else{
-			List<Stores> stores =  storeService.findList();
-			List<ServerZone> serverZones = serverZoneService.findAll();
-			model.addAttribute("stores", stores);
-			model.addAttribute("serverZones", serverZones);
-		}	
 		
 		model.addAttribute("st", st);
 		return "/server/edit";
@@ -219,10 +141,6 @@ public class ServerController extends BaseController{
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
 	public String show(@RequestParam(value = "id")long id,Model model){
 		Server server = serverService.findById(id);
-		Stores stores = storeService.findById(Long.valueOf(server.getStoreId()));
-		ServerZone serverZone = serverZoneService.findById(Long.valueOf(server.getServerZoneId()));
-		server.setStores(stores);
-		server.setServerZone(serverZone);
 		model.addAttribute("server", server);
 		return "/server/info";
 	}

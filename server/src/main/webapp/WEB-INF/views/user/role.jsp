@@ -33,18 +33,6 @@
 				<input type="text" name="loginName" value="${user.loginName }" disabled='disabled' class="input-large" disabled="disabled" />
 			</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label" for="storeId">门店:</label>
-			<div class="controls">
-				<select name="storeId" disabled="disabled">
-					<c:forEach items="${stores}" var="item">
-						<option value="${item.id }"
-							${user.storeId == item.id ? "selected":"" }>${item.name }
-						</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>
 		<div class="control-group ">
 			<label class="control-label" for="status">操作员状态:</label>
 			<div class="controls">

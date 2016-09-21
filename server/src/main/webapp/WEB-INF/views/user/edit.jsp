@@ -22,31 +22,6 @@
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/user/update">
 		<input type="hidden" name="id" value="${user.id}">
 		<div class="control-group">
-			<label class="control-label" for="storeId">项目:</label>
-			<div class="controls">
-				<select name="storeId">
-					<option value="">请选择项目</option>
-					<c:forEach items="${stores}" var="item">
-						<option value="${item.id }"
-							${user.storeId == item.id ? "selected":"" }>${item.name }
-						</option>
-					</c:forEach>
-				</select>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="serverZone">运营大区：</label>
-			<div class="controls">
-				<c:forEach items="${serverZones}" var="ite" varStatus="j">
-					<label class="checkbox inline"> 
-						<input type="checkbox" class="box" name="serverZone" value="${ite.key.id}" id="serverZone_${ite.key.id}" ${ite.value=='包含'?'checked' : ''}/> <span>${ite.key.serverName}</span>
-						<c:if test="${(j.index+1)%7 == 0}">
-						</c:if>
-					</label>
-				</c:forEach>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label" for="name">用户名:</label>
 			<div class="controls">
 				<input type="text" name="name" class="input-large " value="${user.name }" />
@@ -103,12 +78,6 @@
 		$(function() {
 			$("#inputForm").validate({
 				rules : {
-					storeId : {
-						required : true
-					},
-					serverZone : {
-						required : true
-					},
 					name : {
 						required : true,
 						minlength : 2,
@@ -132,12 +101,6 @@
 					}
 				},
 				messages : {
-					storeId : {
-						required : "项目必须填写"
-					},
-					serverZone : {
-						required : "运营大区必须填写"
-					},
 					name : {
 						required : "必须填写",
 						minlength : "用户名长度2-10位"
