@@ -94,18 +94,102 @@
 			<div class="row-fluid">
 				<div class="row-fluid">
 						<div class="tabbable span12">
-							<p><code>近日概况</code></p>
+							<p><code>实时数据</code></p>
 							<table class="table table-striped table-bordered table-condensed" id="table">
 								<thead>
 									<tr>
 										<th title="编号" width="120px">编号</th>
-										<th title="指标">指标</th>
-										<th title="新增用户">新增用户</th>
-										<th title="活跃用户">活跃用户</th>
-										<th title="新用户占比">新用户占比</th>
-										<th title="启动(次数 | 人均)">启动(次数 | 人均)</th>
-										<th title="平均使用时长">平均使用时长</th>
-										<th title="日活跃率">日活跃率</th>
+										<th title="实时新增数据">实时新增数据</th>
+										<th title="实时活跃用户">实时活跃用户</th>
+										<th title="实时付费用户">实时付费用户</th>
+										<th title="实时充值额">实时充值额</th>
+										<th title="实时付费率">实时付费率</th>
+										<th title="实时ARUP">实时ARUP</th>
+										<th title="实时ARPPU">实时ARPPU</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+									<tr id="">
+										<td id="iDictionary">
+											<div class="btn-group">
+												<a class="btn" href="#">#1</a> 
+												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+												<ul class="dropdown-menu">
+													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
+													<li class="divider"></li>
+													<li><a href="#">sample</a></li>
+												</ul>
+											</div>
+										</td>
+										<td>今日</td>
+										<td>6158</td>
+										<td>83033</td>
+										<td>7.4%</td>
+										<td>111319 | 1.3</td>
+										<td>01:28</td>
+										<td>- -</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>	
+				<div class="row-fluid">
+						<div class="tabbable span12">
+							<p><code>昨日数据</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="昨日新增数据">昨日新增数据</th>
+										<th title="昨日活跃用户">昨日活跃用户</th>
+										<th title="昨日付费用户">昨日付费用户</th>
+										<th title="昨日充值额">昨日充值额</th>
+										<th title="昨日付费率">昨日付费率</th>
+										<th title="昨日ARUP">昨日ARUP</th>
+										<th title="昨日ARPPU">昨日ARPPU</th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+									<tr id="">
+										<td id="iDictionary">
+											<div class="btn-group">
+												<a class="btn" href="#">#1</a> 
+												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+												<ul class="dropdown-menu">
+													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
+													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
+													<li class="divider"></li>
+													<li><a href="#">sample</a></li>
+												</ul>
+											</div>
+										</td>
+										<td>今日</td>
+										<td>6158</td>
+										<td>83033</td>
+										<td>7.4%</td>
+										<td>111319 | 1.3</td>
+										<td>01:28</td>
+										<td>- -</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>						
+				<div class="row-fluid">
+						<div class="tabbable span12">
+							<p><code>累计数据</code></p>
+							<table class="table table-striped table-bordered table-condensed" id="table">
+								<thead>
+									<tr>
+										<th title="编号" width="120px">编号</th>
+										<th title="累计新增数据">累计新增数据</th>
+										<th title="累计活跃用户">累计活跃用户</th>
+										<th title="累计付费用户">累计付费用户</th>
+										<th title="累计充值额">累计充值额</th>
+										<th title="累计付费率">累计付费率</th>
+										<th title="累计ARUP">累计ARUP</th>
+										<th title="累计ARPPU">累计ARPPU</th>
 									</tr>
 								</thead>
 								<tbody id="tbody">
