@@ -13,156 +13,97 @@
 
 			<div class="nav-collapse">
 				<ul class="nav navbar-nav">
+					<shiro:hasAnyRoles name="admin,summary">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">首页 <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<shiro:hasAnyRoles name="admin,summary">
+									<li><a href="${ctx}/manage/game/summary/index">首页</a></li>
+								</shiro:hasAnyRoles>
+								<li class="divider"></li>
+								<li><a href="#">sample</a></li>
+							</ul>
+						</li>
+					</shiro:hasAnyRoles>
 					<shiro:hasAnyRoles name="admin,systemUser,systemStore,systemWatcher">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">系统管理 <b class="caret"></b></a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">后台设置 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<shiro:hasAnyRoles name="admin,systemUser">
-									<li><a href="${ctx}/manage/user/index">用户管理</a></li>
+									<li><a href="${ctx}/manage/user/index">账号管理</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,systemStore">
-									<li><a href="${ctx}/manage/store/index">游戏项目</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin">
-									<li><a href="${ctx}/manage/serverZone/index">运营大区</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin">
-									<li><a href="${ctx}/manage/platForm/index">渠道管理</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin">
-									<li><a href="${ctx}/manage/server/index">服务器信息设置</a></li>
+								<shiro:hasAnyRoles name="admin,systemLogger">
+									<li><a href="${ctx}/manage/Logger/index">操作记录</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin">
 									<li><a href="${ctx}/manage/functions/index">权限管理</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,systemWatcher">
-									<li><a href="${ctx}/manage/watcher/index">监控报警</a></li>
+								<li class="divider"></li>
+								<li><a href="#">sample</a></li>
+							</ul>
+						</li>
+					</shiro:hasAnyRoles>
+					<shiro:hasAnyRoles name="admin,functionGiftCode,functionLogin,functionEmail,functionBroadCast,functionBlackList">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">功能管理 <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<shiro:hasAnyRoles name="admin,functionGiftCode">
+									<li><a href="${ctx}/manage/game/functionGiftCode/index">礼品码</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,functionLogin">
+									<li><a href="${ctx}/manage/game/functionLogin/index">登录公告</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,functionEmail">
+									<li><a href="${ctx}/manage/game/functionEmail/index">邮件管理</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,functionBroadCast">
+									<li><a href="${ctx}/manage/game/functionBroadCast/index">系统广播</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,functionBlackList">
+									<li><a href="${ctx}/manage/game/functionBlackList/index">黑名单管理</a></li>
 								</shiro:hasAnyRoles>
 								<li class="divider"></li>
 								<li><a href="#">sample</a></li>
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,summary">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">游戏概况 <b class="caret"></b></a>
+					<shiro:hasAnyRoles name="admin,monitorServer,monitorGameConfig,monitorIssues">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">信息监控 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,summary">
-									<li><a href="${ctx}/manage/game/summary/index">游戏概况</a></li>
+								<shiro:hasAnyRoles name="admin,monitorServer">
+									<li><a href="${ctx}/manage/game/monitorServer/index">服务器状态</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,monitorGameConfig">
+									<li><a href="${ctx}/manage/game/monitorGameConfig/index">游戏配置</a></li>
+								</shiro:hasAnyRoles>
+								<shiro:hasAnyRoles name="admin,monitorIssues">
+									<li><a href="${ctx}/manage/game/monitorIssues/index">意见反馈</a></li>
 								</shiro:hasAnyRoles>
 								<li class="divider"></li>
 								<li><a href="#">sample</a></li>
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,playerNew,playActive,playerRetention,playerConvertion,playerChurned,playerBehavior,playerDivice">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">游戏玩家 <b class="caret"></b></a>
+					<shiro:hasAnyRoles name="admin,dataBasic,dataRetention,,dataRank,dataLevel,dataPayPoint,dataDiamond,dataMall">
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">数据查询 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,playerNew">
-									<li><a href="${ctx}/manage/game/playerNew/index">新增玩家</a></li>
+								<shiro:hasAnyRoles name="admin,dataBasic">
+									<li><a href="${ctx}/manage/game/dataBasic/index">基本指标</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playActive">
-									<li><a href="${ctx}/manage/game/playerActive/index">活跃玩家</a></li>
+								<shiro:hasAnyRoles name="admin,dataRetention">
+									<li><a href="${ctx}/manage/game/dataRetention/index">留存率</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playerRetention">
-									<li><a href="${ctx}/manage/game/playerRetention/index">玩家留存</a></li>
+								<shiro:hasAnyRoles name="admin,dataRank">
+									<li><a href="${ctx}/manage/game/dataRank/index">等级分布</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playerConvertion">
-									<li><a href="${ctx}/manage/game/playerConvertion/index">付费转换</a></li>
+								<shiro:hasAnyRoles name="admin,dataLevel">
+									<li><a href="${ctx}/manage/game/dataLevel/index">关卡分布</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playerChurned">
-									<li><a href="${ctx}/manage/game/playerChurned/index">玩家流失</a></li>
+								<shiro:hasAnyRoles name="admin,dataPayPoint">
+									<li><a href="${ctx}/manage/game/dataPayPoint/index">付费点</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playerBehavior">
-									<li><a href="${ctx}/manage/game/playerBehavior/index">玩家习惯</a></li>
+								<shiro:hasAnyRoles name="admin,dataDiamond">
+									<li><a href="${ctx}/manage/game/dataDiamond/index">钻石消费</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,playerDivice">
-									<li><a href="${ctx}/manage/game/playerDivice/index">设备相关</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,concurrent">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">在线分析 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,concurrent">
-									<li><a href="${ctx}/manage/game/concurrent/index">在线分析</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,levelDetail,levelDistribute,levelSchedule">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">等级分析 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,levelDetail">
-									<li><a href="${ctx}/manage/game/levelDetail/index">等级详情</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,levelDistribute">
-									<li><a href="${ctx}/manage/game/levelDistribute/index">等级分布</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,levelSchedule">
-									<li><a href="${ctx}/manage/game/levelSchedule/index">新玩家进度</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,tasks">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">任务分析 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,tasks">
-									<li><a href="${ctx}/manage/game/tasks/index">任务和关卡</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,revenueIncomeDate,revenuePayPermeate,revenueNewPlayerValue,revenuePayHabit">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">收入分析 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,revenueIncomeData">
-									<li><a href="${ctx}/manage/game/revenueIncomeData/index">收入数据</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,revenuePayPermeate">
-									<li><a href="${ctx}/manage/game/revenuePayPermeate/index">付费渗透</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,revenueNewPlayerValue">
-									<li><a href="${ctx}/manage/game/revenueNewPlayerValue/index">新玩家价值</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,revenuePayHabit">
-									<li><a href="${ctx}/manage/game/revenuePayHabit/index">付费习惯</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,virtualEconomyVirtualCoin,virtualEconomyConsumeAnalysis,virtualEconomyConsumePoint">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">虚拟消费 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,virtualEconomyVirtualCoin">
-									<li><a href="${ctx}/manage/game/virtualEconomyVirtualCoin/index">虚拟币</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,virtualEconomyConsumeAnalysis">
-									<li><a href="${ctx}/manage/game/virtualEconomyConsumeAnalysis/index">消费喜好</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,virtualEconomyConsumePoint">
-									<li><a href="${ctx}/manage/game/virtualEconomyConsumePoint/index">消费点</a></li>
-								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
-							</ul>
-						</li>
-					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,whaleWhaleUser">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">鲸鱼用户 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,whaleWhaleUser">
-									<li><a href="${ctx}/manage/game/whaleWhaleUser/index">鲸鱼用户</a></li>
+								<shiro:hasAnyRoles name="admin,dataMall">
+									<li><a href="${ctx}/manage/game/dataMall/index">商城消费</a></li>
 								</shiro:hasAnyRoles>
 								<li class="divider"></li>
 								<li><a href="#">sample</a></li>

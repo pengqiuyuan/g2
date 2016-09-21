@@ -51,15 +51,11 @@ public class FunctionController extends BaseController{
 	private static LinkedList<String> firstNa = new LinkedList<String>();
 	
 	static {
-		firstNa.add("系统管理");
-		firstNa.add("游戏概况");
-		firstNa.add("游戏玩家");
-		firstNa.add("在线分析");
-		firstNa.add("等级分析");
-		firstNa.add("任务分析");
-		firstNa.add("收入分析");
-		firstNa.add("虚拟消费");
-		firstNa.add("鲸鱼用户");
+		firstNa.add("首页");
+		firstNa.add("后台设置");
+		firstNa.add("功能控制");
+		firstNa.add("信息监控");
+		firstNa.add("数据查询");
 	}
 	
 	static {
@@ -164,6 +160,38 @@ public class FunctionController extends BaseController{
 	public Map<String,Object> delFunction(@RequestParam(value = "id")long id) throws Exception{
 		Map<String,Object> map = new HashMap<String, Object>();
 		functionService.delById(id);
+		map.put("success", "true");
+		return map;
+	}
+	
+	/**
+	 * 冻结操作 @param oid 用户id
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "lock", method = RequestMethod.GET)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public Map<String,Object> lockFunction(@RequestParam(value = "id")long id) throws Exception{
+		Map<String,Object> map = new HashMap<String, Object>();
+		Function function = functionService.findById(id);
+		function.setStatus(Function.STATUS_INVALIDE);
+		functionService.update(function);
+		map.put("success", "true");
+		return map;
+	}
+	
+	/**
+	 * 激活操作 @param oid 用户id
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "unlock", method = RequestMethod.GET)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public Map<String,Object> unlockFunction(@RequestParam(value = "id")long id) throws Exception{
+		Map<String,Object> map = new HashMap<String, Object>();
+		Function function = functionService.findById(id);
+		function.setStatus(Function.STATUS_VALIDE);
+		functionService.update(function);
 		map.put("success", "true");
 		return map;
 	}

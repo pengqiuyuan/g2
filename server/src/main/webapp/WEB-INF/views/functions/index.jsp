@@ -30,12 +30,15 @@
 						<option  value="${first}" ${param.search_EQ_firstName == first ? "selected":"" }>${first}</option>
 					</c:forEach>
 				</select>
+				<!-- 
 				<label>状态：</label> 
 				<select name="search_EQ_status">
 					<option value="">---------请选择---------</option>
 					<option value="1" ${param.search_EQ_status == '1' ? 'selected' : '' }>正常</option>
 					<option value="0" ${param.search_EQ_status == '0' ? 'selected' : '' }>冻结</option>
-				</select> <input type="submit" class="btn btn-default" value="查 找" />
+				</select> 
+				-->
+				<input type="submit" class="btn btn-default" value="查 找" />
 				<tags:sort />
 			</form>
 		</div>
@@ -58,13 +61,17 @@
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 									<span class="caret"></span>
 								</a>
+																	<!-- 
 								<ul class="dropdown-menu">
+
 									<li><a href="<%=request.getContextPath()%>/manage/functions/edit?id=${item.id}"><i class="icon-edit"></i>修改</a></li>
-									<li><a href="javascript:void(0);" rel="${item.id}" class="del"><i class="icon-th"></i>冻结</a></li>
+									<li><a href="javascript:void(0);" rel="${item.id}" class="lock"><i class="icon-th"></i>冻结</a></li>
 									<li><a href="javascript:void(0);" rel="${item.id}" class="unlock"><i class="icon-th"></i>激活</a></li>
 									<li><a href="javascript:void(0);" rel="${item.id}" class="userdel"><i class="icon-th"></i>删除</a></li>
 									<li><a href="<%=request.getContextPath()%>/manage/functions/resetPwd?id=${item.id}"><i class="icon-edit"></i>重置密码</a></li>
+
 								</ul>
+																	 -->
 							</div>
 						</td>
 						<td>${item.firstName}</td>
@@ -82,11 +89,27 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".del").click(function(){
+			$(".lock").click(function(){
 				var id = $(this).attr("rel");
 					$.ajax({
-						url: '<%=request.getContextPath()%>/manage/functions/del?id=' + id, 
-						type: 'DELETE',
+						url: '<%=request.getContextPath()%>/manage/functions/lock?id=' + id, 
+						type: 'GET',
+						contentType: "application/json;charset=UTF-8",
+						dataType: 'json',
+						success: function(data){
+							window.location.href = window.location.href;
+						},error:function(xhr){
+							alert('错误了，请重试');
+						}
+					});
+				
+			});
+			
+			$(".unlock").click(function(){
+				var id = $(this).attr("rel");
+					$.ajax({
+						url: '<%=request.getContextPath()%>/manage/functions/unlock?id=' + id, 
+						type: 'GET',
 						contentType: "application/json;charset=UTF-8",
 						dataType: 'json',
 						success: function(data){
