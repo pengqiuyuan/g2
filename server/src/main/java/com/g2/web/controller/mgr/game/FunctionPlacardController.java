@@ -12,6 +12,9 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -29,27 +33,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
 import com.g2.entity.User;
-import com.g2.entity.game.DataPayPoint;
+import com.g2.entity.game.FunctionPlacard;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
 import com.g2.service.game.DataPayPointService;
+import com.g2.service.game.FunctionPlacardService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
 import com.g2.web.controller.mgr.BaseController;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 
 /**
- * 付费点管理的controller
+ *  登录公告管理的controller
  *
  */
-@Controller("dataPayPointController")
-@RequestMapping(value="/manage/game/dataPayPoint")
-public class DataPayPointController extends BaseController{
+@Controller("functionPlacardController")
+@RequestMapping(value="/manage/game/functionPlacard")
+public class FunctionPlacardController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(DataPayPointController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FunctionPlacardController.class);
 	
 	private static final String PAGE_SIZE = "2";
 	
@@ -60,8 +69,6 @@ public class DataPayPointController extends BaseController{
 
 	static {
 		sortTypes.put("auto", "编号");
-		sortTypes.put("buyCount", "购买次数");
-		sortTypes.put("amount", "总金额");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -69,7 +76,7 @@ public class DataPayPointController extends BaseController{
 	}
 
 	public static void setSortTypes(Map<String, String> sortTypes) {
-		DataPayPointController.sortTypes = sortTypes;
+		FunctionPlacardController.sortTypes = sortTypes;
 	}
 
 	@Override
@@ -86,7 +93,7 @@ public class DataPayPointController extends BaseController{
 	private ServerService serverService;
 	
 	@Autowired
-	private DataPayPointService dataPayPointService;
+	private FunctionPlacardService functionPlacardService;
 	
 	/**
 	 * @throws Exception 
@@ -96,36 +103,95 @@ public class DataPayPointController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
-		logger.debug("付费点");
+		logger.debug("登录公告");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		Long userId = dataPayPointService.getCurrentUserId();
+		Long userId = functionPlacardService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
-		List<DataPayPoint> dataPayPoints = new ArrayList<>();
+		List<FunctionPlacard> functionPlacards = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
-			DataPayPoint p = new DataPayPoint();
-			p.setPayTotal(String.valueOf(100*i));
-			p.setPayTimes(String.valueOf(30*i));
-			p.setPoint("钻石＊" + String.valueOf(10*i));
-			p.setPrice(String.valueOf(60*i));
-			dataPayPoints.add(p);
+			FunctionPlacard f = new FunctionPlacard();
+			f.setId(i);
+			f.setCrDate(new Date());
+			f.setTitle("test " +i);
+			f.setText("啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦 " +i);
+			functionPlacards.add(f);
 		}
 		
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<DataPayPoint> ps = new PageImpl<DataPayPoint>(dataPayPoints, pageRequest, dataPayPoints.size());
+		PageImpl<FunctionPlacard> ps = new PageImpl<FunctionPlacard>(functionPlacards, pageRequest, functionPlacards.size());
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
 		
 		model.addAttribute("user", user);
-		model.addAttribute("dateFrom", dataPayPointService.thirtyDayAgoFrom());
-		model.addAttribute("dateTo", dataPayPointService.nowDate());
-		model.addAttribute("servers", serverService.findAll());
-		model.addAttribute("payPoints", ps);
+		model.addAttribute("functionPlacards", ps);
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/game/datapaypoint/index";
+		return "/game/functionplacard/index";
+	}
+	
+	
+	/**
+	 * 新增页面
+	 */
+	@RequestMapping(value = "/add" ,method=RequestMethod.GET)
+	public String add(Model model){
+		Long userId = functionPlacardService.getCurrentUserId();
+		User user = accountService.getUser(userId);
+		
+		return "/game/functionplacard/add";
+	}
+	
+	/**
+	 * 操作员编辑页	
+	 */
+	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	public String edit(@RequestParam(value = "id")long id,Model model){
+		FunctionPlacard functionPlacard = functionPlacardService.findById(id);
+		model.addAttribute("functionPlacard", functionPlacard);
+		model.addAttribute("id", id);
+		return "/game/functionplacard/edit";
+	}
+	
+	/**
+	 * 新增操作	 
+	 */
+	@RequestMapping(value = "save", method = RequestMethod.POST)
+	public String saveStores(FunctionPlacard functionPlacard,RedirectAttributes redirectAttributes){
+		functionPlacardService.save(functionPlacard);
+		redirectAttributes.addFlashAttribute("message", "新增项目成功");
+		//String message = "新增:" +functionPlacard.toString();
+		//LogService.log(getCurrentUserName(), message, Log.TYPE_STORE);
+		return "redirect:/game/functionplacard/index";
+	}
+	
+	/**
+	 * 修改
+	 */
+	@RequestMapping(value = "/update",method=RequestMethod.POST)
+	public String update(FunctionPlacard functionPlacard,ServletRequest request,RedirectAttributes redirectAttributes){
+		System.out.println(functionPlacard.getId() +"  " + functionPlacard.getTitle() + " "+ functionPlacard.getText() );
+
+    	redirectAttributes.addFlashAttribute("message", "服务器列表为空,保存失败");
+    	return "redirect:/game/functionplacard/index";
+	}
+	
+	/**
+	 * 删除操作	 
+	 * @param oid 用户id
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "del", method = RequestMethod.DELETE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public Map<String,Object> del(@RequestParam(value = "id")Long id
+			) throws Exception{
+		 Map<String,Object> map = new HashMap<String, Object>();
+		 
+		 map.put("message", "ok");
+		 return map;
 	}
 	
 	/**
@@ -160,11 +226,9 @@ public class DataPayPointController extends BaseController{
 	
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;
-		if ("buyCount".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "buyCount");
-		} else if ("amount".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "amount");
-		}
+		if ("auto".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "id");
+		} 
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 	

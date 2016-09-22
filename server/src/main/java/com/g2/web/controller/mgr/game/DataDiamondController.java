@@ -36,6 +36,7 @@ import com.g2.entity.User;
 import com.g2.entity.game.DataDiamond;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
+import com.g2.service.game.DataDiamondService;
 import com.g2.service.game.DataPayPointService;
 import com.g2.service.server.ServerService;
 import com.g2.web.controller.mgr.BaseController;
@@ -87,7 +88,7 @@ public class DataDiamondController extends BaseController{
 	private ServerService serverService;
 	
 	@Autowired
-	private DataPayPointService dataPayPointService;
+	private DataDiamondService dataDiamondService;
 	
 	/**
 	 * @throws Exception 
@@ -99,7 +100,7 @@ public class DataDiamondController extends BaseController{
 			ServletRequest request) throws Exception{
 		logger.debug("钻石消费分布");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		Long userId = dataPayPointService.getCurrentUserId();
+		Long userId = dataDiamondService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
 		List<DataDiamond> dataDiamonds = new ArrayList<>();
@@ -119,8 +120,8 @@ public class DataDiamondController extends BaseController{
 		model.addAttribute("sortTypes", sortTypes);
 		
 		model.addAttribute("user", user);
-		model.addAttribute("dateFrom", dataPayPointService.thirtyDayAgoFrom());
-		model.addAttribute("dateTo", dataPayPointService.nowDate());
+		model.addAttribute("dateFrom", dataDiamondService.thirtyDayAgoFrom());
+		model.addAttribute("dateTo", dataDiamondService.nowDate());
 		model.addAttribute("servers", serverService.findAll());
 		model.addAttribute("dataDiamonds", ps);
 		
@@ -161,12 +162,9 @@ public class DataDiamondController extends BaseController{
 	
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;
-		System.out.println("111"  );
 		if ("buyCount".equals(sortType)) {
-			System.out.println("2222" +  sortType);
 			sort = new Sort(Direction.DESC, "buyCount");
 		} else if ("amount".equals(sortType)) {
-			System.out.println("3333" +  sortType);
 			sort = new Sort(Direction.DESC, "amount");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
