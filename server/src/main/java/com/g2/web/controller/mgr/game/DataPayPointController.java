@@ -51,7 +51,7 @@ public class DataPayPointController extends BaseController{
 
 	private static final Logger logger = LoggerFactory.getLogger(DataPayPointController.class);
 	
-	private static final String PAGE_SIZE = "15";
+	private static final String PAGE_SIZE = "2";
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	Calendar calendar = new GregorianCalendar(); 
@@ -59,6 +59,7 @@ public class DataPayPointController extends BaseController{
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 
 	static {
+		sortTypes.put("auto", "编号");
 		sortTypes.put("buyCount", "购买次数");
 		sortTypes.put("amount", "总金额");
 	}
@@ -101,21 +102,17 @@ public class DataPayPointController extends BaseController{
 		User user = accountService.getUser(userId);
 
 		List<PayPoint> payPoints = new ArrayList<>();
-		PayPoint p1 = new PayPoint();
-		p1.setAmount("6000");
-		p1.setBuyCount("20");
-		p1.setBuyItem("钻石＊60");
-		p1.setPrice("6");
-		PayPoint p2 = new PayPoint();
-		p2.setAmount("2000");
-		p2.setBuyCount("30");
-		p2.setBuyItem("钻石＊600");
-		p2.setPrice("60");
-		payPoints.add(p1);
-		payPoints.add(p2);
+		for (int i = 1; i <= 10; i++) {
+			PayPoint p = new PayPoint();
+			p.setAmount(String.valueOf(100*i));
+			p.setBuyCount(String.valueOf(30*i));
+			p.setBuyItem("钻石＊" + String.valueOf(10*i));
+			p.setPrice(String.valueOf(60*i));
+			payPoints.add(p);
+		}
 		
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<PayPoint> ps = new PageImpl<PayPoint>(payPoints, pageRequest, Long.valueOf("10"));
+		PageImpl<PayPoint> ps = new PageImpl<PayPoint>(payPoints, pageRequest, payPoints.size());
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
@@ -163,9 +160,12 @@ public class DataPayPointController extends BaseController{
 	
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;
+		System.out.println("111"  );
 		if ("buyCount".equals(sortType)) {
+			System.out.println("2222" +  sortType);
 			sort = new Sort(Direction.DESC, "buyCount");
 		} else if ("amount".equals(sortType)) {
+			System.out.println("3333" +  sortType);
 			sort = new Sort(Direction.DESC, "amount");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);

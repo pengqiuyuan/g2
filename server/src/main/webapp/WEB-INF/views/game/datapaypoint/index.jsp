@@ -8,7 +8,10 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-<title>消费点</title>
+	<title>付费点分布</title>
+    <!-- 引入 G2 文件 -->
+    <script src="${ctx}/static/g2/index.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
 </head>
 <body>
 	<div>
@@ -62,6 +65,14 @@
 
 				</div>
 				<div class="control-group">
+					<label class="control-label"></label> 
+					<div class="controls">
+						<a href="#" class="btn btn-success" id="yesterday">昨日</a> 
+						<a href="#" class="btn btn-success" id="sevenDayAgo">近7日</a> 
+						<a href="#" class="btn btn-success" id="thirtyDayAgo">近30日</a>
+					</div>
+				</div>
+				<div class="control-group">
 					<label class="control-label"></label>
 					<div class="controls">
 						<button class="btn btn-primary" type="submit">
@@ -70,8 +81,7 @@
 						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
-				<tags:sort />
-			</form>			
+			</form>
 		</div>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
@@ -104,9 +114,99 @@
 		</table>
 		<tags:pagination page="${payPoints}" paginationSize="5" />
 	</div>
+	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$('#datetimepickerStart').datetimepicker({
+			format : 'yyyy-MM-dd',
+			language : 'en',
+			pickDate : true,
+			pickTime : true,
+			hourStep : 1,
+			minuteStep : 15,
+			secondStep : 30,
+			inputMask : true
+		});
+		$('#datetimepickerEnd').datetimepicker({
+			format : 'yyyy-MM-dd',
+			language : 'en',
+			pickDate : true,
+			pickTime : true,
+			hourStep : 1,
+			minuteStep : 15,
+			secondStep : 30,
+			inputMask : true
+		});
+
+		$(function() {
+			$("#inputForm").validate({
+				rules:{
+					"search_EQ_serverId":{
+						required:true
+					},
+					search_EQ_dateFrom:{
+						required:true
+					},
+					search_EQ_dateTo:{
+						required:true
+					}
+				},messages:{
+					"search_EQ_serverId":{
+						required:"查询区服必须填写"
+					},
+					search_EQ_dateFrom:{
+						required:"起始时间必须填写"
+					},
+					search_EQ_dateTo:{
+						required:"结束时间必须填写"
+					}
+				}
+			});
 			
+			$("#yesterday").click(function() {
+				$.ajax({
+					url : '<%=request.getContextPath()%>/manage/game/summary/getDate',
+					type: 'GET',
+					contentType: "application/json;charset=UTF-8",		
+					dataType: 'text',
+					success: function(data){
+						var parsedJson = $.parseJSON(data);
+						$("#dateFrom").val(parsedJson.yesterday);
+						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
+					}//回调看看是否有出错
+				});
+			});
+			$("#sevenDayAgo").click(function(){
+				$.ajax({                                               
+					url: '<%=request.getContextPath()%>/manage/game/summary/getDate',
+					type: 'GET',
+					contentType: "application/json;charset=UTF-8",		
+					dataType: 'text',
+					success: function(data){
+						var parsedJson = $.parseJSON(data);
+						$("#dateFrom").val(parsedJson.sevenDayAgo);
+						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
+					}//回调看看是否有出错
+				});
+			});
+			$("#thirtyDayAgo").click(function(){
+				$.ajax({                                               
+					url: '<%=request.getContextPath()%>/manage/game/summary/getDate',
+					type: 'GET',
+					contentType: "application/json;charset=UTF-8",		
+					dataType: 'text',
+					success: function(data){
+						var parsedJson = $.parseJSON(data);
+						$("#dateFrom").val(parsedJson.thirtyDayAgo);
+						$("#dateTo").val(parsedJson.nowDate);
+					},error:function(xhr){
+						window.location.href = window.location.href;
+					}//回调看看是否有出错
+				});
+			});		
 		});
 	</script>
 </body>

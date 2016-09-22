@@ -160,7 +160,7 @@
 		$(function() {
 			$("#inputForm").validate({
 				rules:{
-					search_EQ_storeId:{
+					search_EQ_serverId:{
 						required:true
 					},
 					search_EQ_dateFrom:{
@@ -170,8 +170,8 @@
 						required:true
 					}
 				},messages:{
-					search_EQ_storeId:{
-						required:"查询项目必须填写"
+					search_EQ_serverId:{
+						required:"查询区服必须填写"
 					},
 					search_EQ_dateFrom:{
 						required:"起始时间必须填写"

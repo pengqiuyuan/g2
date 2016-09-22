@@ -1,6 +1,11 @@
 package com.g2.entity.game;
 
-public class PayPoint{
+import javax.persistence.Entity;
+
+import com.g2.entity.IdEntity;
+
+@Entity
+public class PayPoint extends IdEntity{
 	
 	public String buyItem;
 	
