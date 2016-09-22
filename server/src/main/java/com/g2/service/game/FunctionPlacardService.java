@@ -47,7 +47,10 @@ public class FunctionPlacardService {
 	}
 	
 	public FunctionPlacard findById(long id){
-		return new FunctionPlacard();
+		FunctionPlacard functionPlacard = new FunctionPlacard();
+		functionPlacard.setTitle("我是要修改的title");
+		functionPlacard.setText("我是要修改的text");
+		return functionPlacard;
 	}
 	
 	public void save(FunctionPlacard functionPlacard){

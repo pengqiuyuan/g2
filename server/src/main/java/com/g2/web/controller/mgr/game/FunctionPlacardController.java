@@ -164,7 +164,7 @@ public class FunctionPlacardController extends BaseController{
 		redirectAttributes.addFlashAttribute("message", "新增项目成功");
 		//String message = "新增:" +functionPlacard.toString();
 		//LogService.log(getCurrentUserName(), message, Log.TYPE_STORE);
-		return "redirect:/game/functionplacard/index";
+		return "redirect:/manage/game/functionPlacard/index";
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class FunctionPlacardController extends BaseController{
 		System.out.println(functionPlacard.getId() +"  " + functionPlacard.getTitle() + " "+ functionPlacard.getText() );
 
     	redirectAttributes.addFlashAttribute("message", "服务器列表为空,保存失败");
-    	return "redirect:/game/functionplacard/index";
+    	return "redirect:/manage/game/functionPlacard/index";
 	}
 	
 	/**

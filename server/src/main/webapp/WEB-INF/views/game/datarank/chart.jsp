@@ -228,8 +228,8 @@
 	var Stat = G2.Stat;
 	var chart = new G2.Chart({
 		id : 'chart_a1',
-		width : 1000,
-		height : 300
+		width : 1800,
+		height : 400
 	});
 	chart.source(chart_a1);
 	chart.col('day', {

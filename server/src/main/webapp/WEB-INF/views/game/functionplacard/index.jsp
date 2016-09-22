@@ -31,6 +31,7 @@
 							<th title="添加时间">添加时间</th>
 							<th title="标题">标题</th>
 							<th title="内容">内容</th>
+							<th title="操作">操作</th>
 						</tr>
 					</thead>
 					<tbody id="tbody">
@@ -44,7 +45,7 @@
 										</a>
 									</div>
 								</td>
-								<td>${item.crDate}</td>
+								<td><fmt:formatDate value="${item.crDate}" pattern="yyyy/MM/dd" /></td>
 								<td>${item.title}</td>
 								<td><a href="#"  class="intro" title="${item.text}" >
 								<c:choose> 
@@ -59,7 +60,7 @@
 			   					</td>
 			   					<td>
 									<div class="action-buttons">
-										<a class="exportCode btn table-actions" href="${ctx}/manage/game/functionPlacard/edit" ><i class="icon-ok"></i>修改</a>
+										<a class="exportCode btn table-actions" href="${ctx}/manage/game/functionPlacard/edit?id=${item.id}" ><i class="icon-ok"></i>修改</a>
 									    <a class="exportCode btn table-actions" onclick="delPlacard('${item.id}')"><i class="icon-remove"></i>删除</a>
 									</div>
 								</td>
@@ -81,7 +82,7 @@
 				if(confirm("该操作会删除。。。。！"))
 				    {
 							$.ajax({
-								url: '<%=request.getContextPath()%>/manage/game/functionplacard/del?id='+id, 
+								url: '<%=request.getContextPath()%>/manage/game/functionPlacard/del?id='+id, 
 								type: 'DELETE',
 								contentType: "application/json;charset=UTF-8",
 								dataType: 'json',

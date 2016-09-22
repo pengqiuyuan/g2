@@ -20,8 +20,9 @@
 </head>
 
 <body>
+	<script type="text/javascript" src="${ctx}/static/ckeditor/ckeditor.js"></script>
 	<div class="page-header">
-   		<h2>新增登录公告</h2>
+   		<h4>新增登录公告</h4>
  	</div>
  	<c:if test="${not empty message}">
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>
@@ -37,7 +38,7 @@
 			<div class="control-group ">
 				<label class="control-label" for="text">公告内容（1000字）：</label>
 				<div class="controls">
-					<textarea path="text" name="text" cssClass="input-xlarge" value="" style="height: 200px;width: 800px" /></textarea>
+					<textarea path="text" id="text" name="text" cssClass="input-xlarge" value="" cols="100" rows="20" /></textarea>
 				</div>
 			</div>
 			<div class="form-actions">
@@ -46,7 +47,9 @@
 			</div>
 	</form>
 <script type="text/javascript">
+	CKEDITOR.replace('text');	
 	$(function(){
+		//CKEDITOR.instances.contents.setData('')
 		$("#inputForm").validate({
 			rules:{
 				title:{
