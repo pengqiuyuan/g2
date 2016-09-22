@@ -8,7 +8,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>付费点分布</title>
+	<title>钻石消费分布</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,7 +16,7 @@
 <body>
 	<div>
 		<div class="page-header">
-			<h4>消费点</h4>
+			<h4>钻石消费分布</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">
@@ -95,7 +95,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${payPoints.content}" var="item" varStatus="s">
+				<c:forEach items="${dataDiamonds.content}" var="item" varStatus="s">
 					<tr>
 						<td>
 							<div class="btn-group">
@@ -113,7 +113,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<tags:pagination page="${payPoints}" paginationSize="5" />
+		<tags:pagination page="${dataDiamonds}" paginationSize="5" />
 	</div>
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript">

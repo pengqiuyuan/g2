@@ -33,7 +33,7 @@ import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
 import com.g2.entity.User;
-import com.g2.entity.game.DataPayPoint;
+import com.g2.entity.game.DataDiamond;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
 import com.g2.service.game.DataPayPointService;
@@ -42,14 +42,14 @@ import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
 /**
- * 付费点管理的controller
+ * 钻石消费分布管理的controller
  *
  */
-@Controller("dataPayPointController")
-@RequestMapping(value="/manage/game/dataPayPoint")
-public class DataPayPointController extends BaseController{
+@Controller("dataDiamondController")
+@RequestMapping(value="/manage/game/dataDiamond")
+public class DataDiamondController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(DataPayPointController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DataDiamondController.class);
 	
 	private static final String PAGE_SIZE = "2";
 	
@@ -60,6 +60,7 @@ public class DataPayPointController extends BaseController{
 
 	static {
 		sortTypes.put("auto", "编号");
+		sortTypes.put("auto", "价格");
 		sortTypes.put("buyCount", "购买次数");
 		sortTypes.put("amount", "总金额");
 	}
@@ -69,7 +70,7 @@ public class DataPayPointController extends BaseController{
 	}
 
 	public static void setSortTypes(Map<String, String> sortTypes) {
-		DataPayPointController.sortTypes = sortTypes;
+		DataDiamondController.sortTypes = sortTypes;
 	}
 
 	@Override
@@ -96,23 +97,23 @@ public class DataPayPointController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
-		logger.debug("付费点");
+		logger.debug("钻石消费分布");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = dataPayPointService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
-		List<DataPayPoint> dataPayPoints = new ArrayList<>();
+		List<DataDiamond> dataDiamonds = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
-			DataPayPoint p = new DataPayPoint();
+			DataDiamond p = new DataDiamond();
 			p.setPayTotal(String.valueOf(100*i));
 			p.setPayTimes(String.valueOf(30*i));
 			p.setPoint("钻石＊" + String.valueOf(10*i));
 			p.setPrice(String.valueOf(60*i));
-			dataPayPoints.add(p);
+			dataDiamonds.add(p);
 		}
 		
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<DataPayPoint> ps = new PageImpl<DataPayPoint>(dataPayPoints, pageRequest, dataPayPoints.size());
+		PageImpl<DataDiamond> ps = new PageImpl<DataDiamond>(dataDiamonds, pageRequest, dataDiamonds.size());
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
@@ -121,11 +122,11 @@ public class DataPayPointController extends BaseController{
 		model.addAttribute("dateFrom", dataPayPointService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", dataPayPointService.nowDate());
 		model.addAttribute("servers", serverService.findAll());
-		model.addAttribute("payPoints", ps);
+		model.addAttribute("dataDiamonds", ps);
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/game/datapaypoint/index";
+		return "/game/datadiamond/index";
 	}
 	
 	/**

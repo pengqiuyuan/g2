@@ -41,14 +41,14 @@
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,functionGiftCode,functionLogin,functionEmail,functionBroadCast,functionBlackList">
+					<shiro:hasAnyRoles name="admin,functionGiftCode,functionPlacard,functionEmail,functionBroadCast,functionBlackList">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">功能管理 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<shiro:hasAnyRoles name="admin,functionGiftCode">
 									<li><a href="${ctx}/manage/game/functionGiftCode/index">礼品码</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,functionLogin">
-									<li><a href="${ctx}/manage/game/functionLogin/index">登录公告</a></li>
+								<shiro:hasAnyRoles name="admin,functionPlacard">
+									<li><a href="${ctx}/manage/game/functionPlacard/index">登录公告</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,functionEmail">
 									<li><a href="${ctx}/manage/game/functionEmail/index">邮件管理</a></li>
