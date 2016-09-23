@@ -17,7 +17,7 @@
 
 	<div>
 		<div class="page-header">
-			<h2>日志管理</h2>
+			<h4>日志管理</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">

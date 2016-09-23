@@ -41,7 +41,7 @@
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
-					<shiro:hasAnyRoles name="admin,functionGiftCode,functionPlacard,functionEmail,functionBroadCast,functionBlackList">
+					<shiro:hasAnyRoles name="admin,functionGiftCode,functionPlacard,functionEmail,functionBroadCast,functionSeal">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">功能管理 <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<shiro:hasAnyRoles name="admin,functionGiftCode">
@@ -56,8 +56,8 @@
 								<shiro:hasAnyRoles name="admin,functionBroadCast">
 									<li><a href="${ctx}/manage/game/functionBroadCast/index">系统广播</a></li>
 								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,functionBlackList">
-									<li><a href="${ctx}/manage/game/functionBlackList/index">黑名单管理</a></li>
+								<shiro:hasAnyRoles name="admin,functionSeal">
+									<li><a href="${ctx}/manage/game/functionSeal/index">黑名单管理</a></li>
 								</shiro:hasAnyRoles>
 								<li class="divider"></li>
 								<li><a href="#">sample</a></li>
