@@ -24,7 +24,23 @@
 		<div class="page-header">
 			<h4>服务器状态设置</h4>
 		</div>
-		
+		<div>
+			<c:if test="${not empty message}">
+				<div id="message" class="alert alert-success">
+					<button data-dismiss="alert" class="close">×</button>${message}</div>
+			</c:if>
+			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/game/monitorServer/index">
+				<label>服务器状态：</label> 
+					<select name="search_EQ_load">
+						<option value="">---------请选择---------</option>
+						<option value="0" ${param.search_EQ_load == '0' ? 'selected' : '' }>正常</option>
+						<option value="1" ${param.search_EQ_load == '1' ? 'selected' : '' }>繁忙</option>
+						<option value="2" ${param.search_EQ_load == '2' ? 'selected' : '' }>离线</option>
+					</select> 
+				<input type="submit" class="btn btn-default" value="查 找" />
+				<tags:sort />
+			</form>
+		</div>
 		<form id="inputForm" method="post" Class="form-horizontal" action="<%=request.getContextPath()%>/manage/game/monitorServer/update"   enctype="multipart/form-data" >
 			<div class="control-group">
 				<table class="table table-striped table-bordered table-condensed" id="table">
@@ -82,39 +98,20 @@
 				<input type="submit" class="btn btn-primary" value="修改服务器信息" />
 			</div>
 		</form>
-
-
 	</div>
-		<script type="text/javascript">
-			$("#checkAll").click(function(){
-		         var bischecked=$('#checkAll').is(':checked');
-		         var f=$('input[class="checkbox"]');
-		         bischecked?f.attr('checked',true):f.attr('checked',false);
-		         var m=$('.cStatus');
-		         bischecked?m.show():m.hide();
-			});
-			$(".checkbox").click(function(){
-		         var bischecked=$('.checkbox').is(':checked');
-		         var m=$('.cStatus');
-		         bischecked?m.show():m.hide();
-			});
-			$("#queryForm").validate({
-				rules:{
-					search_EQ_storeId:{
-						required:true
-					},
-					search_EQ_serverZoneId:{
-						required:true
-					}
-				},messages:{
-					search_EQ_storeId:{
-						required:"游戏项目"
-					},
-					search_EQ_serverZoneId:{
-						required:"运营必须填写"
-					}
-				}
-			});	
-		</script> 	
+	<script type="text/javascript">
+		$("#checkAll").click(function(){
+	         var bischecked=$('#checkAll').is(':checked');
+	         var f=$('input[class="checkbox" ]');
+	         bischecked?f.prop('checked',true):f.prop('checked',false);
+	         var m=$('.cStatus');
+	         bischecked?m.show():m.hide();
+		});
+		$(".checkbox").click(function(){
+	         var bischecked=$('.checkbox').is(':checked');
+	         var m=$('.cStatus');
+	         bischecked?m.show():m.hide();
+		});
+	</script> 	
 </body>
 </html>

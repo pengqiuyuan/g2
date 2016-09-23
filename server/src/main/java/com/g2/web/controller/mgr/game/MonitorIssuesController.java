@@ -16,10 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -28,30 +30,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Server;
 import com.g2.entity.User;
-import com.g2.entity.game.FunctionPlacard;
-import com.g2.entity.game.MonitorServer;
+import com.g2.entity.game.MonitorGameConfig;
+import com.g2.entity.game.MonitorIssues;
+import com.g2.entity.game.MonitorIssuesReply;
 import com.g2.service.account.AccountService;
-import com.g2.service.game.MonitorServerService;
+import com.g2.service.account.ShiroDbRealm.ShiroUser;
+import com.g2.service.game.MonitorIssuesService;
 import com.g2.service.server.ServerService;
-import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
 /**
- * 服务器状态管理的controller
+ *  意见反馈管理的controller
  *
  */
-@Controller("monitorServerController")
-@RequestMapping(value="/manage/game/monitorServer")
-public class MonitorServerController extends BaseController{
+@Controller("monitorIssuesController")
+@RequestMapping(value="/manage/game/monitorIssues")
+public class MonitorIssuesController extends BaseController{
 
-	private static final Logger logger = LoggerFactory.getLogger(MonitorServerController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MonitorIssuesController.class);
 	
-	private static final String PAGE_SIZE = "15";
+	private static final String PAGE_SIZE = "2";
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	Calendar calendar = new GregorianCalendar(); 
@@ -59,9 +64,7 @@ public class MonitorServerController extends BaseController{
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 
 	static {
-		sortTypes.put("auto", "自动");
-		sortTypes.put("totalUser", "总玩家人数");
-		sortTypes.put("onlineUser", "在线人数");
+		sortTypes.put("auto", "编号");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -69,7 +72,7 @@ public class MonitorServerController extends BaseController{
 	}
 
 	public static void setSortTypes(Map<String, String> sortTypes) {
-		MonitorServerController.sortTypes = sortTypes;
+		MonitorIssuesController.sortTypes = sortTypes;
 	}
 
 	@Override
@@ -86,7 +89,7 @@ public class MonitorServerController extends BaseController{
 	private ServerService serverService;
 	
 	@Autowired
-	private MonitorServerService monitorServerService;
+	private MonitorIssuesService monitorIssuesService;
 	
 	/**
 	 * @throws Exception 
@@ -96,35 +99,75 @@ public class MonitorServerController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
-		logger.debug("服务器状态");
+		logger.debug("意见反馈");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
-		Long userId = monitorServerService.getCurrentUserId();
+		Long userId = monitorIssuesService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
-		List<MonitorServer> monitorServers = new ArrayList<>();
+		List<MonitorIssues> monitorIssues = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
-			MonitorServer f = new MonitorServer();
-			f.setId(Long.valueOf(i));
-			f.setServerId(String.valueOf(i));
-			f.setServerName("安卓"+i+"区");
-			f.setLoad("0");
-			f.setOnlineUser(String.valueOf(10*i));
-			f.setTotalUser(String.valueOf(100*i));
-			f.setIp("127.0.0.1");
-			monitorServers.add(f);
+			MonitorIssues m = new MonitorIssues();
+			m.setId(Long.valueOf(i));
+			m.setTime("2016-09-16");
+			m.setServer("安卓"+i+"区");
+			m.setUserId("user"+i);
+			m.setName("玩家名称"+i);
+			m.setGroup("战士"+i);
+			m.setContact("188839384"+i);
+			m.setDevice("iphone12312332a"+i);
+			m.setText("超级好玩的游戏，大家来加我好友一起玩啊！！");
+			monitorIssues.add(m);
 		}
 		
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<MonitorServer> ps = new PageImpl<MonitorServer>(monitorServers, pageRequest, monitorServers.size());
+		PageImpl<MonitorIssues> ps = new PageImpl<MonitorIssues>(monitorIssues, pageRequest, monitorIssues.size());
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
+		
 		model.addAttribute("user", user);
-		model.addAttribute("monitorServers", ps);
+		model.addAttribute("servers", serverService.findAll());
+		model.addAttribute("monitorIssues", ps);
 		
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
-		return "/game/monitorserver/index";
+		return "/game/monitorissues/index";
+	}
+	
+	@RequestMapping(value="edit",method=RequestMethod.GET)
+	public String edit(@RequestParam(value="id")long id,Model model){
+		MonitorIssues issues = monitorIssuesService.findById(id);
+
+		Long userId = monitorIssuesService.getCurrentUserId();
+		User user = accountService.getUser(userId);
+		model.addAttribute("servers", serverService.findAll());
+		model.addAttribute("issues", issues);
+		return "/game/monitorissues/add";
+	}
+	
+	/**
+	 * 修改
+	 */
+	@RequestMapping(value = "/update",method=RequestMethod.POST)
+	public String update(MonitorIssuesReply monitorIssuesReply,ServletRequest request,RedirectAttributes redirectAttributes){
+		//发送 monitorIssuesReply 给游戏服务器
+		redirectAttributes.addFlashAttribute("message", "反馈消息成功");
+		return "redirect:/manage/game/monitorIssues/index";
+	}
+	
+	/**
+	 * 删除操作	 
+	 * @param oid 用户id
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "del", method = RequestMethod.DELETE)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public Map<String,Object> delServerZone(@RequestParam(value = "id")Long id) throws Exception{
+		 Map<String,Object> map = new HashMap<String, Object>();
+		 monitorIssuesService.delById(id);
+		 map.put("success", "true");
+		 return map;
 	}
 	
 	/**
@@ -157,15 +200,10 @@ public class MonitorServerController extends BaseController{
 		return dateMap;
 	}
 	
-	
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;
 		if ("auto".equals(sortType)) {
 			sort = new Sort(Direction.DESC, "id");
-		} else if ("onlineUser".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "onlineUser");
-		} if ("totalUser".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "totalUser");
 		} 
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}

@@ -35,7 +35,7 @@
 <body>
 	
 	<%@ include file="/WEB-INF/layouts/nav.jsp"%>
-	<div class="container" style="width: 100%;padding-top: 20px">
+	<div class="container" style="width: 90%;padding-top: 20px">
 		<div id="content" style="width: 95%;margin-left:50px;padding-top: 0px">
 			<sitemesh:body/>
 		</div>
