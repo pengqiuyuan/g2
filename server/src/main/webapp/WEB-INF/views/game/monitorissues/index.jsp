@@ -51,6 +51,7 @@
 					<th title="联系方式">联系方式</th>
 					<th title="手机型号">手机型号</th>
 					<th title="反馈内容">反馈内容</th>
+					<th title="操作">操作</th>		
 				</tr>
 			</thead>
 			<tbody id="tbody">
@@ -85,6 +86,11 @@
 									</c:otherwise>
 								</c:choose>
 							</a>
+						</td>
+						<td>
+							<div class="action-buttons">
+								<a class="exportCode btn table-actions" href="${ctx}/manage/game/monitorIssues/edit?id=${item.id}" ><i class="icon-ok"></i>回复</a>
+							</div>
 						</td>
 					</tr>
 				</c:forEach>

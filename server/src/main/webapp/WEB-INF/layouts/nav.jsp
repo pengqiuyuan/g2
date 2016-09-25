@@ -51,7 +51,7 @@
 									<li><a href="${ctx}/manage/game/functionPlacard/index">登录公告</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,functionEmail">
-									<li><a href="${ctx}/manage/game/functionEmail/index">邮件管理</a></li>
+									<li><a href="${ctx}/manage/game/functionEmail/add">邮件管理</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,functionBroadCast">
 									<li><a href="${ctx}/manage/game/functionBroadCast/add">系统广播</a></li>
