@@ -46,9 +46,7 @@
 				<table class="table table-striped table-bordered table-condensed" id="table">
 					<thead>
 						<tr>
-							<th class="check-header hidden-xs">
-		                      <label><input id="checkAll" name="checkAll" type="checkbox"><span></span></label>
-		                    </th>
+							<th title="编号" width="120px">编号</th>
 		                    <th title="serverName">服务器名称</th>
 		                    <th title="load">状态</th>
 							<th title="onlineUser">在线人数</th>
@@ -59,7 +57,12 @@
 					<tbody id="tbody">
 						<c:forEach items="${monitorServers.content}" var="item" varStatus="s">
 							<tr id="${item.id}">
-								<td><label><input  type="checkbox" class="checkbox" name="checkId" value="${item.serverId}"><span></span></label></td>
+								<td id="iDictionary" value="${item.id}">
+									<div class="btn-group">
+										<a class="btn" href="#">#${item.id}</a> 
+										<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+									</div>
+								</td>
 								<td>${item.serverName}</td>
 								<td>
 									<c:choose>
