@@ -28,11 +28,12 @@ import com.g2.service.account.ShiroDbRealm.ShiroUser;
 public class LoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String login() {
+	public String login() throws InterruptedException {
 		ShiroUser u = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
 		if(u!=null){
 			return "redirect:/manage/index";
 		}else{
+			SecurityUtils.getSubject().logout();
 			return "account/login";
 		}
 	}
