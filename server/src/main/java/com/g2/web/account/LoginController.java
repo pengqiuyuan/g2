@@ -41,6 +41,7 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
+		SecurityUtils.getSubject().logout();
 		return "account/login";
 	}
 
