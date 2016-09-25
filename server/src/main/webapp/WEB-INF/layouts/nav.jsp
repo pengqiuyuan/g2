@@ -54,7 +54,7 @@
 									<li><a href="${ctx}/manage/game/functionEmail/index">邮件管理</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,functionBroadCast">
-									<li><a href="${ctx}/manage/game/functionBroadCast/index">系统广播</a></li>
+									<li><a href="${ctx}/manage/game/functionBroadCast/add">系统广播</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,functionSeal">
 									<li><a href="${ctx}/manage/game/functionSeal/index">黑名单管理</a></li>
