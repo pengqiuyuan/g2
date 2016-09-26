@@ -125,7 +125,7 @@
 						<div class="tabbable span12">
 							<p class=""><code>趋势</code></p>
 							<ul class="nav nav-tabs">
-								<li class="active"><a href="#a1" data-toggle="tab">新增用户</a></li>
+								<li class="active"><a href="#a1" data-toggle="tab">关卡用户趋势</a></li>
 								<li><a href="#a2" data-toggle="tab">活跃用户</a></li>
 								<li><a href="#a3" data-toggle="tab">付费用户</a></li>
 								<li><a href="#a4" data-toggle="tab">充值金额</a></li>

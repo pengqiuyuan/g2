@@ -106,6 +106,7 @@ public class FunctionGiftCodeController extends BaseController{
 		List<FunctionGiftCode> functionGiftCodes = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
 			FunctionGiftCode gift = new FunctionGiftCode();
+			gift.setId(Long.valueOf(i));
 			gift.setGiftId(i);
 			gift.setGiftId(Long.valueOf("20160915"+i));
 			gift.setGiftBuildNum(String.valueOf(100*i));
