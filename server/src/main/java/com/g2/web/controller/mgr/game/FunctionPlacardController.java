@@ -134,7 +134,7 @@ public class FunctionPlacardController extends BaseController{
 	
 	
 	/**
-	 * 新增页面
+	 * 登录公告 新增页面
 	 */
 	@RequestMapping(value = "/add" ,method=RequestMethod.GET)
 	public String add(Model model){
@@ -145,7 +145,7 @@ public class FunctionPlacardController extends BaseController{
 	}
 	
 	/**
-	 * 操作员编辑页	
+	 * 登录公告 操作员编辑页	
 	 */
 	@RequestMapping(value = "edit", method = RequestMethod.GET)
 	public String edit(@RequestParam(value = "id")long id,Model model){
