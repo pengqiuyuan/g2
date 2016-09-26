@@ -76,7 +76,7 @@ public class FunctionSealController extends BaseController{
 		model.addAttribute("functionSeals", functionSeals);
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
-		model.addAttribute("servers", serverService.findAll());
+		model.addAttribute("servers", serverService.findAllNot());
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
@@ -90,7 +90,7 @@ public class FunctionSealController extends BaseController{
 	public String add(Model model){
 		ShiroUser user = getCurrentUser();
 		User u = accountService.getUser(user.id);
-		model.addAttribute("servers", serverService.findAll());
+		model.addAttribute("servers", serverService.findAllNot());
 		return "/game/functionseal/add";
 	}
 	

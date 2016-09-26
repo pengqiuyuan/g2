@@ -89,9 +89,10 @@
 				<tr>
 					<th title="编号" width="120px">编号</th>
 					<th title="项目">项目</th>
+					<th title="货币类型">货币类型</th>
 					<th title="价格">价格</th>
-					<th title="购买次数" width="240px">购买次数</th>
-					<th title="总金额">总金额（价格*购买次数）</th>
+					<th title="购买次数">购买次数</th>
+					<th title="购买人数">购买人数</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -107,8 +108,9 @@
 						</td>
 						<td>${item.point }</td>
 						<td>${item.price}</td>
+						<td>${item.currency}</td>
 						<td>${item.payTimes}</td>
-						<td>${item.payTotal}</td>
+						<td>${item.payPersons}</td>
 					</tr>
 				</c:forEach>
 			</tbody>

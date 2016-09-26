@@ -14,12 +14,7 @@
 			<div class="nav-collapse">
 				<ul class="nav navbar-nav">
 					<shiro:hasAnyRoles name="admin,summary">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">首页 <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<shiro:hasAnyRoles name="admin,summary">
-									<li><a href="${ctx}/manage/game/summary/index">首页</a></li>
-								</shiro:hasAnyRoles>
-							</ul>
+						<li class="dropdown"><a href="${ctx}/manage/game/summary/index" class="dropdown-toggle" >首页 <b class="caret"></b></a>
 						</li>
 					</shiro:hasAnyRoles>
 					<shiro:hasAnyRoles name="admin,systemUser,systemStore,systemWatcher">
@@ -96,9 +91,6 @@
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,dataPayPoint">
 									<li><a href="${ctx}/manage/game/dataPayPoint/index">付费点</a></li>
-								</shiro:hasAnyRoles>
-								<shiro:hasAnyRoles name="admin,dataDiamond">
-									<li><a href="${ctx}/manage/game/dataDiamond/index">钻石消费</a></li>
 								</shiro:hasAnyRoles>
 								<shiro:hasAnyRoles name="admin,dataMall">
 									<li><a href="${ctx}/manage/game/dataMall/index">商城消费</a></li>

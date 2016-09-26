@@ -13,6 +13,8 @@ public class DataPayPoint extends IdEntity{
 	
 	public String payTimes;
 	
+	public String payPersons;
+	
 	public String payTotal;
 
 	public String getPoint() {
@@ -46,5 +48,13 @@ public class DataPayPoint extends IdEntity{
 	public void setPayTotal(String payTotal) {
 		this.payTotal = payTotal;
 	}
-	
+
+	public String getPayPersons() {
+		return payPersons;
+	}
+
+	public void setPayPersons(String payPersons) {
+		this.payPersons = payPersons;
+	}
+
 }

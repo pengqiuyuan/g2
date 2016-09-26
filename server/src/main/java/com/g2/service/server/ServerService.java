@@ -39,6 +39,14 @@ public class ServerService {
 		return serverDao.findAll();
 	}
 	
+	/**
+	 * 封禁账号没有全区全服
+	 * @return
+	 */
+	public List<Server> findAllNot(){
+		return serverDao.findAllNot();
+	}
+	
 	public Server findById(Long id){
 		return serverDao.findOne(id);
 	}

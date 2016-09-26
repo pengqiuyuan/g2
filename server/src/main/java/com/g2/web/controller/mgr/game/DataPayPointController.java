@@ -60,8 +60,9 @@ public class DataPayPointController extends BaseController{
 
 	static {
 		sortTypes.put("auto", "编号");
-		sortTypes.put("buyCount", "购买次数");
-		sortTypes.put("amount", "总金额");
+		sortTypes.put("price", "价格");
+		sortTypes.put("payTimes", "购买次数");
+		sortTypes.put("payPersons", "购买人数");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -108,6 +109,7 @@ public class DataPayPointController extends BaseController{
 			p.setPayTimes(String.valueOf(30*i));
 			p.setPoint("钻石＊" + String.valueOf(10*i));
 			p.setPrice(String.valueOf(60*i));
+			p.setPayPersons(String.valueOf(100*i));
 			dataPayPoints.add(p);
 		}
 		
@@ -160,10 +162,14 @@ public class DataPayPointController extends BaseController{
 	
 	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
 		Sort sort = null;
-		if ("buyCount".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "buyCount");
-		} else if ("amount".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "amount");
+		if ("auto".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "id");
+		} else if ("payTimes".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "payTimes");
+		} else if ("payPersons".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "payPersons");
+		} else if ("price".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "price");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}

@@ -13,7 +13,9 @@ public class DataMall extends IdEntity{
 	
 	public String payTimes;
 	
-	public String payTotal;
+	public String payPersons;
+	
+	public String currency;
 
 	public String getPoint() {
 		return point;
@@ -39,12 +41,22 @@ public class DataMall extends IdEntity{
 		this.payTimes = payTimes;
 	}
 
-	public String getPayTotal() {
-		return payTotal;
+	public String getPayPersons() {
+		return payPersons;
 	}
 
-	public void setPayTotal(String payTotal) {
-		this.payTotal = payTotal;
+	public void setPayPersons(String payPersons) {
+		this.payPersons = payPersons;
 	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	
+	
 	
 }

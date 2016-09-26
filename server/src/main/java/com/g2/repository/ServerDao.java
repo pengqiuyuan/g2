@@ -17,4 +17,8 @@ public interface ServerDao extends PagingAndSortingRepository<Server, Long>,JpaS
 	@Modifying
 	@Query("from Server server where server.status='1'")
 	List<Server> findAll();
+	
+	@Modifying
+	@Query("from Server server where server.status='1' and server.serverName !='全区全服'")
+	List<Server> findAllNot();
 }
