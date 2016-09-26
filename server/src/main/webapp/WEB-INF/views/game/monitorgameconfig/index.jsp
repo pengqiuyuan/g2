@@ -33,8 +33,8 @@
 			<thead>
 				<tr>
 					<th title="编号" width="120px">编号</th>
-					<th title="配置项">服务器ID</th>
-					<th title="配置值">游戏项目</th>
+					<th title="配置项">配置项D</th>
+					<th title="配置值">配置值</th>
 					<th title="作用备注">作用备注</th>
 				</tr>
 			</thead>

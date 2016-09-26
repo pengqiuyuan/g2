@@ -14,7 +14,6 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="${ctx}/static/ckeditor/ckeditor.js"></script>
 	<div class="page-header">
 		<h4>玩家反馈信息回复</h4>
 	</div>
@@ -45,10 +44,9 @@
 		<div class="control-group ">
 			<label class="control-label" for="text">公告内容（1000字）：</label>
 				<div class="controls">
-					<textarea path="text" id="text" name="text" cssClass="input-xlarge" value="" cols="100" rows="20" /></textarea>
+					<textarea path="text" id="text" name="text" cssClass="input-xlarge" value="" style="height: 100px;width: 400px" /></textarea>
 				</div>
 		</div>
-		<p><code>邮件附件（可选）</code></p>
 		<div class="control-group">
 			<label class="control-label" for="attachmentID">物品ID：</label>
 			<div class="controls">
@@ -67,7 +65,6 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		CKEDITOR.replace('text');	
 		$(function(){
 			$("#inputForm").validate({
 				rules:{

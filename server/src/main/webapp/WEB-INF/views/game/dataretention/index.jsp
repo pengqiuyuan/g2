@@ -108,7 +108,6 @@
 												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 												<ul class="dropdown-menu">
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -131,7 +130,6 @@
 												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 												<ul class="dropdown-menu">
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -154,7 +152,6 @@
 												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 												<ul class="dropdown-menu">
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -177,7 +174,6 @@
 												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 												<ul class="dropdown-menu">
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -200,7 +196,6 @@
 												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 												<ul class="dropdown-menu">
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>

@@ -42,7 +42,7 @@
 			id="table">
 			<thead>
 				<tr>
-					<th title="编号" width="120px">编号</th>
+					<th title="编号">编号</th>
 					<th title="时间">时间</th>
 					<th title="区服">区服</th>
 					<th title="玩家ID">玩家ID</th>
@@ -78,8 +78,8 @@
 						<td>
 							<a href="#" class="intro" title="${item.text}"> 
 								<c:choose>
-									<c:when test="${fn:length(item.text)>3 }">
-										<c:out value="${fn:substring(item.text,0,3) }..." />
+									<c:when test="${fn:length(item.text)>100 }">
+										<c:out value="${fn:substring(item.text,0,100) }..." />
 									</c:when>
 									<c:otherwise>
 										<c:out value="${item.text }" />

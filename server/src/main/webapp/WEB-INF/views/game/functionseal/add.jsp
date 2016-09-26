@@ -14,7 +14,6 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="${ctx}/static/ckeditor/ckeditor.js"></script>
 	<div class="page-header">
 		<h4>封禁账号</h4>
 	</div>
@@ -54,20 +53,19 @@
 			<div class="controls">
 				<input type="text" name="sealDayCount" class="input-large "/>
 			</div>
-		</div>
+		</div>	
 		<div class="control-group ">
 			<label class="control-label" for="causes">原因备注：</label>
 			<div class="controls">
-				<textarea path="text" id="causes" name="causes" cssClass="input-xlarge" value="" cols="100" rows="20" /></textarea>
+				<textarea path="text" name="causes" cssClass="input-xlarge" value="" style="height: 100px;width: 400px" /></textarea>
 			</div>
-		</div>		
+		</div>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" id="submit">保存</button>
 			<a href="<%=request.getContextPath()%>/manage/game/functionSeal/index" class="btn btn-primary">返回</a>
 		</div>
 	</form>
 	<script type="text/javascript">
-		CKEDITOR.replace('causes');
 		$(function(){			
 			$("#userId").blur(function(){
 				var userId = $("#userId").val();

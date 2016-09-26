@@ -62,7 +62,6 @@
 				<input type="text" name="notes" class="input-large " />
 			</div>
 		</div>			
-		<p><code>邮件附件（可选）</code></p>
 		<div class="control-group">
 			<label class="control-label" for="itemId">物品ID：</label>
 			<div class="controls">
@@ -77,7 +76,7 @@
 		</div>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" id="submit">保存</button>
-			<a href="<%=request.getContextPath()%>/manage/game/monitorIssues/index" class="btn btn-primary">返回</a>
+			<a href="<%=request.getContextPath()%>/manage/game/functionGiftCode/index" class="btn btn-primary">返回</a>
 		</div>
 	</form>
 	<script type="text/javascript" src="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>

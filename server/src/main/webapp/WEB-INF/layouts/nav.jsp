@@ -19,8 +19,6 @@
 								<shiro:hasAnyRoles name="admin,summary">
 									<li><a href="${ctx}/manage/game/summary/index">首页</a></li>
 								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
@@ -36,8 +34,8 @@
 								<shiro:hasAnyRoles name="admin">
 									<li><a href="${ctx}/manage/functions/index">权限管理</a></li>
 								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
+								
+								
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
@@ -59,8 +57,8 @@
 								<shiro:hasAnyRoles name="admin,functionSeal">
 									<li><a href="${ctx}/manage/game/functionSeal/index">黑名单管理</a></li>
 								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
+								
+								
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
@@ -76,8 +74,8 @@
 								<shiro:hasAnyRoles name="admin,monitorIssues">
 									<li><a href="${ctx}/manage/game/monitorIssues/index">意见反馈</a></li>
 								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
+								
+								
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
@@ -105,8 +103,7 @@
 								<shiro:hasAnyRoles name="admin,dataMall">
 									<li><a href="${ctx}/manage/game/dataMall/index">商城消费</a></li>
 								</shiro:hasAnyRoles>
-								<li class="divider"></li>
-								<li><a href="#">sample</a></li>
+								
 							</ul>
 						</li>
 					</shiro:hasAnyRoles>
@@ -117,7 +114,6 @@
 							data-toggle="dropdown"><i class="icon-user icon-white"></i>&nbsp;<shiro:principal
 									property="name" /><b class="caret"></b></a>
 							<ul class="dropdown-menu nav-list">
-								<li class="divider"></li>
 								<li><a href="${ctx}/profile">编辑个人资料</a></li>
 								<li><a href="${ctx}/logout">安全退出</a></li>
 							</ul></li>

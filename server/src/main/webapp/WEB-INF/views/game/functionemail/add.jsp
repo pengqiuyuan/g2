@@ -50,7 +50,6 @@
 				<textarea path="text" name="text" cssClass="input-xlarge" value="" style="height: 200px;width: 800px" /></textarea>
 			</div>
 		</div>
-		<p><code>邮件附件（可选）</code></p>
 		<div class="control-group">
 			<label class="control-label" for="attachmentID">物品ID：</label>
 			<div class="controls">

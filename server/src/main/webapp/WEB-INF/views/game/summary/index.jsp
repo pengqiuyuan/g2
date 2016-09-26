@@ -106,7 +106,6 @@
 													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
 													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -148,7 +147,6 @@
 													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
 													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -190,7 +188,6 @@
 													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
 													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
 													<li class="divider"></li>
-													<li><a href="#">sample</a></li>
 												</ul>
 											</div>
 										</td>
@@ -228,7 +225,6 @@
 														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
 														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
 														<li class="divider"></li>
-														<li><a href="#">sample</a></li>
 													</ul>
 												</div>
 											</td>
@@ -260,7 +256,6 @@
 														<li><a href="#"><i class="icon-edit"></i>修改</a></li>
 														<li><a href="javascript:void(0);" class="del"><i class="icon-th"></i>删除 </a></li>
 														<li class="divider"></li>
-														<li><a href="#">sample</a></li>
 													</ul>
 												</div>
 											</td>

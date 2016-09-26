@@ -27,7 +27,8 @@ public class IndexController {
 	public String index()
 	{
 		logger.debug("登入后首页");
-		return "index";
+		//return "index";
+		return "redirect:/manage/game/summary/index";
 	}
 
 }
