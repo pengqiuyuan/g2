@@ -27,7 +27,7 @@
 				<table class="table table-striped table-bordered table-condensed" id="table">
 					<thead>
 						<tr>
-		                    <th title="ID">ID</th>
+		                    <th title="ID" width="120px">ID</th>
 							<th title="添加时间">添加时间</th>
 							<th title="标题">标题</th>
 							<th title="内容">内容</th>
@@ -49,8 +49,8 @@
 								<td>${item.title}</td>
 								<td><a href="#"  class="intro" title="${item.text}" >
 								<c:choose> 
-			    					<c:when test="${fn:length(item.text)>3 }"> 
-			     						<c:out value="${fn:substring(item.text,0,3) }..." /> 
+			    					<c:when test="${fn:length(item.text)>100 }"> 
+			     						<c:out value="${fn:substring(item.text,0,100) }..." /> 
 			    					</c:when> 
 			    					<c:otherwise> 
 			     						<c:out value="${item.text }" /> 
