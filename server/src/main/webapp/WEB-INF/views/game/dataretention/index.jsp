@@ -75,7 +75,6 @@
 						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
-						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
 			</form>

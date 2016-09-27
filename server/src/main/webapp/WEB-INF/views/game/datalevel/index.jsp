@@ -75,79 +75,19 @@
 						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
-						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
 			</form>
 			<div class="row-fluid">
-				<div class="row-fluid">
-						<div class="tabbable span12">
-							<p><code>基本指标</code></p>
-							<table class="table table-striped table-bordered table-condensed" id="table">
-								<thead>
-									<tr>
-										<th title="编号" width="120px">编号</th>
-										<th title="新增用户">新增数据</th>
-										<th title="活跃用户">活跃用户</th>
-										<th title="付费用户">付费用户</th>
-										<th title="充值金额">充值金额</th>
-										<th title="付费率">付费率</th>
-										<th title="ARPU">ARPU</th>
-										<th title="ARPPU">ARPPU</th>
-									</tr>
-								</thead>
-								<tbody id="tbody">
-									<tr id="">
-										<td id="iDictionary">
-											<div class="btn-group">
-												<a class="btn" href="#">#1</a> 
-												<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-												<ul class="dropdown-menu">
-													<li><a href="#"><i class="icon-edit"></i>修改</a></li>
-													<li><a href="javascript:void(0);" rel="#" class="del"><i class="icon-th"></i>删除 </a></li>
-													<li class="divider"></li>
-												</ul>
-											</div>
-										</td>
-										<td>今日</td>
-										<td>6158</td>
-										<td>83033</td>
-										<td>7.4%</td>
-										<td>111319 | 1.3</td>
-										<td>01:28</td>
-										<td>- -</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>	
 					<div class="row-fluid">
 						<div class="tabbable span12">
 							<p class=""><code>趋势</code></p>
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#a1" data-toggle="tab">关卡用户趋势</a></li>
-								<li><a href="#a2" data-toggle="tab">活跃用户</a></li>
-								<li><a href="#a3" data-toggle="tab">付费用户</a></li>
-								<li><a href="#a4" data-toggle="tab">充值金额</a></li>
-								<li><a href="#a5" data-toggle="tab">付费率</a></li>
-								<li><a href="#a5" data-toggle="tab">ARPU</a></li>
-								<li><a href="#a5" data-toggle="tab">ARPPU</a></li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="a1">
 									<div id="chart_a1"></div>
-								</div>
-								<div class="tab-pane" id="a2">
-									<div id="chart_a2"></div>
-								</div>
-								<div class="tab-pane" id="a3">
-									<div id="chart_a3"></div>
-								</div>
-								<div class="tab-pane" id="a4">
-									<div id="chart_a4"></div>
-								</div>
-								<div class="tab-pane" id="a5">
-									<div id="chart_a5"></div>
 								</div>
 							</div>
 						</div>

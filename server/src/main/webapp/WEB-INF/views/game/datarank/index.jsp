@@ -75,7 +75,6 @@
 						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
-						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
 			</form>
@@ -85,28 +84,10 @@
 							<p class=""><code>趋势</code></p>
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#a1" data-toggle="tab">用户等级分布</a></li>
-								<li><a href="#a2" data-toggle="tab">活跃用户</a></li>
-								<li><a href="#a3" data-toggle="tab">付费用户</a></li>
-								<li><a href="#a4" data-toggle="tab">充值金额</a></li>
-								<li><a href="#a5" data-toggle="tab">付费率</a></li>
-								<li><a href="#a5" data-toggle="tab">ARPU</a></li>
-								<li><a href="#a5" data-toggle="tab">ARPPU</a></li>
 							</ul>
 							<div class="tab-content">
 								<div class="tab-pane active" id="a1">
 									<div id="chart_a1"></div>
-								</div>
-								<div class="tab-pane" id="a2">
-									<div id="chart_a2"></div>
-								</div>
-								<div class="tab-pane" id="a3">
-									<div id="chart_a3"></div>
-								</div>
-								<div class="tab-pane" id="a4">
-									<div id="chart_a4"></div>
-								</div>
-								<div class="tab-pane" id="a5">
-									<div id="chart_a5"></div>
 								</div>
 							</div>
 						</div>

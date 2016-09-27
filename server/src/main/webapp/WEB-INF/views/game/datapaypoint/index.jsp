@@ -16,7 +16,7 @@
 <body>
 	<div>
 		<div class="page-header">
-			<h4>消费点</h4>
+			<h4>付费点分布</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">
@@ -78,7 +78,6 @@
 						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
-						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
 				<tags:sort />

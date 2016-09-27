@@ -8,7 +8,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
-	<title>商城消费分布</title>
+	<title>钻石消费分布</title>
     <!-- 引入 G2 文件 -->
     <script src="${ctx}/static/g2/index.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="${ctx}/static/datetimepicker/bootstrap-datetimepicker.min.css">
@@ -16,7 +16,7 @@
 <body>
 	<div>
 		<div class="page-header">
-			<h4>商城消费分布</h4>
+			<h4>钻石消费分布</h4>
 		</div>
 		<div>
 			<c:if test="${not empty message}">
@@ -78,7 +78,6 @@
 						<button class="btn btn-primary" type="submit">
 							<i class="fa fa-check"></i>&nbsp;&nbsp;<span class="bold">确定</span>
 						</button>
-						<a href="<%=request.getContextPath()%>/manage/store/index" class="btn btn-primary">返回</a>
 					</div>
 				</div>
 				<tags:sort />
@@ -107,8 +106,8 @@
 							</div>
 						</td>
 						<td>${item.point }</td>
-						<td>${item.price}</td>
 						<td>${item.currency}</td>
+						<td>${item.price}</td>
 						<td>${item.payTimes}</td>
 						<td>${item.payPersons}</td>
 					</tr>
