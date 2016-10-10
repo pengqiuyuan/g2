@@ -86,8 +86,8 @@
 							href="<%=request.getContextPath()%>/manage/logger/detail?id=${item.id}"
 							data-fancybox-type="iframe" rel="fancy" title="日志详细"
 							class="showInfo"> <c:choose>
-									<c:when test="${fn:length(item.content)>10}">
-										<c:out value="${fn:substring(item.content,0,10) }..." />
+									<c:when test="${fn:length(item.content)>100}">
+										<c:out value="${fn:substring(item.content,0,100) }..." />
 									</c:when>
 									<c:otherwise>
 										<c:out value="${item.content}" />
