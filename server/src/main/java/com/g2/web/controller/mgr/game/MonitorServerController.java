@@ -15,6 +15,7 @@ import javax.servlet.ServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -30,13 +31,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.entity.game.FunctionPlacard;
 import com.g2.entity.game.MonitorServer;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.MonitorServerService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
@@ -81,12 +85,17 @@ public class MonitorServerController extends BaseController{
 	
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private ServerService serverService;
 	
 	@Autowired
 	private MonitorServerService monitorServerService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -122,6 +131,7 @@ public class MonitorServerController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("monitorServers", ps);
 		
+		logService.log(user.getName(), user.getName() + "：访问服务器状态页面", Log.TYPE_MONITOR_SERVER);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/monitorserver/index";

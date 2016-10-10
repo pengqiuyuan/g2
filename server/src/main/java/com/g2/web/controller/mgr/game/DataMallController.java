@@ -12,9 +12,11 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,12 +33,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
+import com.g2.entity.game.ConfigServer;
 import com.g2.entity.game.DataMall;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataMallService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
+import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -81,12 +88,17 @@ public class DataMallController extends BaseController{
 	
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private ServerService serverService;
 	
 	@Autowired
 	private DataMallService dataMallService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -121,9 +133,11 @@ public class DataMallController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("dateFrom", dataMallService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", dataMallService.nowDate());
-		model.addAttribute("servers", serverService.findAll());
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		model.addAttribute("dataMalls", ps);
 		
+		logService.log(dataMallService.getCurrentUser().getName(), dataMallService.getCurrentUser().getName() + "：查询商城消费分布页面", Log.TYPE_DATA_MALL);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/datamall/index";

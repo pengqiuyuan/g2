@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.User;
 import com.g2.entity.game.MonitorGameConfig;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.MonitorGameConfigService;
+import com.g2.service.log.LogService;
+import com.g2.util.JsonBinder;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -58,6 +62,14 @@ public class MonitorGameConfigController extends BaseController{
 	@Autowired
 	private AccountService accountService;
 	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
+	
 	@RequestMapping(value = "index",method=RequestMethod.GET)
 	public String index(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
@@ -74,6 +86,7 @@ public class MonitorGameConfigController extends BaseController{
 		model.addAttribute("sortTypes", sortTypes);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		
+		logService.log(getCurrentUser().getName(), getCurrentUser().getName() + "：访问游戏配置页面", Log.TYPE_MONITOR_GAMECONFIG);
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/monitorgameconfig/index";
 	}
@@ -94,6 +107,7 @@ public class MonitorGameConfigController extends BaseController{
 	@RequestMapping(value = "/save",method=RequestMethod.POST)
 	public String save(MonitorGameConfig monitorGameConfig,ServletRequest request,RedirectAttributes redirectAttributes,Model model){
 		monitorGameConfigService.save(monitorGameConfig);
+		logService.log(getCurrentUser().getName(), getCurrentUser().getName() + "：新增游戏配置", Log.TYPE_MONITOR_GAMECONFIG);
 		redirectAttributes.addFlashAttribute("message", "新增成功");
 		return "redirect:/manage/game/monitorGameConfig/index";
 	}
@@ -102,10 +116,8 @@ public class MonitorGameConfigController extends BaseController{
 	@RequestMapping(value="edit",method=RequestMethod.GET)
 	public String edit(@RequestParam(value="id")long id,Model model){
 		MonitorGameConfig monitorGameConfig = monitorGameConfigService.findById(id);
-
-		ShiroUser user = getCurrentUser();
-		User u = accountService.getUser(user.id);
 		
+		logService.log(getCurrentUser().getName(), getCurrentUser().getName() + "：修改游戏配置", Log.TYPE_MONITOR_GAMECONFIG);
 		model.addAttribute("monitorGameConfig", monitorGameConfig);
 		return "/game/monitorgameconfig/edit";
 	}

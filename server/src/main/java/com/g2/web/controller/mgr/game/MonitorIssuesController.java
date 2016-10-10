@@ -1,5 +1,6 @@
 package com.g2.web.controller.mgr.game;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,9 +13,13 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,15 +39,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
+import com.g2.entity.game.ConfigServer;
 import com.g2.entity.game.MonitorGameConfig;
 import com.g2.entity.game.MonitorIssues;
 import com.g2.entity.game.MonitorIssuesReply;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.MonitorIssuesService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
+import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -84,12 +94,17 @@ public class MonitorIssuesController extends BaseController{
 	
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private ServerService serverService;
 	
 	@Autowired
 	private MonitorIssuesService monitorIssuesService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -124,23 +139,28 @@ public class MonitorIssuesController extends BaseController{
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
-		
 		model.addAttribute("user", user);
-		model.addAttribute("servers", serverService.findAll());
 		model.addAttribute("monitorIssues", ps);
+		//model.addAttribute("servers", serverService.findAll());
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		
+		logService.log(monitorIssuesService.getCurrentUser().getName(), monitorIssuesService.getCurrentUser().getName() + "：访问意见反馈页面", Log.TYPE_MONITOR_ISSUES);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/monitorissues/index";
 	}
 	
 	@RequestMapping(value="edit",method=RequestMethod.GET)
-	public String edit(@RequestParam(value="id")long id,Model model){
+	public String edit(@RequestParam(value="id")long id,Model model) throws JsonParseException, JsonMappingException, IOException{
 		MonitorIssues issues = monitorIssuesService.findById(id);
 
 		Long userId = monitorIssuesService.getCurrentUserId();
 		User user = accountService.getUser(userId);
-		model.addAttribute("servers", serverService.findAll());
+		
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
+		
 		model.addAttribute("issues", issues);
 		return "/game/monitorissues/add";
 	}
@@ -151,6 +171,8 @@ public class MonitorIssuesController extends BaseController{
 	@RequestMapping(value = "/update",method=RequestMethod.POST)
 	public String update(MonitorIssuesReply monitorIssuesReply,ServletRequest request,RedirectAttributes redirectAttributes){
 		//发送 monitorIssuesReply 给游戏服务器
+		
+		logService.log(monitorIssuesService.getCurrentUser().getName(), monitorIssuesService.getCurrentUser().getName() + "：修改意见反馈", Log.TYPE_MONITOR_ISSUES);
 		redirectAttributes.addFlashAttribute("message", "反馈消息成功");
 		return "redirect:/manage/game/monitorIssues/index";
 	}
@@ -166,6 +188,7 @@ public class MonitorIssuesController extends BaseController{
 	public Map<String,Object> delServerZone(@RequestParam(value = "id")Long id) throws Exception{
 		 Map<String,Object> map = new HashMap<String, Object>();
 		 monitorIssuesService.delById(id);
+		 logService.log(monitorIssuesService.getCurrentUser().getName(), monitorIssuesService.getCurrentUser().getName() + "：删除意见反馈", Log.TYPE_MONITOR_ISSUES);
 		 map.put("success", "true");
 		 return map;
 	}

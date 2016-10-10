@@ -1,5 +1,6 @@
 package com.g2.web.controller.mgr.game;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,9 +13,13 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,14 +39,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
+import com.g2.entity.game.ConfigServer;
 import com.g2.entity.game.FunctionGiftCode;
 import com.g2.entity.game.FunctionSeal;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.FunctionGiftCodeService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
+import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -83,12 +93,17 @@ public class FunctionGiftCodeController extends BaseController{
 	
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private ServerService serverService;
 	
 	@Autowired
 	private FunctionGiftCodeService functionGiftCodeService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -124,11 +139,12 @@ public class FunctionGiftCodeController extends BaseController{
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
-		
 		model.addAttribute("user", user);
-		model.addAttribute("servers", serverService.findAll());
 		model.addAttribute("functionGiftCodes", ps);
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		
+		logService.log(functionGiftCodeService.getCurrentUser().getName(), functionGiftCodeService.getCurrentUser().getName() + "：礼品码页面", Log.TYPE_FUNCTION_GIFTCODE);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/functiongiftcode/index";
@@ -138,12 +154,16 @@ public class FunctionGiftCodeController extends BaseController{
 	
 	/**
 	 * 新增页面
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonParseException 
 	 */
 	@RequestMapping(value = "/add" ,method=RequestMethod.GET)
-	public String add(Model model){
+	public String add(Model model) throws JsonParseException, JsonMappingException, IOException{
 		Long userId = functionGiftCodeService.getCurrentUserId();
 		User user = accountService.getUser(userId);
-		model.addAttribute("servers", serverService.findAll());
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		return "/game/functiongiftcode/add";
 	}
 	
@@ -152,15 +172,19 @@ public class FunctionGiftCodeController extends BaseController{
 	 */
 	@RequestMapping(value = "/save",method=RequestMethod.POST)
 	public String save(FunctionGiftCode functionGiftCode,ServletRequest request,RedirectAttributes redirectAttributes,Model model){
+		
+		logService.log(functionGiftCodeService.getCurrentUser().getName(), functionGiftCodeService.getCurrentUser().getName() + "：新增礼品码", Log.TYPE_FUNCTION_GIFTCODE);
 		redirectAttributes.addFlashAttribute("message", "新增礼品码成功");
 		return "redirect:/manage/game/functionGiftCode/index";
 	}
 	
 	/**
-	 * 新增
+	 * 导出礼品码
 	 */
 	@RequestMapping(value = "/excel")
 	public String excel(ServletRequest request,RedirectAttributes redirectAttributes,Model model){
+		
+		logService.log(functionGiftCodeService.getCurrentUser().getName(), functionGiftCodeService.getCurrentUser().getName() + "：导出礼品码", Log.TYPE_FUNCTION_GIFTCODE);
 		redirectAttributes.addFlashAttribute("message", "礼品码excel导出成功");
 		return "redirect:/manage/game/functionGiftCode/index";
 	}

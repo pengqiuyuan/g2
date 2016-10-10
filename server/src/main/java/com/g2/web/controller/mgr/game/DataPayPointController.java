@@ -12,9 +12,11 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,13 +33,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
+import com.g2.entity.game.ConfigServer;
 import com.g2.entity.game.DataPayPoint;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
 import com.g2.service.game.DataPayPointService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
+import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -82,12 +89,17 @@ public class DataPayPointController extends BaseController{
 	
 	@Autowired
 	private AccountService accountService;
-
-	@Autowired
-	private ServerService serverService;
 	
 	@Autowired
 	private DataPayPointService dataPayPointService;
+	
+	@Autowired
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -122,9 +134,11 @@ public class DataPayPointController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("dateFrom", dataPayPointService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", dataPayPointService.nowDate());
-		model.addAttribute("servers", serverService.findAll());
 		model.addAttribute("payPoints", ps);
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		
+		logService.log(dataPayPointService.getCurrentUser().getName(), dataPayPointService.getCurrentUser().getName() + "：查询付费点页面", Log.TYPE_DATA_PAYPOINT);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/datapaypoint/index";

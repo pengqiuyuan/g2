@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.entity.game.FunctionPlacard;
@@ -46,6 +48,7 @@ import com.g2.service.game.DataPayPointService;
 import com.g2.service.game.FunctionPlacardService;
 import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -90,10 +93,15 @@ public class FunctionPlacardController extends BaseController{
 	private AccountService accountService;
 
 	@Autowired
-	private ServerService serverService;
+	private FunctionPlacardService functionPlacardService;
 	
 	@Autowired
-	private FunctionPlacardService functionPlacardService;
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -127,6 +135,7 @@ public class FunctionPlacardController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("functionPlacards", ps);
 		
+		logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：登录公告页面", Log.TYPE_FUNCTION_PLACARD);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/functionplacard/index";
@@ -164,6 +173,7 @@ public class FunctionPlacardController extends BaseController{
 		redirectAttributes.addFlashAttribute("message", "新增项目成功");
 		//String message = "新增:" +functionPlacard.toString();
 		//LogService.log(getCurrentUserName(), message, Log.TYPE_STORE);
+		logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：新增公告 " + functionPlacard.getId(), Log.TYPE_FUNCTION_PLACARD);
 		return "redirect:/manage/game/functionPlacard/index";
 	}
 	
@@ -174,6 +184,7 @@ public class FunctionPlacardController extends BaseController{
 	public String update(FunctionPlacard functionPlacard,ServletRequest request,RedirectAttributes redirectAttributes){
 		System.out.println(functionPlacard.getId() +"  " + functionPlacard.getTitle() + " "+ functionPlacard.getText() );
 
+		logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：修改公告 " + functionPlacard.getId(), Log.TYPE_FUNCTION_PLACARD);
     	redirectAttributes.addFlashAttribute("message", "服务器列表为空,保存失败");
     	return "redirect:/manage/game/functionPlacard/index";
 	}
@@ -190,6 +201,7 @@ public class FunctionPlacardController extends BaseController{
 			) throws Exception{
 		 Map<String,Object> map = new HashMap<String, Object>();
 		 
+		 logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：删除公告 " + id, Log.TYPE_FUNCTION_PLACARD);
 		 map.put("message", "ok");
 		 return map;
 	}

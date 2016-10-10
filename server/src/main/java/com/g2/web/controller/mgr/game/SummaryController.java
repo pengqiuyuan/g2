@@ -5,13 +5,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
 
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -25,11 +28,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springside.modules.web.Servlets;
 
+import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
+import com.g2.entity.game.ConfigServer;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.SummaryService;
+import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.JsonBinder;
+import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
 
@@ -74,10 +82,15 @@ public class SummaryController extends BaseController{
 	private AccountService accountService;
 	
 	@Autowired
-	private ServerService serverService;
+	private SummaryService summaryService;
 	
 	@Autowired
-	private SummaryService summaryService;
+	private LogService logService;
+	
+	@Value("#{envProps.server_url}")
+	private String excelUrl;
+	
+	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
 	
 	/**
 	 * @throws Exception 
@@ -94,12 +107,15 @@ public class SummaryController extends BaseController{
 		model.addAttribute("user", user);
 		model.addAttribute("dateFrom", summaryService.thirtyDayAgoFrom());
 		model.addAttribute("dateTo", summaryService.nowDate());
-		model.addAttribute("servers", serverService.findAll());
+		//model.addAttribute("servers", serverService.findAll());
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
+		model.addAttribute("servers", beanList);
 		//model.addAttribute("c_30_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/newuser"));
 		//model.addAttribute("c_30_activeuser",springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/30/activeuser"));	
 		//model.addAttribute("c_timeframe_newuser", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/timeframe/newuser"));	
 		//model.addAttribute("c_top_area_1", springHttpClient.getMethodStr("http://private-9394a-g22.apiary-mock.com/top/userarea"));	
 		
+		logService.log(user.getName(), user.getName() + "：访问首页", Log.TYPE_SUMMARY);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
 		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 		return "/game/summary/index";
