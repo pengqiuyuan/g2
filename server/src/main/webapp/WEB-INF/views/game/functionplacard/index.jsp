@@ -45,7 +45,7 @@
 										</a>
 									</div>
 								</td>
-								<td><fmt:formatDate value="${item.crDate}" pattern="yyyy/MM/dd" /></td>
+								<td>${item.crDate}</td>
 								<td>${item.title}</td>
 								<td><a href="#"  class="intro" title="${item.text}" >
 								<c:choose> 

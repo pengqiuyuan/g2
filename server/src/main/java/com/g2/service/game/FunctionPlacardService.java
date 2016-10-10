@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.g2.entity.game.FunctionPlacard;
+import com.g2.repository.game.FunctionPlacardDao;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
@@ -19,6 +21,9 @@ public class FunctionPlacardService {
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	
 	Calendar calendar = new GregorianCalendar(); 
+	
+	@Autowired
+	private FunctionPlacardDao functionPlacardDao;
 	
 	public String nowDate(){
 		String nowDate = sdf.format(new Date());
@@ -54,7 +59,7 @@ public class FunctionPlacardService {
 	}
 	
 	public void save(FunctionPlacard functionPlacard){
-		
+		functionPlacardDao.save(functionPlacard);
 	}
 	
 }

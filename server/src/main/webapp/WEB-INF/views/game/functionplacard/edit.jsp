@@ -20,7 +20,6 @@
 </head>
 
 <body>
-	<script type="text/javascript" src="${ctx}/static/ckeditor/ckeditor.js"></script>
 	<div class="page-header">
    		<h4>修改登录公告</h4>
  	</div>
@@ -38,9 +37,8 @@
 			<div class="control-group ">
 				<label class="control-label" for="text">公告内容（1000字）：</label>
 				<div class="controls">
-					<textarea path="text" id="text" name="c" cssClass="input-xlarge" value="" cols="100" rows="20" /></textarea>
+					<textarea path="text" name="text" cssClass="input-xlarge" value="" style="height: 200px;width: 800px" />${functionPlacard.text}</textarea>
 				</div>
-				<input id="functionPlacardText" value=" ${functionPlacard.text}"  type="hidden">
 			</div>
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary" id="submit">保存</button>
@@ -48,10 +46,7 @@
 			</div>
 	</form>
 <script type="text/javascript">
-
-	CKEDITOR.replace('text');	
 	$(function(){
-		CKEDITOR.instances.text.setData($("#functionPlacardText").val());
 		$("#inputForm").validate({
 			rules:{
 				title:{

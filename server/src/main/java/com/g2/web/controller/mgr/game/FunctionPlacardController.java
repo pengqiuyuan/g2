@@ -119,8 +119,8 @@ public class FunctionPlacardController extends BaseController{
 		List<FunctionPlacard> functionPlacards = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
 			FunctionPlacard f = new FunctionPlacard();
-			f.setId(i);
-			f.setCrDate(new Date());
+			f.setId(Long.valueOf(i));
+			f.setCrDate("2016-09-18");
 			f.setTitle("test " +i);
 			f.setText("啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦 " +i);
 			functionPlacards.add(f);
@@ -169,6 +169,7 @@ public class FunctionPlacardController extends BaseController{
 	 */
 	@RequestMapping(value = "save", method = RequestMethod.POST)
 	public String saveStores(FunctionPlacard functionPlacard,RedirectAttributes redirectAttributes){
+		functionPlacard.setCrDate(functionPlacardService.nowDate());
 		functionPlacardService.save(functionPlacard);
 		redirectAttributes.addFlashAttribute("message", "新增项目成功");
 		//String message = "新增:" +functionPlacard.toString();

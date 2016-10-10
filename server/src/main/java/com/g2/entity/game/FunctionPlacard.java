@@ -1,26 +1,21 @@
 package com.g2.entity.game;
 
-import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public class FunctionPlacard {
-	
-	private long id;
+import com.g2.entity.IdEntity;
+
+
+@Entity
+@Table(name="g2_placard")
+public class FunctionPlacard extends IdEntity{
 	
 	private String title;
 	
 	private String text;
 	
-	private Date crDate;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private String crDate;
 
 	public String getTitle() {
 		return title;
@@ -37,13 +32,12 @@ public class FunctionPlacard {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
-	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+08:00")
-	public Date getCrDate() {
+
+	public String getCrDate() {
 		return crDate;
 	}
 
-	public void setCrDate(Date crDate) {
+	public void setCrDate(String crDate) {
 		this.crDate = crDate;
 	}
 
