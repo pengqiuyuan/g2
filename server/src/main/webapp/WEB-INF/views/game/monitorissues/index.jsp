@@ -26,6 +26,7 @@
 				<label class="control-label" for="serverId">区服：</label>
 				<select id="serverId" name="search_EQ_serverId">	
 					<option value="">请选择项目</option>
+					<option value="全区全服">全区全服</option>
 					<c:forEach items="${servers}" var="item" >
 						<option value="${item.serverName}">
 							${item.serverName}
