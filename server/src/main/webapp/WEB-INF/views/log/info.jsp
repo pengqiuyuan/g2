@@ -29,7 +29,7 @@
 		
 			<p><span>创建时间：</span><fmt:formatDate value="${log.crDate}" pattern="yyyy/MM/dd  HH:mm:ss" /></p>
 			<p><span>日志类型：</span>
-${log.type == "1" ? "订单日志" : log.type == "2" ? "商品日志" : log.type == "3" ? "用户日志" : log.type == "4"? "门店日志" : log.type == "5" ? "劵日志" : log.type == "6" ? "配置日志" : log.type == "7"? "主题日志" : log.type == "8"? "活动日志" : "未知"}			
+${log.type == "1" ? "首页查看日志" : log.type == "2" ? "账号管理日志" : log.type == "3" ? "礼品码日志" : log.type == "4"? "公告日志" : log.type == "5" ? "邮件日志" : log.type == "6" ? "系统广播日志" : log.type == "7"? "黑名单日志" : log.type == "8"? "服务器状态日志" : log.type == "9" ? "游戏配置日志" : log.type == "10" ? "意见反馈日志" : log.type == "11" ? "基本指标日志" : log.type == "12"? "留存日志" : log.type == "13" ? "等级分布日志" : log.type == "14" ? "关卡分布日志" : log.type == "15"? "付费点日志" : log.type == "16"? "商城消费日志" : "未知"}
 			</p>
 		
 		</div>
