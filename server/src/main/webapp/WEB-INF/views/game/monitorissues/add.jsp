@@ -23,16 +23,17 @@
 		</div>
 	</c:if>
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/game/monitorIssues/update" enctype="multipart/form-data">
+		<input type="hidden" name="userId" value="${issues.userId}">
 		<div class="control-group">
 			<label class="control-label" for="server">区服：</label>
 			<div class="controls">
-				<input type="text" name="server" class="input-large "  value="${issues.server}" disabled="disabled"/>
+				<input type="text" name="server" class="input-large "  value="${issues.server}" readonly="readonly"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="name">角色名：</label>
 			<div class="controls">
-				<input type="text" name="name" class="input-large " value="${issues.name}" disabled="disabled"/>
+				<input type="text" name="name" class="input-large " value="${issues.name}" readonly="readonly"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -70,10 +71,16 @@
 				rules:{
 					title:{
 						required:true
+					},
+					text:{
+						required:true
 					}
 				},messages:{
 					title:{
 						required:"邮件标题必须填写"
+					},
+					text:{
+						required:"邮件内容必须填写"
 					}
 				}
 			});

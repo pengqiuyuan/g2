@@ -1,5 +1,6 @@
 package com.g2.web.controller.mgr.game;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +43,7 @@ import com.g2.service.account.AccountService;
 import com.g2.service.game.MonitorServerService;
 import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.HttpClientUts;
 import com.g2.util.JsonBinder;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;

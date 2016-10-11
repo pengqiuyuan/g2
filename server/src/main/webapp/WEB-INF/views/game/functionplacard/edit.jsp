@@ -27,6 +27,7 @@
 		<div id="message" class="alert alert-success"><button data-dismiss="alert" class="close">×</button>${message}</div>
 	</c:if>
 	<form id="inputForm" method="post" Class="form-horizontal" action="${ctx}/manage/game/functionPlacard/update"   enctype="multipart/form-data" >
+			<input type="hidden" name="id" value="${functionPlacard.id}">
 			<div
 				class="control-group">
 				<label class="control-label" for="title">标题（50字）：</label>

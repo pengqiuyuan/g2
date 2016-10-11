@@ -4,14 +4,25 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.persistence.DynamicSpecifications;
+import org.springside.modules.persistence.SearchFilter;
 
+import com.g2.entity.User;
 import com.g2.entity.game.FunctionPlacard;
 import com.g2.repository.game.FunctionPlacardDao;
+import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
@@ -24,6 +35,9 @@ public class FunctionPlacardService {
 	
 	@Autowired
 	private FunctionPlacardDao functionPlacardDao;
+	
+	@Autowired
+	private AccountService accountService;
 	
 	public String nowDate(){
 		String nowDate = sdf.format(new Date());
@@ -51,15 +65,71 @@ public class FunctionPlacardService {
 		return user;
 	}
 	
+	public List<FunctionPlacard> findAll(){
+		return functionPlacardDao.findAll();
+	}
+	
 	public FunctionPlacard findById(long id){
-		FunctionPlacard functionPlacard = new FunctionPlacard();
-		functionPlacard.setTitle("我是要修改的title");
-		functionPlacard.setText("我是要修改的text");
+		FunctionPlacard functionPlacard =  functionPlacardDao.findOne(id);
 		return functionPlacard;
 	}
 	
 	public void save(FunctionPlacard functionPlacard){
 		functionPlacardDao.save(functionPlacard);
+	}
+	
+	public void update(FunctionPlacard functionPlacard){
+		FunctionPlacard f =  functionPlacardDao.findOne(functionPlacard.getId());
+		f.setTitle(functionPlacard.getTitle());
+		f.setText(functionPlacard.getText());
+		functionPlacardDao.save(f);
+	}
+	
+	public void delById(Long id){
+		functionPlacardDao.delete(id);
+	}
+	
+	/**
+	 * 分页查询
+	 * 
+	 * @param userId
+	 * @param searchParams
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param sortType
+	 * @return
+	 */
+	public Page<FunctionPlacard> findConfigByCondition(Long userId,
+			Map<String, Object> searchParams, int pageNumber, int pageSize,
+			String sortType) {
+		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize,
+				sortType);
+		Specification<FunctionPlacard> spec = buildSpecification(userId, searchParams);
+		return functionPlacardDao.findAll(spec, pageRequest);
+	}
+	
+	
+	/**
+	 * 创建分页请求.
+	 */
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize,
+			String sortType) {
+		Sort sort = null;
+		if ("id".equals(sortType)) {
+			sort = new Sort(Direction.DESC, "id");
+		}
+		return new PageRequest(pageNumber - 1, pagzSize, sort);
+	}
+	
+	/**
+	 * 创建动态查询条件组合.
+	 */
+	private Specification<FunctionPlacard> buildSpecification(Long userId,
+			Map<String, Object> searchParams) {
+		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
+		User user = accountService.getUser(userId);
+		Specification<FunctionPlacard> spec = DynamicSpecifications.bySearchFilter(filters.values(), FunctionPlacard.class);
+		return spec;
 	}
 	
 }

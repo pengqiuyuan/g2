@@ -1,6 +1,7 @@
 package com.g2.web.controller.mgr.game;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
+
+import net.sf.json.JSONObject;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -51,6 +54,7 @@ import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.MonitorIssuesService;
 import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
+import com.g2.util.HttpClientUts;
 import com.g2.util.JsonBinder;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
@@ -124,7 +128,7 @@ public class MonitorIssuesController extends BaseController{
 			MonitorIssues m = new MonitorIssues();
 			m.setId(Long.valueOf(i));
 			m.setTime("2016-09-16");
-			m.setServer("安卓"+i+"区");
+			m.setServer("安卓一区");
 			m.setUserId("user"+i);
 			m.setName("玩家名称"+i);
 			m.setGroup("战士"+i);
@@ -152,11 +156,16 @@ public class MonitorIssuesController extends BaseController{
 	}
 	
 	@RequestMapping(value="edit",method=RequestMethod.GET)
-	public String edit(@RequestParam(value="id")long id,Model model) throws JsonParseException, JsonMappingException, IOException{
-		MonitorIssues issues = monitorIssuesService.findById(id);
-
-		Long userId = monitorIssuesService.getCurrentUserId();
-		User user = accountService.getUser(userId);
+	public String edit(@RequestParam(value="id")long id,
+			@RequestParam(value="server")String server,
+			@RequestParam(value="name")String name,
+			@RequestParam(value="userId")String userId,
+			Model model) throws JsonParseException, JsonMappingException, IOException{
+		MonitorIssues issues = new MonitorIssues();
+		issues.setId(id);
+		issues.setServer(server);
+		issues.setName(name);
+		issues.setUserId(userId);
 		
 		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
 		model.addAttribute("servers", beanList);
@@ -166,14 +175,30 @@ public class MonitorIssuesController extends BaseController{
 	}
 	
 	/**
-	 * 修改
+	 * 反馈信息回复
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/update",method=RequestMethod.POST)
-	public String update(MonitorIssuesReply monitorIssuesReply,ServletRequest request,RedirectAttributes redirectAttributes){
+	public String update(MonitorIssuesReply monitorIssuesReply,ServletRequest request,RedirectAttributes redirectAttributes) throws Exception{
+		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
 		//发送 monitorIssuesReply 给游戏服务器
-		
-		logService.log(monitorIssuesService.getCurrentUser().getName(), monitorIssuesService.getCurrentUser().getName() + "：修改意见反馈", Log.TYPE_MONITOR_ISSUES);
-		redirectAttributes.addFlashAttribute("message", "反馈消息成功");
+		Boolean tag = false;
+		for (ConfigServer configServer : beanList) {
+			if(configServer.getServerName().equals(monitorIssuesReply.getServer())){
+				String result = HttpClientUts.doGet("http://"+configServer.getIp()+":"+configServer.getPort()+"/api/sendIssuesReply"+"?server="+URLEncoder.encode(monitorIssuesReply.getServer(), "utf-8")+"&userId="+URLEncoder.encode(monitorIssuesReply.getUserId(), "utf-8")+"&title="+URLEncoder.encode(monitorIssuesReply.getTitle(), "utf-8")+"&text="+URLEncoder.encode(monitorIssuesReply.getText(), "utf-8"), "utf-8");
+				JSONObject dataJson=JSONObject.fromObject(result);
+				if(dataJson.get("result").equals("1")){
+					redirectAttributes.addFlashAttribute("message", "反馈消息发送成功");
+				}else{
+					redirectAttributes.addFlashAttribute("message", "反馈消息发送失败");
+				}
+				tag = true;
+			}
+		}
+		if (!tag){
+			redirectAttributes.addFlashAttribute("message", "未发现 "+monitorIssuesReply.getServer()+" 服务器，反馈消息发送失败");
+		}
+		logService.log(monitorIssuesService.getCurrentUser().getName(), monitorIssuesService.getCurrentUser().getName() + "：发送意见反馈", Log.TYPE_MONITOR_ISSUES);
 		return "redirect:/manage/game/monitorIssues/index";
 	}
 	

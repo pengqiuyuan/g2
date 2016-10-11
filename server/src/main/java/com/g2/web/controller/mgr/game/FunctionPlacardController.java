@@ -42,6 +42,7 @@ import com.g2.entity.Log;
 import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.entity.game.FunctionPlacard;
+import com.g2.entity.game.MonitorGameConfig;
 import com.g2.service.account.AccountService;
 import com.g2.service.game.DataBasicService;
 import com.g2.service.game.DataPayPointService;
@@ -112,11 +113,12 @@ public class FunctionPlacardController extends BaseController{
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
 		logger.debug("登录公告");
-		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = functionPlacardService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
-		List<FunctionPlacard> functionPlacards = new ArrayList<>();
+		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		Page<FunctionPlacard> functionPlacards = functionPlacardService.findConfigByCondition(userId,searchParams, pageNumber, pageSize, sortType);
+/*		List<FunctionPlacard> functionPlacards = new ArrayList<>();
 		for (int i = 1; i <= 10; i++) {
 			FunctionPlacard f = new FunctionPlacard();
 			f.setId(Long.valueOf(i));
@@ -127,13 +129,12 @@ public class FunctionPlacardController extends BaseController{
 		}
 		
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<FunctionPlacard> ps = new PageImpl<FunctionPlacard>(functionPlacards, pageRequest, functionPlacards.size());
-		
+		PageImpl<FunctionPlacard> ps = new PageImpl<FunctionPlacard>(functionPlacards, pageRequest, functionPlacards.size());*/
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
 		
 		model.addAttribute("user", user);
-		model.addAttribute("functionPlacards", ps);
+		model.addAttribute("functionPlacards", functionPlacards);
 		
 		logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：登录公告页面", Log.TYPE_FUNCTION_PLACARD);
 		// 将搜索条件编码成字符串，用于排序，分页的URL
@@ -184,9 +185,9 @@ public class FunctionPlacardController extends BaseController{
 	@RequestMapping(value = "/update",method=RequestMethod.POST)
 	public String update(FunctionPlacard functionPlacard,ServletRequest request,RedirectAttributes redirectAttributes){
 		System.out.println(functionPlacard.getId() +"  " + functionPlacard.getTitle() + " "+ functionPlacard.getText() );
-
+		functionPlacardService.update(functionPlacard);
 		logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：修改公告 " + functionPlacard.getId(), Log.TYPE_FUNCTION_PLACARD);
-    	redirectAttributes.addFlashAttribute("message", "服务器列表为空,保存失败");
+    	redirectAttributes.addFlashAttribute("message", "修改公告成功");
     	return "redirect:/manage/game/functionPlacard/index";
 	}
 	
@@ -201,7 +202,7 @@ public class FunctionPlacardController extends BaseController{
 	public Map<String,Object> del(@RequestParam(value = "id")Long id
 			) throws Exception{
 		 Map<String,Object> map = new HashMap<String, Object>();
-		 
+		 functionPlacardService.delById(id);
 		 logService.log(functionPlacardService.getCurrentUser().getName(), functionPlacardService.getCurrentUser().getName() + "：删除公告 " + id, Log.TYPE_FUNCTION_PLACARD);
 		 map.put("message", "ok");
 		 return map;

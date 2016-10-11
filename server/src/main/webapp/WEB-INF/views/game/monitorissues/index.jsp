@@ -63,8 +63,7 @@
 								<a class="btn" href="#">#${item.id}</a> 
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="<%=request.getContextPath()%>/manage/game/monitorIssues/edit?id=${item.id}"><i class="icon-edit"></i>回复</a></li>
-									<li><a href="javascript:void(0);" rel="${item.id}" class="del"><i class="icon-th"></i>删除 </a></li>
+									<li><a href="<%=request.getContextPath()%>/manage/game/monitorIssues/edit?id=${item.id}&server=${item.server}&name=${item.name}&userId=${item.userId}"><i class="icon-edit"></i>回复</a></li>
 									<li class="divider"></li>
 								</ul>
 							</div>
@@ -90,7 +89,7 @@
 						</td>
 						<td>
 							<div class="action-buttons">
-								<a class="exportCode btn table-actions" href="${ctx}/manage/game/monitorIssues/edit?id=${item.id}" ><i class="icon-ok"></i>回复</a>
+								<a class="exportCode btn table-actions" href="${ctx}/manage/game/monitorIssues/edit?id=${item.id}&server=${item.server}&name=${item.name}&userId=${item.userId}" ><i class="icon-ok"></i>回复</a>
 							</div>
 						</td>
 					</tr>

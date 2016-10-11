@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import com.g2.entity.IdEntity;
 
 @Entity
-public class MonitorServer extends IdEntity {
+public class MonitorServer extends IdEntity{
 
 	/**
 	 * load:服务器负载状态 0正常 1繁忙 2离线
@@ -76,6 +76,5 @@ public class MonitorServer extends IdEntity {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-
 	
 }
