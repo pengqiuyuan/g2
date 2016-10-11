@@ -45,6 +45,7 @@ import com.g2.service.log.LogService;
 import com.g2.service.server.ServerService;
 import com.g2.util.HttpClientUts;
 import com.g2.util.JsonBinder;
+import com.g2.util.MySortList;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
 import com.google.common.collect.Maps;
@@ -120,15 +121,39 @@ public class MonitorServerController extends BaseController{
 			f.setId(Long.valueOf(i));
 			f.setServerId(String.valueOf(i));
 			f.setServerName("安卓"+i+"区");
-			f.setLoad("0");
+			if(i>5){
+				f.setLoad("1");
+			}else{
+				f.setLoad("0");
+			}
 			f.setOnlineUser(String.valueOf(10*i));
 			f.setTotalUser(String.valueOf(100*i));
 			f.setIp("127.0.0.1");
 			monitorServers.add(f);
 		}
 		
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<MonitorServer> ps = new PageImpl<MonitorServer>(monitorServers, pageRequest, monitorServers.size());
+		if(null!= request.getParameter("search_EQ_load")){
+			List<MonitorServer> save = new ArrayList<MonitorServer>();  
+			for (MonitorServer monitorServer : monitorServers) {
+				if(!request.getParameter("search_EQ_load").equals(monitorServer.getLoad())){
+					save.add(monitorServer);
+				}
+			}
+			monitorServers.removeAll(save);  
+		}
+		
+		/* 对 list monitorServers 排序 */
+		MySortList<MonitorServer> msList = new MySortList<MonitorServer>();
+		if ("auto".equals(sortType)) {
+			msList.sortByMethod(monitorServers, "getId", false);
+		} else if ("onlineUser".equals(sortType)) {
+			msList.sortByMethod(monitorServers, "getOnlineUser", true);
+		} if ("totalUser".equals(sortType)) {
+			msList.sortByMethod(monitorServers, "getTotalUser", true);
+		} 
+		/* 对 list monitorServers 排序 */
+		
+		PageImpl<MonitorServer> ps = new PageImpl<MonitorServer>(monitorServers, null, monitorServers.size());
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
@@ -169,19 +194,6 @@ public class MonitorServerController extends BaseController{
 	    dateMap.put("sevenDayAgo",sevenDayAgo);
 	    dateMap.put("thirtyDayAgo",thirtyDayAgo);
 		return dateMap;
-	}
-	
-	
-	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
-		Sort sort = null;
-		if ("auto".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "id");
-		} else if ("onlineUser".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "onlineUser");
-		} if ("totalUser".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "totalUser");
-		} 
-		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 	
 }
