@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,17 @@ import org.springside.modules.persistence.DynamicSpecifications;
 import org.springside.modules.persistence.SearchFilter;
 
 import com.g2.entity.User;
-import com.g2.entity.game.FunctionGiftCode;
-import com.g2.repository.game.FunctionGiftCodeDao;
+import com.g2.entity.game.FunctionGiftKey;
+import com.g2.repository.game.FunctionGiftKeyDao;
 import com.g2.service.account.AccountService;
 import com.g2.service.account.ShiroDbRealm.ShiroUser;
 
 @Component
 @Transactional
-public class FunctionGiftCodeService {
+public class FunctionGiftKeyService {
 	
 	@Autowired
-	private FunctionGiftCodeDao functionGiftCodeDao;
+	private FunctionGiftKeyDao functionGiftKeyDao;
 	
 	@Autowired
 	private AccountService accountService;
@@ -58,9 +59,8 @@ public class FunctionGiftCodeService {
 		return da;
 	}
 	
-	
-	public void save(FunctionGiftCode functionGiftCode){
-		functionGiftCodeDao.save(functionGiftCode);
+	public void save(FunctionGiftKey functionGiftKey){
+		functionGiftKeyDao.save(functionGiftKey);
 	}
 	
 	/**
@@ -73,13 +73,13 @@ public class FunctionGiftCodeService {
 	 * @param sortType
 	 * @return
 	 */
-	public Page<FunctionGiftCode> findConfigByCondition(Long userId,
+	public Page<FunctionGiftKey> findConfigByCondition(Long userId,
 			Map<String, Object> searchParams, int pageNumber, int pageSize,
 			String sortType) {
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize,
 				sortType);
-		Specification<FunctionGiftCode> spec = buildSpecification(userId, searchParams);
-		return functionGiftCodeDao.findAll(spec, pageRequest);
+		Specification<FunctionGiftKey> spec = buildSpecification(userId, searchParams);
+		return functionGiftKeyDao.findAll(spec, pageRequest);
 	}
 	
 	
@@ -91,10 +91,8 @@ public class FunctionGiftCodeService {
 		Sort sort = null;
 		if ("auto".equals(sortType)) {
 			sort = new Sort(Direction.ASC, "id");
-		}else  if ("id".equals(sortType)) {
+		}else if ("id".equals(sortType)) {
 			sort = new Sort(Direction.DESC, "id");
-		}else if ("giftNum".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "giftNum");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
@@ -102,11 +100,11 @@ public class FunctionGiftCodeService {
 	/**
 	 * 创建动态查询条件组合.
 	 */
-	private Specification<FunctionGiftCode> buildSpecification(Long userId,
+	private Specification<FunctionGiftKey> buildSpecification(Long userId,
 			Map<String, Object> searchParams) {
 		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
 		User user = accountService.getUser(userId);
-		Specification<FunctionGiftCode> spec = DynamicSpecifications.bySearchFilter(filters.values(), FunctionGiftCode.class);
+		Specification<FunctionGiftKey> spec = DynamicSpecifications.bySearchFilter(filters.values(), FunctionGiftKey.class);
 		return spec;
 	}
 	
@@ -122,4 +120,13 @@ public class FunctionGiftCodeService {
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
 		return user;
 	}
+	
+	/**
+	 * 生成CDKEY 
+	 */
+	public String getCdKey(){
+		UUID uuid = UUID.randomUUID(); 
+		return uuid.toString();
+	}
+	
 }

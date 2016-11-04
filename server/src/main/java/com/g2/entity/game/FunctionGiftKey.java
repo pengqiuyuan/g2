@@ -7,14 +7,32 @@ import javax.persistence.Table;
 import com.g2.entity.IdEntity;
 
 @Entity
-@Table(name="g2_gift_num")
-public class FunctionGiftCode extends IdEntity {
+@Table(name="g2_gift_key")
+public class FunctionGiftKey extends IdEntity {
+	
+	/**
+	 * 礼品码 
+	 * 0 未使用（有效的礼品码）
+	 */
+	public static final String GIFT_0 = "0";
+
+	/**
+	 * 礼品码 
+	 * 1 已使用（无效的礼品码）
+	 */
+	public static final String GIFT_1 = "1";
+
+	/**
+	 * 礼品码 
+	 * 2 已过期（礼品码已过期）
+	 */
+	public static final String GIFT_2 = "2";
 	
 	private String giftNum;
 	
-	private String giftBuildNum;
+	private String giftUse;
 	
-	private String giftUseNum;
+	private String giftKey;
 	
 	private String startDate;
 	
@@ -42,7 +60,7 @@ public class FunctionGiftCode extends IdEntity {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-
+	
 	public String getGiftNum() {
 		return giftNum;
 	}
@@ -51,20 +69,20 @@ public class FunctionGiftCode extends IdEntity {
 		this.giftNum = giftNum;
 	}
 
-	public String getGiftBuildNum() {
-		return giftBuildNum;
+	public String getGiftUse() {
+		return giftUse;
 	}
 
-	public void setGiftBuildNum(String giftBuildNum) {
-		this.giftBuildNum = giftBuildNum;
+	public void setGiftUse(String giftUse) {
+		this.giftUse = giftUse;
 	}
 
-	public String getGiftUseNum() {
-		return giftUseNum;
+	public String getGiftKey() {
+		return giftKey;
 	}
 
-	public void setGiftUseNum(String giftUseNum) {
-		this.giftUseNum = giftUseNum;
+	public void setGiftKey(String giftKey) {
+		this.giftKey = giftKey;
 	}
 
 	public String getItemId() {

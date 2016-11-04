@@ -56,10 +56,10 @@
 					</thead>
 					<tbody id="tbody">
 						<c:forEach items="${monitorServers.content}" var="item" varStatus="s">
-							<tr id="${item.id}">
-								<td id="iDictionary" value="${item.id}">
+							<tr id="${s.index+1}">
+								<td id="iDictionary" value="${s.index+1}">
 									<div class="btn-group">
-										<a class="btn" href="#">#${item.id}</a> 
+										<a class="btn" href="#">#${s.index+1}</a> 
 										<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
 									</div>
 								</td>

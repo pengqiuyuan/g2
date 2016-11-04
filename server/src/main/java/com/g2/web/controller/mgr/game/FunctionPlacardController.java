@@ -64,7 +64,7 @@ public class FunctionPlacardController extends BaseController{
 
 	private static final Logger logger = LoggerFactory.getLogger(FunctionPlacardController.class);
 	
-	private static final String PAGE_SIZE = "2";
+	private static final String PAGE_SIZE = "15";
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	Calendar calendar = new GregorianCalendar(); 

@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
@@ -26,7 +25,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -35,21 +33,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Log;
-import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.entity.game.ConfigServer;
 import com.g2.entity.game.FunctionGiftCode;
-import com.g2.entity.game.FunctionSeal;
+import com.g2.entity.game.FunctionGiftKey;
 import com.g2.service.account.AccountService;
-import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.FunctionGiftCodeService;
+import com.g2.service.game.FunctionGiftKeyService;
 import com.g2.service.log.LogService;
-import com.g2.service.server.ServerService;
 import com.g2.util.JsonBinder;
 import com.g2.util.SpringHttpClient;
 import com.g2.web.controller.mgr.BaseController;
@@ -65,7 +60,7 @@ public class FunctionGiftCodeController extends BaseController{
 
 	private static final Logger logger = LoggerFactory.getLogger(FunctionGiftCodeController.class);
 	
-	private static final String PAGE_SIZE = "2";
+	private static final String PAGE_SIZE = "15";
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	Calendar calendar = new GregorianCalendar(); 
@@ -74,6 +69,8 @@ public class FunctionGiftCodeController extends BaseController{
 
 	static {
 		sortTypes.put("auto", "编号");
+		sortTypes.put("id", "id");
+		sortTypes.put("giftNum", "按最新批次");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -98,12 +95,16 @@ public class FunctionGiftCodeController extends BaseController{
 	private FunctionGiftCodeService functionGiftCodeService;
 	
 	@Autowired
+	private FunctionGiftKeyService functionGiftKeyService;
+	
+	@Autowired
 	private LogService logService;
 	
 	@Value("#{envProps.server_url}")
 	private String excelUrl;
 	
 	private static JsonBinder binder = JsonBinder.buildNonDefaultBinder();
+	
 	
 	/**
 	 * @throws Exception 
@@ -113,34 +114,17 @@ public class FunctionGiftCodeController extends BaseController{
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
 			@RequestParam(value = "sortType", defaultValue = "auto")String sortType, Model model,
 			ServletRequest request) throws Exception{
-		logger.debug("礼品码管理");
+		logger.debug("礼品码批次管理");
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = functionGiftCodeService.getCurrentUserId();
 		User user = accountService.getUser(userId);
 
-		List<FunctionGiftCode> functionGiftCodes = new ArrayList<>();
-		for (int i = 1; i <= 10; i++) {
-			FunctionGiftCode gift = new FunctionGiftCode();
-			gift.setId(Long.valueOf(i));
-			gift.setGiftId(i);
-			gift.setGiftId(Long.valueOf("20160915"+i));
-			gift.setGiftBuildNum(String.valueOf(100*i));
-			gift.setGiftUseNum("0");
-			gift.setStartDate("2016-09-17");
-			gift.setEndDate("2016-09-29");
-			gift.setItemId("10293"+i);
-			gift.setItemNum(String.valueOf(10*i));
-			gift.setNotes("新手礼包"+i);
-			functionGiftCodes.add(gift);
-		}
-		
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<FunctionGiftCode> ps = new PageImpl<FunctionGiftCode>(functionGiftCodes, pageRequest, functionGiftCodes.size());
+		Page<FunctionGiftCode> functionGiftCodes = functionGiftCodeService.findConfigByCondition(userId,searchParams, pageNumber, pageSize, sortType);
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
 		model.addAttribute("user", user);
-		model.addAttribute("functionGiftCodes", ps);
+		model.addAttribute("functionGiftCodes", functionGiftCodes);
 		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
 		model.addAttribute("servers", beanList);
 		
@@ -172,7 +156,27 @@ public class FunctionGiftCodeController extends BaseController{
 	 */
 	@RequestMapping(value = "/save",method=RequestMethod.POST)
 	public String save(FunctionGiftCode functionGiftCode,ServletRequest request,RedirectAttributes redirectAttributes,Model model){
+		/*保存礼品码批次*/
+		functionGiftCode.setGiftUseNum("0");
+		functionGiftCode.setGiftNum(functionGiftCodeService.nowDateString());
+		functionGiftCodeService.save(functionGiftCode);
+		/*保存礼品码批次*/
 		
+		/*保存批次下的cdkey*/
+		Integer num = Integer.valueOf(functionGiftCode.getGiftBuildNum());
+		for (int i = 0; i < num; i++) {
+			FunctionGiftKey functionGiftKey = new FunctionGiftKey();
+			functionGiftKey.setGiftNum(functionGiftCode.getGiftNum());
+			functionGiftKey.setGiftUse(FunctionGiftKey.GIFT_0);
+			functionGiftKey.setGiftKey(functionGiftKeyService.getCdKey().substring(0, 7));
+			functionGiftKey.setStartDate(functionGiftCode.getStartDate());
+			functionGiftKey.setEndDate(functionGiftCode.getEndDate());
+			functionGiftKey.setItemId(functionGiftCode.getItemId());
+			functionGiftKey.setItemNum(functionGiftCode.getItemNum());
+			functionGiftKey.setNotes(functionGiftCode.getNotes());
+			functionGiftKeyService.save(functionGiftKey);
+		}
+		/*保存批次下的cdkey*/
 		logService.log(functionGiftCodeService.getCurrentUser().getName(), functionGiftCodeService.getCurrentUser().getName() + "：新增礼品码", Log.TYPE_FUNCTION_GIFTCODE);
 		redirectAttributes.addFlashAttribute("message", "新增礼品码成功");
 		return "redirect:/manage/game/functionGiftCode/index";
@@ -217,14 +221,6 @@ public class FunctionGiftCodeController extends BaseController{
 	    dateMap.put("sevenDayAgo",sevenDayAgo);
 	    dateMap.put("thirtyDayAgo",thirtyDayAgo);
 		return dateMap;
-	}
-	
-	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
-		Sort sort = null;
-		if ("auto".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "id");
-		} 
-		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 	
 }

@@ -140,7 +140,10 @@ public class FunctionSealController extends BaseController{
 	public Map<String,Object> delServerZone(@RequestParam(value = "id")Long id) throws Exception{
 		 Map<String,Object> map = new HashMap<String, Object>();
 		 functionSealService.delById(id);
-		 logService.log(getCurrentUser().getName(), getCurrentUser().getName() + "：解封账号 " + functionSealService.findById(id).getUserName(), Log.TYPE_FUNCTION_SEAL);
+		 /**
+		  
+		  */
+		 logService.log(getCurrentUser().getName(), getCurrentUser().getName() + "：解封账号 " + id, Log.TYPE_FUNCTION_SEAL);
 		 map.put("success", "true");
 		 return map;
 	}
