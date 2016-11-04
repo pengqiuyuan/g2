@@ -1,12 +1,16 @@
 package com.g2.entity.game;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import com.g2.entity.IdEntity;
 
 @Entity
+@Table(name="g2_issues")
 public class MonitorIssues extends IdEntity {
 	
+	@Column(name = "issues_time")
 	private String time;
 	
 	private String server;
@@ -15,6 +19,7 @@ public class MonitorIssues extends IdEntity {
 	
 	private String name;
 	
+	@Column(name = "issues_group")
 	private String group;
 	
 	private String contact;
@@ -23,6 +28,7 @@ public class MonitorIssues extends IdEntity {
 	
 	private String text ;
 
+	@Column(name = "issues_time")
 	public String getTime() {
 		return time;
 	}
@@ -55,6 +61,7 @@ public class MonitorIssues extends IdEntity {
 		this.name = name;
 	}
 
+	@Column(name = "issues_group")
 	public String getGroup() {
 		return group;
 	}

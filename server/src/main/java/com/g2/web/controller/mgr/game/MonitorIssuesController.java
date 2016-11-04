@@ -3,14 +3,12 @@ package com.g2.web.controller.mgr.game;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletRequest;
 
@@ -25,10 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,17 +37,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
 
 import com.g2.entity.Log;
-import com.g2.entity.Server;
 import com.g2.entity.User;
 import com.g2.entity.game.ConfigServer;
-import com.g2.entity.game.MonitorGameConfig;
 import com.g2.entity.game.MonitorIssues;
 import com.g2.entity.game.MonitorIssuesReply;
 import com.g2.service.account.AccountService;
-import com.g2.service.account.ShiroDbRealm.ShiroUser;
 import com.g2.service.game.MonitorIssuesService;
 import com.g2.service.log.LogService;
-import com.g2.service.server.ServerService;
 import com.g2.util.HttpClientUts;
 import com.g2.util.JsonBinder;
 import com.g2.util.SpringHttpClient;
@@ -70,7 +60,7 @@ public class MonitorIssuesController extends BaseController{
 
 	private static final Logger logger = LoggerFactory.getLogger(MonitorIssuesController.class);
 	
-	private static final String PAGE_SIZE = "2";
+	private static final String PAGE_SIZE = "15";
 	
 	SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd" ); 
 	Calendar calendar = new GregorianCalendar(); 
@@ -79,6 +69,7 @@ public class MonitorIssuesController extends BaseController{
 
 	static {
 		sortTypes.put("auto", "编号");
+		sortTypes.put("time", "时间");
 	}
 	
 	public static Map<String, String> getSortTypes() {
@@ -122,29 +113,13 @@ public class MonitorIssuesController extends BaseController{
 		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 		Long userId = monitorIssuesService.getCurrentUserId();
 		User user = accountService.getUser(userId);
-
-		List<MonitorIssues> monitorIssues = new ArrayList<>();
-		for (int i = 1; i <= 10; i++) {
-			MonitorIssues m = new MonitorIssues();
-			m.setId(Long.valueOf(i));
-			m.setTime("2016-09-16");
-			m.setServer("安卓一区");
-			m.setUserId("user"+i);
-			m.setName("玩家名称"+i);
-			m.setGroup("战士"+i);
-			m.setContact("188839384"+i);
-			m.setDevice("iphone12312332a"+i);
-			m.setText("超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！超级好玩的游戏，大家来加我好友一起玩啊！！");
-			monitorIssues.add(m);
-		}
 		
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		PageImpl<MonitorIssues> ps = new PageImpl<MonitorIssues>(monitorIssues, pageRequest, monitorIssues.size());
+		Page<MonitorIssues> monitorIssues = monitorIssuesService.findConfigByCondition(userId,searchParams, pageNumber, pageSize, sortType);
 		
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
 		model.addAttribute("user", user);
-		model.addAttribute("monitorIssues", ps);
+		model.addAttribute("monitorIssues", monitorIssues);
 		//model.addAttribute("servers", serverService.findAll());
 		List<ConfigServer> beanList = binder.getMapper().readValue(new SpringHttpClient().getMethodStr(excelUrl), new TypeReference<List<ConfigServer>>() {}); 
 		model.addAttribute("servers", beanList);
@@ -246,14 +221,6 @@ public class MonitorIssuesController extends BaseController{
 	    dateMap.put("sevenDayAgo",sevenDayAgo);
 	    dateMap.put("thirtyDayAgo",thirtyDayAgo);
 		return dateMap;
-	}
-	
-	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
-		Sort sort = null;
-		if ("auto".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "id");
-		} 
-		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 	
 }

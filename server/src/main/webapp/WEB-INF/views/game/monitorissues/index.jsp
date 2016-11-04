@@ -23,8 +23,8 @@
 				</div>
 			</c:if>
 			<form id="queryForm" class="well form-inline" method="get" action="${ctx}/manage/game/monitorIssues/index">
-				<label class="control-label" for="serverId">区服：</label>
-				<select id="serverId" name="search_EQ_serverId">	
+				<label class="control-label" for="server">区服：</label>
+				<select id="server" name="search_EQ_server">	
 					<option value="">请选择项目</option>
 					<option value="全区全服">全区全服</option>
 					<c:forEach items="${servers}" var="item" >
