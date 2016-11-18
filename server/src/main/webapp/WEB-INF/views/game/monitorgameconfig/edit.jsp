@@ -25,7 +25,7 @@
 		<div class="control-group">
 			<label class="control-label" for="configKey">配置项：</label>
 			<div class="controls">
-				<input type="text" name="configKey" class="input-large " value="${monitorGameConfig.configKey}"/>
+				<input type="text" name="configKey" class="input-large " value="${monitorGameConfig.configKey}" readonly="readonly"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -58,8 +58,7 @@
 					configKey:{
 						required:true,
 						minlength:1,
-						maxlength:7,
-						remote: '<%=request.getContextPath()%>/manage/game/monitorGameConfig/checkConfigKey'
+						maxlength:7
 					}
 				},messages:{
 					nodes:{
@@ -69,8 +68,7 @@
 						required:"配置值必须填写"
 					},
 					configKey:{
-						required:"配置项必须填写",
-						remote: "configKey已存在"
+						required:"配置项必须填写"
 					}
 				}
 			});

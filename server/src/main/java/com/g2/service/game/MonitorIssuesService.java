@@ -65,9 +65,9 @@ public class MonitorIssuesService {
 			String sortType) {
 		Sort sort = null;
 		if ("auto".equals(sortType)) {
-			sort = new Sort(Direction.ASC, "id");
+			sort = new Sort(Direction.DESC, "id");
 		}else  if ("time".equals(sortType)) {
-			sort = new Sort(Direction.DESC, "time");
+			sort = new Sort(Direction.ASC, "id");
 		}
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
